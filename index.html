@@ -112,8 +112,7 @@
                         <i class="fa-solid fa-magnifying-glass text-indigo-600 text-xs"></i>
                         <span>1. Tra Cứu Điểm Thi Tốt Nghiệp THPT (Theo SBD)</span>
                     </span>
-                    <span class="text-[11px] text-slate-400 font-normal hidden sm:inline">Gõ đủ 8 số tự động tra cứu •
-                        Phím Enter</span>
+                    <span class="text-[11px] text-slate-400 font-normal hidden sm:inline">Nhấn Tra Cứu hoặc phím Enter</span>
                 </div>
 
                 <div class="flex gap-2">
@@ -1169,13 +1168,6 @@
         sbdEl.addEventListener('input', (e) => {
             e.target.value = e.target.value.replace(/[^0-9]/g, '').slice(0, 8);
             toggleSbdClearButton();
-
-            if (e.target.value.length === 8) {
-                clearTimeout(lookupDebounce);
-                lookupDebounce = setTimeout(() => {
-                    doLookup();
-                }, 200);
-            }
         });
 
         sbdEl.addEventListener('keydown', (e) => {
