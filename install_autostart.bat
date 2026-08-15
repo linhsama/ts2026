@@ -13,11 +13,11 @@ echo.
 (
 echo Set WshShell = CreateObject^("WScript.Shell"^)
 echo WshShell.CurrentDirectory = "%~dp0"
-echo WshShell.Run "python server.py", 0, False
+echo WshShell.Run "pythonw server.py", 0, False
 ) > "%VBS_TARGET%"
 
 echo [OK] Auto-start successfully installed!
-echo The TS2026 server will now start automatically in the background
+echo The TS2026 server will now start automatically in the background 
 echo whenever Windows boots up.
 echo.
 echo =================================================================
@@ -27,3 +27,4 @@ echo [OK] Server is running in the background on port 8080!
 echo =================================================================
 echo.
 pause
+

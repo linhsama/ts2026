@@ -19,72 +19,173 @@ def get_local_ip():
         s.close()
         return ip
     except Exception:
-        return "127.0.0.1"
+        pass
+    
+    try:
+        hostname = socket.gethostname()
+        for ip in socket.gethostbyname_ex(hostname)[2]:
+            if not ip.startswith("127.") and not ip.startswith("169.254."):
+                return ip
+    except Exception:
+        pass
+        
+    return "127.0.0.1"
 
 def update_client_launchers(local_ip, hostname):
     base_dir = os.path.dirname(os.path.abspath(__file__))
     
-    # Generate single client launcher file for LAN access
+    # Generate resilient client launcher file for LAN access
     html_content = f"""<!DOCTYPE html>
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tra Cứu Điểm Thi THPT 2026 và Tính Điểm Học Bạ</title>
+    <title>Mở Trang Tra Cứu Tuyển Sinh 2026 - Mạng LAN</title>
     <style>
+        * {{
+            box-sizing: border-box;
+        }}
         body {{
-            font-family: system-ui, -apple-system, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             display: flex;
             align-items: center;
             justify-content: center;
             min-height: 100vh;
             margin: 0;
-            background: #f8fafc;
-            color: #0f172a;
+            padding: 16px;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: #f8fafc;
             text-align: center;
         }}
         .card {{
-            background: white;
+            background: rgba(30, 41, 59, 0.95);
+            backdrop-filter: blur(12px);
             padding: 32px 24px;
-            border-radius: 16px;
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
-            max-width: 440px;
-            border: 1px solid #e2e8f0;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.1);
+            max-width: 480px;
+            width: 100%;
         }}
         .spinner {{
-            width: 36px;
-            height: 36px;
-            border: 3px solid #e2e8f0;
-            border-top-color: #1e40af;
+            width: 44px;
+            height: 44px;
+            border: 4px solid rgba(59, 130, 246, 0.2);
+            border-top-color: #3b82f6;
             border-radius: 50%;
             animation: spin 0.8s linear infinite;
-            margin: 0 auto 16px;
+            margin: 0 auto 18px;
         }}
         @keyframes spin {{
             to {{
                 transform: rotate(360deg);
             }}
         }}
-        .btn {{
-            display: inline-block;
-            margin-top: 16px;
-            padding: 10px 20px;
-            background: #1e40af;
-            color: white;
-            border-radius: 8px;
-            text-decoration: none;
-            font-weight: 600;
+        .title {{
+            margin: 0 0 8px;
+            font-size: 19px;
+            font-weight: 700;
+            color: #60a5fa;
+            letter-spacing: -0.02em;
+        }}
+        .status {{
             font-size: 14px;
+            color: #94a3b8;
+            margin: 0 0 20px;
+            line-height: 1.5;
+        }}
+        .server-badge {{
+            display: inline-block;
+            background: rgba(59, 130, 246, 0.15);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            color: #93c5fd;
+            padding: 6px 14px;
+            border-radius: 9999px;
+            font-size: 13px;
+            font-family: monospace;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }}
+        .btn {{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            padding: 13px 20px;
+            background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+            color: white;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 15px;
+            box-shadow: 0 4px 14px rgba(37, 99, 235, 0.4);
+            transition: all 0.2s ease;
+            border: none;
+            cursor: pointer;
+        }}
+        .btn:hover {{
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            transform: translateY(-1px);
+            box-shadow: 0 6px 20px rgba(37, 99, 235, 0.5);
+        }}
+        .guide-box {{
+            margin-top: 24px;
+            padding: 16px;
+            background: rgba(15, 23, 42, 0.6);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            text-align: left;
+            font-size: 13px;
+            color: #cbd5e1;
+        }}
+        .guide-box h4 {{
+            margin: 0 0 8px;
+            color: #f59e0b;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }}
+        .guide-box ul {{
+            margin: 0;
+            padding-left: 18px;
+        }}
+        .guide-box li {{
+            margin-bottom: 6px;
+            line-height: 1.4;
+        }}
+        .guide-box li:last-child {{
+            margin-bottom: 0;
+        }}
+        .code {{
+            background: rgba(0, 0, 0, 0.3);
+            padding: 2px 6px;
+            border-radius: 4px;
+            color: #38bdf8;
+            font-family: monospace;
         }}
     </style>
 </head>
 <body>
     <div class="card">
-        <div class="spinner"></div>
-        <h2 style="margin: 0 0 8px; font-size: 17px; color: #1e3a8a;">Đang kết nối Máy Chủ Tra Cứu Điểm 2026...</h2>
-        <p id="status" style="font-size: 13px; color: #64748b; margin: 0;">Đang tự động nhận diện máy chủ mạng LAN...</p>
-        <div id="manual" style="display: none; margin-top: 16px;">
-            <a id="link" href="#" class="btn">Mở thủ công</a>
+        <div id="loading-spinner" class="spinner"></div>
+        <h2 class="title">Đang Kết Nối Máy Chủ Tuyển Sinh 2026</h2>
+        <div class="server-badge">IP Máy Chủ: {local_ip}:{PORT}</div>
+        <p id="status" class="status">Đang tự động nhận diện và kết nối máy chủ qua mạng LAN...</p>
+        
+        <div style="margin-top: 10px;">
+            <a id="direct-btn" href="http://{local_ip}:{PORT}/" class="btn">
+                🚀 Mở Trực Tiếp: http://{local_ip}:{PORT}/
+            </a>
+        </div>
+
+        <div id="guide" class="guide-box" style="display: none;">
+            <h4>⚠️ Chưa kết nối được? Hãy kiểm tra:</h4>
+            <ul>
+                <li>1. <b>Chung mạng LAN/Wi-Fi</b>: Đảm bảo máy này và máy chủ đang kết nối cùng 1 modem Wi-Fi hoặc mạng dây.</li>
+                <li>2. <b>Máy chủ đang bật</b>: Đảm bảo máy tính chứa server (<span class="code">{local_ip}</span>) đang chạy file server.</li>
+                <li>3. <b>Tường lửa (Firewall)</b>: Trên máy chủ, chạy file <span class="code">mo_khoa_tuong_lua_lan.bat</span> (bấm chuột phải chọn <i>Run as administrator</i>).</li>
+            </ul>
         </div>
     </div>
 
@@ -93,48 +194,98 @@ def update_client_launchers(local_ip, hostname):
         const KNOWN_HOSTNAME = "{hostname}";
         const PORT = {PORT};
 
-        let found = false;
+        let redirected = false;
 
         function redirectTo(url) {{
-            if (found) return;
-            found = true;
-            document.getElementById('status').textContent = "Đã kết nối thành công! Đang chuyển hướng...";
-            window.location.replace(url);
+            if (redirected) return;
+            redirected = true;
+            const statusEl = document.getElementById('status');
+            if (statusEl) statusEl.innerHTML = '<span style="color:#4ade80;font-weight:600;">✓ Kết nối thành công! Đang chuyển hướng...</span>';
+            const spinner = document.getElementById('loading-spinner');
+            if (spinner) spinner.style.borderTopColor = '#4ade80';
+            
+            setTimeout(() => {{
+                window.location.href = url;
+            }}, 300);
         }}
 
-        async function ping(ipOrHost) {{
-            const url = `http://${{ipOrHost}}:${{PORT}}/`;
-            try {{
-                const controller = new AbortController();
-                const timeoutId = setTimeout(() => controller.abort(), 700);
-                await fetch(url + "api/score?sbd=00000000", {{ mode: 'no-cors', signal: controller.signal }});
-                clearTimeout(timeoutId);
-                redirectTo(url);
-                return true;
-            }} catch (e) {{
-                return false;
-            }}
+        // Probe endpoint using fetch and Image as fallback (bypasses CORS restrictions)
+        function probe(ipOrHost, timeoutMs = 1200) {{
+            return new Promise((resolve) => {{
+                if (redirected) return resolve(true);
+                const baseUrl = `http://${{ipOrHost}}:${{PORT}}`;
+                let done = false;
+
+                const finish = (success) => {{
+                    if (done) return;
+                    done = true;
+                    if (success) {{
+                        redirectTo(baseUrl + '/');
+                        resolve(true);
+                    }} else {{
+                        resolve(false);
+                    }}
+                }};
+
+                // 1. Fetch probe
+                try {{
+                    const controller = new AbortController();
+                    const timer = setTimeout(() => controller.abort(), timeoutMs);
+                    fetch(`${{baseUrl}}/api/ping`, {{ 
+                        mode: 'cors',
+                        cache: 'no-store',
+                        signal: controller.signal 
+                    }})
+                    .then(res => {{
+                        clearTimeout(timer);
+                        if (res.ok) finish(true);
+                        else finish(false);
+                    }})
+                    .catch(() => finish(false));
+                }} catch (e) {{
+                    finish(false);
+                }}
+
+                // 2. Image probe backup
+                const img = new Image();
+                img.onload = () => finish(true);
+                img.onerror = () => {{}}; // Ignore image 404/error, fetch handles
+                img.src = `${{baseUrl}}/favicon.ico?_t=${{Date.now()}}`;
+
+                setTimeout(() => finish(false), timeoutMs + 100);
+            }});
         }}
 
         async function autoDiscover() {{
-            // 1. Try known server IP and hostname first
-            if (await ping(KNOWN_IP)) return;
-            if (await ping(KNOWN_HOSTNAME)) return;
-            if (await ping("localhost")) return;
+            // 1. Try known server IP directly
+            if (await probe(KNOWN_IP, 1000)) return;
+            
+            // 2. Try known Hostname
+            if (KNOWN_HOSTNAME && await probe(KNOWN_HOSTNAME, 1000)) return;
 
-            // 2. Fast scan local subnet if IP has changed
-            const prefix = KNOWN_IP.substring(0, KNOWN_IP.lastIndexOf('.') + 1);
-            const promises = [];
-            for (let i = 1; i <= 254; i++) {{
-                promises.push(ping(prefix + i));
+            // 3. Try Localhost
+            if (await probe('127.0.0.1', 600)) return;
+            if (await probe('localhost', 600)) return;
+
+            // 4. Fast scan local subnet if IP shifted
+            if (KNOWN_IP && KNOWN_IP.includes('.')) {{
+                const prefix = KNOWN_IP.substring(0, KNOWN_IP.lastIndexOf('.') + 1);
+                const scanPromises = [];
+                for (let i = 1; i <= 254; i++) {{
+                    scanPromises.push(probe(prefix + i, 800));
+                }}
+                await Promise.all(scanPromises);
             }}
-            await Promise.all(promises);
 
-            if (!found) {{
-                document.getElementById('status').innerHTML = "Chưa kết nối được máy chủ.<br>Vui lòng đảm bảo máy chủ đã chạy <b>server</b> và 2 máy cùng chung mạng nội bộ.";
-                document.getElementById('manual').style.display = "block";
-                document.getElementById('link').href = `http://${{KNOWN_IP}}:${{PORT}}/`;
-                document.getElementById('link').textContent = `Bấm thử vào http://${{KNOWN_IP}}:${{PORT}}/`;
+            if (!redirected) {{
+                const statusEl = document.getElementById('status');
+                if (statusEl) {{
+                    statusEl.innerHTML = '<span style="color:#f87171;">Không tự động nhận diện được máy chủ.</span><br>Vui lòng bấm nút mở trực tiếp bên dưới:';
+                }}
+                const guideEl = document.getElementById('guide');
+                if (guideEl) guideEl.style.display = 'block';
+                const spinner = document.getElementById('loading-spinner');
+                if (spinner) spinner.style.display = 'none';
             }}
         }}
 
@@ -171,60 +322,98 @@ def fetch_year(sbd, yr):
         pass
     return None
 
+from http.server import ThreadingHTTPServer, SimpleHTTPRequestHandler
+
 class AppHandler(SimpleHTTPRequestHandler):
     def end_headers(self):
         self.send_header("Access-Control-Allow-Origin", "*")
-        self.send_header("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
-        self.send_header("Access-Control-Allow-Headers", "Content-Type")
+        self.send_header("Access-Control-Allow-Methods", "GET, POST, OPTIONS, HEAD")
+        self.send_header("Access-Control-Allow-Headers", "Content-Type, Access-Control-Request-Private-Network, X-Requested-With")
+        self.send_header("Access-Control-Allow-Private-Network", "true")
+        self.send_header("Access-Control-Max-Age", "86400")
         self.send_header("Cache-Control", "no-cache, no-store, must-revalidate")
         super().end_headers()
 
     def do_OPTIONS(self):
-        self.send_response(200)
+        self.send_response(204)
         self.end_headers()
 
-    def do_GET(self):
+    def do_HEAD(self):
         parsed = urllib.parse.urlparse(self.path)
-        if parsed.path == "/api/score":
-            query = urllib.parse.parse_qs(parsed.query)
-            sbd = query.get("sbd", [""])[0]
-            
-            if not sbd:
-                self.send_response(400)
-                self.send_header("Content-Type", "application/json; charset=utf-8")
-                self.end_headers()
-                self.wfile.write(json.dumps({"status": False, "message": "Missing SBD parameter"}).encode("utf-8"))
-                return
-
-            years_to_try = ["2026", "2025", "2024"]
-            result_data = None
-            
-            with ThreadPoolExecutor(max_workers=3) as executor:
-                future_to_yr = {executor.submit(fetch_year, sbd, yr): yr for yr in years_to_try}
-                for future in as_completed(future_to_yr):
-                    res = future.result()
-                    if res:
-                        result_data = res
-                        break
-
+        if parsed.path in ["/api/ping", "/ping", "/favicon.ico"]:
             self.send_response(200)
             self.send_header("Content-Type", "application/json; charset=utf-8")
             self.end_headers()
-            
-            if result_data:
-                self.wfile.write(json.dumps(result_data).encode("utf-8"))
-            else:
-                self.wfile.write(json.dumps({
-                    "status": False,
-                    "errorCode": 404,
-                    "messages": ["Không tìm thấy dữ liệu điểm thi"],
-                    "data": {"model": False}
-                }).encode("utf-8"))
             return
+        return super().do_HEAD()
 
-        if parsed.path == "/" or parsed.path == "":
-            self.path = "/index.html"
-        return super().do_GET()
+    def do_GET(self):
+        try:
+            parsed = urllib.parse.urlparse(self.path)
+
+            # Healthcheck endpoint for instant LAN discovery
+            if parsed.path in ["/api/ping", "/ping"]:
+                self.send_response(200)
+                self.send_header("Content-Type", "application/json; charset=utf-8")
+                self.end_headers()
+                resp = {
+                    "status": True,
+                    "service": "TS2026 Server",
+                    "version": "2026.1",
+                    "ip": get_local_ip(),
+                    "port": PORT
+                }
+                self.wfile.write(json.dumps(resp).encode("utf-8"))
+                return
+
+            if parsed.path == "/api/score":
+                query = urllib.parse.parse_qs(parsed.query)
+                sbd = query.get("sbd", [""])[0]
+                
+                if not sbd:
+                    self.send_response(400)
+                    self.send_header("Content-Type", "application/json; charset=utf-8")
+                    self.end_headers()
+                    self.wfile.write(json.dumps({"status": False, "message": "Missing SBD parameter"}).encode("utf-8"))
+                    return
+
+                years_to_try = ["2026", "2025", "2024"]
+                result_data = None
+                
+                with ThreadPoolExecutor(max_workers=3) as executor:
+                    future_to_yr = {executor.submit(fetch_year, sbd, yr): yr for yr in years_to_try}
+                    for future in as_completed(future_to_yr):
+                        res = future.result()
+                        if res:
+                            result_data = res
+                            break
+
+                self.send_response(200)
+                self.send_header("Content-Type", "application/json; charset=utf-8")
+                self.end_headers()
+                
+                if result_data:
+                    self.wfile.write(json.dumps(result_data).encode("utf-8"))
+                else:
+                    self.wfile.write(json.dumps({
+                        "status": False,
+                        "errorCode": 404,
+                        "messages": ["Không tìm thấy dữ liệu điểm thi"],
+                        "data": {"model": False}
+                    }).encode("utf-8"))
+                return
+
+            if parsed.path == "/" or parsed.path == "":
+                self.path = "/index.html"
+            return super().do_GET()
+        except (ConnectionResetError, ConnectionAbortedError, BrokenPipeError):
+            pass
+
+    def copyfile(self, source, outputfile):
+        try:
+            super().copyfile(source, outputfile)
+        except (ConnectionResetError, ConnectionAbortedError, BrokenPipeError):
+            pass
 
 def run():
     os.chdir(os.path.dirname(os.path.abspath(__file__)))
@@ -235,7 +424,8 @@ def run():
     update_client_launchers(local_ip, hostname)
 
     server_address = (HOST, PORT)
-    httpd = HTTPServer(server_address, AppHandler)
+    httpd = ThreadingHTTPServer(server_address, AppHandler)
+    httpd.daemon_threads = True
     local_url = f"http://127.0.0.1:{PORT}/"
     lan_url = f"http://{local_ip}:{PORT}/"
     host_url = f"http://{hostname}:{PORT}/"
@@ -247,11 +437,15 @@ def run():
     print(f"  * LAN Network Access  : {lan_url}  or  {host_url}")
     print("=" * 68)
     print(f"  [>] SHARE THIS FILE WITH OTHER CLIENTS: ToolTS2026.html")
+    print(f"  [>] DIRECT ACCESS LINK FOR BROWSER/PHONES: {lan_url}")
     print("=" * 68)
     print("  Press Ctrl + C to stop the server.")
     print("=" * 68)
 
-    webbrowser.open(local_url)
+    # Only open browser if run directly with interactive console
+    if sys.stdout and sys.stdout.isatty():
+        webbrowser.open(local_url)
+
     try:
         httpd.serve_forever()
     except KeyboardInterrupt:
@@ -260,3 +454,5 @@ def run():
 
 if __name__ == "__main__":
     run()
+
+

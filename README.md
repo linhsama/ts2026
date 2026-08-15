@@ -42,7 +42,7 @@
 
 ## 🚀 Hướng Dẫn Sử Dụng Trong Mạng LAN Nội Bộ
 
-### Bước 1: Khởi động máy chủ (Trên máy Host của bạn)
+### Bước 1: Khởi động máy chủ (Trên máy Host)
 Bạn có 2 lựa chọn:
 
 * **Cách 1 (Khuyên dùng - Tự động chạy ngầm mỗi khi bật máy tính)**:
@@ -51,12 +51,16 @@ Bạn có 2 lựa chọn:
 * **Cách 2 (Chạy trực tiếp có xem log)**:
   * Nhấp đúp vào file **`run.bat`**.
 
+> 💡 **Lưu ý quan trọng khi máy khác chưa vào được**:
+> * Nhấp đúp vào file **`mo_khoa_tuong_lua_lan.bat`** (chọn *Yes* khi Windows hỏi quyền Admin) để mở khóa cổng 8080 trên Windows Firewall.
+
 ---
 
 ### Bước 2: Sử dụng trên các máy tính / điện thoại khác cùng mạng Wi-Fi / LAN
-* Bạn chỉ cần gửi **1 file duy nhất** là **[`ToolTS2026.html`](./ToolTS2026.html)** sang máy khác (qua Zalo, USB, chia sẻ mạng nội bộ...).
-* Người nhận chỉ cần **nhấp đúp mở file `ToolTS2026.html`**:
-  * Trình duyệt sẽ **tự động dò tìm máy chủ nội bộ và mở trang web ngay lập tức** mà **hoàn toàn không cần phải nhập địa chỉ IP**!
+* **Cách 1 (Mở tự động)**: Gửi file **[`ToolTS2026.html`](./ToolTS2026.html)** sang máy khác (qua Zalo, USB...). Người nhận chỉ cần nhấp đúp mở file `ToolTS2026.html`, trình duyệt sẽ tự động kết nối và mở trang web!
+* **Cách 2 (Nhập trực tiếp trên trình duyệt máy tính hoặc điện thoại)**:
+  Mở trình duyệt (Chrome, Safari, Edge...) và gõ địa chỉ IP máy chủ:
+  👉 **`http://192.168.1.4:8080/`**
 
 ---
 
@@ -64,9 +68,10 @@ Bạn có 2 lựa chọn:
 
 ```text
 ts2026/
-├── index.html               # Giao diện chính của ứng dụng (phóng to 125%, responsive)
+├── index.html               # Giao diện chính của ứng dụng
 ├── ToolTS2026.html          # File gửi cho máy khác để mở web tự động trong mạng LAN
 ├── server.py                # Backend Python đa luồng xử lý API và đồng bộ IP mạng LAN
+├── mo_khoa_tuong_lua_lan.bat# Mở khóa tường lửa Windows (Firewall) cho mạng LAN
 ├── run.bat                  # File khởi động server trực tiếp xem console log
 ├── install_autostart.bat    # Cài đặt server tự động khởi động ngầm cùng Windows
 ├── run_background.vbs       # Khởi động server chạy ngầm không hiện cửa sổ đen
@@ -85,3 +90,4 @@ ts2026/
 ---
 
 © 2026 Tuyển Sinh Đại Học - Thiết kế tinh gọn, hiệu năng cao, tối ưu cho máy tính và thiết bị di động.
+
