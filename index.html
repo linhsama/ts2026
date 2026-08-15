@@ -222,15 +222,6 @@
                         Hướng dẫn: Gõ 2 số tự động chuyển thập phân (VD: <span class="font-semibold text-slate-700">85</span> ➔ <strong>8.5</strong>) • Phím mũi tên (↑ ↓ ← →) để di chuyển
                     </div>
                 </div>
-
-                <div class="flex items-center gap-2 self-end sm:self-auto">
-                    <button id="btnClearHocba"
-                        class="h-7.5 px-2.5 bg-white hover:bg-slate-50 text-slate-600 text-xs font-medium rounded-md border border-slate-300 flex items-center gap-1 transition"
-                        title="Xóa nhanh dữ liệu bảng học bạ">
-                        <i class="fa-regular fa-trash-can text-slate-400 text-xs"></i>
-                        <span>Xóa HB</span>
-                    </button>
-                </div>
             </div>
 
             <!-- BẢNG HỌC BẠ 3x3 -->
@@ -1159,11 +1150,6 @@
         });
 
         document.getElementById('btnLookup').addEventListener('click', doLookup);
-
-        document.getElementById('btnClearHocba').addEventListener('click', () => {
-            clearHocba();
-            showToast('Đã xóa dữ liệu bảng học bạ');
-        });
 
         document.getElementById('btnResetAll').addEventListener('click', resetAll);
 
