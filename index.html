@@ -34,12 +34,12 @@
         body {
             font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             font-size: 15px;
-            zoom: 1.15;
+            zoom: 1.05;
         }
 
         @media (min-width: 640px) {
             body {
-                zoom: 1.25;
+                zoom: 1.15;
             }
         }
 
@@ -630,7 +630,7 @@
                 const nextY = hocbaYrs[nextRow];
                 const nextEl = document.getElementById(`hb_${nextM}_${nextY}`);
                 if (nextEl) {
-                    nextEl.focus();
+                    nextEl.focus({ preventScroll: true });
                     nextEl.select();
                 }
             } else {
@@ -650,7 +650,7 @@
                 const prevY = hocbaYrs[prevRow];
                 const prevEl = document.getElementById(`hb_${prevM}_${prevY}`);
                 if (prevEl) {
-                    prevEl.focus();
+                    prevEl.focus({ preventScroll: true });
                     prevEl.select();
                 }
             }
@@ -814,7 +814,7 @@
                             const nextY = hocbaYrs[targetRow];
                             const nextEl = document.getElementById(`hb_${nextM}_${nextY}`);
                             if (nextEl) {
-                                nextEl.focus();
+                                nextEl.focus({ preventScroll: true });
                                 nextEl.select();
                             }
                         }
