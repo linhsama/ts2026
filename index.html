@@ -216,23 +216,25 @@
                 </div>
             </div>
 
-            <!-- TỔNG HỢP ĐIỂM THI THPT & TỔ HỢP XÉT TUYỂN (HOVER CHI TIẾT) -->
+            <!-- TỔNG HỢP ĐIỂM THI THPT & TỔ HỢP XÉT TUYỂN (THIẾT KẾ COMPACT & PHÂN BIỆT RÕ) -->
             <div id="comboResultsSection"
-                class="hidden bg-white border border-slate-200 rounded-lg p-2.5 flex flex-col gap-2 shadow-2xs text-xs">
+                class="hidden bg-white border border-slate-200 rounded-lg p-2 flex flex-col gap-1.5 shadow-2xs text-xs">
 
-                <!-- Hàng 1: 2 Thẻ chỉ số nổi bật cân đối song song -->
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                <!-- Hàng 1: 2 Thẻ chỉ số phân biệt rõ ràng & siêu gọn -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-1.5">
 
                     <!-- Thẻ 1: Toán, Văn + 1 môn cao nhất -->
                     <div id="cardTVB"
-                        class="relative group flex items-center justify-between gap-2 bg-slate-50 hover:bg-blue-50/50 border border-slate-200 hover:border-blue-300 rounded-md px-3 py-2 transition cursor-help">
+                        class="relative group bg-slate-50 hover:bg-slate-100/80 border border-slate-200 rounded-md px-2.5 py-1.5 flex items-center justify-between gap-2 transition cursor-help">
                         <div class="flex flex-col min-w-0">
-                            <span class="text-[11px] text-slate-500 font-semibold uppercase tracking-wider">Toán, Văn +
-                                1 môn</span>
-                            <span id="tvbSubjects" class="text-xs text-slate-700 font-medium mt-0.5 truncate">—</span>
+                            <div class="flex items-center gap-1.5 text-[10px] text-slate-500 font-bold uppercase tracking-wider">
+                                <span class="w-1.5 h-1.5 rounded-full bg-blue-600"></span>
+                                <span>Toán, Văn + 1 môn</span>
+                            </div>
+                            <span id="tvbSubjects" class="text-[11px] text-slate-700 font-medium truncate mt-0.5">—</span>
                         </div>
-                        <div class="flex items-baseline gap-1 shrink-0">
-                            <span id="tvbScore" class="text-lg sm:text-xl font-bold text-blue-900">—</span>
+                        <div class="flex items-baseline gap-0.5 shrink-0">
+                            <span id="tvbScore" class="text-base sm:text-lg font-black text-slate-900">—</span>
                             <span class="text-[10px] text-slate-400 font-normal">đ</span>
                         </div>
                         <!-- Tooltip Hover chi tiết -->
@@ -246,21 +248,21 @@
                         </div>
                     </div>
 
-                    <!-- Thẻ 2: Tổ hợp 3 môn cao nhất -->
+                    <!-- Thẻ 2: Tổ hợp 3 môn cao nhất (Nổi bật với tông xanh đại học) -->
                     <div id="cardTopCombo"
-                        class="relative group flex items-center justify-between gap-2 bg-slate-50 hover:bg-blue-50/50 border border-slate-200 hover:border-blue-300 rounded-md px-3 py-2 transition cursor-help">
+                        class="relative group bg-blue-50/60 hover:bg-blue-50 border border-blue-200 rounded-md px-2.5 py-1.5 flex items-center justify-between gap-2 transition cursor-help">
                         <div class="flex flex-col min-w-0">
-                            <span class="text-[11px] text-slate-500 font-semibold uppercase tracking-wider">Tổ hợp cao
-                                nhất</span>
-                            <div class="flex items-center gap-1.5 mt-0.5">
+                            <div class="flex items-center gap-1.5 text-[10px] text-blue-900 font-bold uppercase tracking-wider">
+                                <span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span>
+                                <span>Tổ hợp cao nhất</span>
                                 <span id="topComboBadge"
-                                    class="bg-blue-800 text-white text-[11px] font-bold px-1.5 py-0.2 rounded">X01</span>
-                                <span id="topComboSubjects" class="text-xs text-slate-700 font-medium truncate">—</span>
+                                    class="bg-blue-800 text-white text-[10px] font-bold px-1.5 py-0.2 rounded">X01</span>
                             </div>
+                            <span id="topComboSubjects" class="text-[11px] text-blue-950 font-medium truncate mt-0.5">—</span>
                         </div>
-                        <div class="flex items-baseline gap-1 shrink-0">
-                            <span id="topComboScore" class="text-lg sm:text-xl font-bold text-blue-900">—</span>
-                            <span class="text-[10px] text-slate-400 font-normal">đ</span>
+                        <div class="flex items-baseline gap-0.5 shrink-0">
+                            <span id="topComboScore" class="text-base sm:text-lg font-black text-blue-900">—</span>
+                            <span class="text-[10px] text-blue-600 font-normal">đ</span>
                         </div>
                         <!-- Tooltip Hover chi tiết -->
                         <div
@@ -275,14 +277,14 @@
 
                 </div>
 
-                <!-- Hàng 2: Danh sách tất cả tổ hợp có điểm (Mỗi badge khi hover hiển thị công thức chi tiết) -->
+                <!-- Hàng 2: Danh sách tất cả tổ hợp có điểm (Thanh ngang inline siêu gọn) -->
                 <div
-                    class="flex flex-col sm:flex-row sm:items-center gap-2 bg-slate-50 border border-slate-200/80 rounded-md px-3 py-2">
-                    <div
-                        class="text-[11px] text-slate-500 font-semibold shrink-0 uppercase tracking-wider flex items-center gap-1.5">
-                        <span>Tất cả tổ hợp:</span>
-                    </div>
-                    <div id="comboGrid" class="flex flex-wrap items-center gap-1.5 flex-1">
+                    class="flex items-center gap-2 bg-slate-50 border border-slate-200/70 rounded-md px-2.5 py-1.5">
+                    <span
+                        class="text-[10px] text-slate-500 font-bold uppercase tracking-wider shrink-0 whitespace-nowrap">
+                        Tất cả tổ hợp:
+                    </span>
+                    <div id="comboGrid" class="flex flex-wrap items-center gap-1.5 flex-1 min-w-0">
                         <!-- Rendered via JS -->
                     </div>
                 </div>
