@@ -1,12 +1,29 @@
 import sys
 import os
+import io
 import urllib.request
 import urllib.parse
 import json
 import webbrowser
 import socket
 from concurrent.futures import ThreadPoolExecutor, as_completed
-from http.server import HTTPServer, SimpleHTTPRequestHandler
+from http.server import HTTPServer, SimpleHTTPRequestHandler, ThreadingHTTPServer
+
+# Safe stdout/stderr fallbacks when running silently in background (e.g. via pythonw)
+class SafeWriter:
+    def write(self, s):
+        pass
+    def flush(self):
+        pass
+    def isatty(self):
+        return False
+
+if sys.stdout is None:
+    sys.stdout = SafeWriter()
+if sys.stderr is None:
+    sys.stderr = SafeWriter()
+
+
 
 PORT = 8080
 HOST = "0.0.0.0"
@@ -184,7 +201,7 @@ def update_client_launchers(local_ip, hostname):
             <ul>
                 <li>1. <b>Chung mạng LAN/Wi-Fi</b>: Đảm bảo máy này và máy chủ đang kết nối cùng 1 modem Wi-Fi hoặc mạng dây.</li>
                 <li>2. <b>Máy chủ đang bật</b>: Đảm bảo máy tính chứa server (<span class="code">{local_ip}</span>) đang chạy file server.</li>
-                <li>3. <b>Tường lửa (Firewall)</b>: Trên máy chủ, chạy file <span class="code">mo_khoa_tuong_lua_lan.bat</span> (bấm chuột phải chọn <i>Run as administrator</i>).</li>
+                <li>3. <b>Tường lửa (Firewall)</b>: Trên máy chủ, chạy file <span class="code">open_firewall_lan.bat</span> (bấm chuột phải chọn <i>Run as administrator</i>).</li>
             </ul>
         </div>
     </div>
@@ -322,9 +339,17 @@ def fetch_year(sbd, yr):
         pass
     return None
 
-from http.server import ThreadingHTTPServer, SimpleHTTPRequestHandler
-
 class AppHandler(SimpleHTTPRequestHandler):
+    def log_message(self, format, *args):
+        # Prevent crash when stderr is None or during background headless execution
+        try:
+            if sys.stderr is not None:
+                sys.stderr.write("%s - - [%s] %s\n" %
+                                 (self.address_string(),
+                                  self.log_date_time_string(),
+                                  format % args))
+        except Exception:
+            pass
     def end_headers(self):
         self.send_header("Access-Control-Allow-Origin", "*")
         self.send_header("Access-Control-Allow-Methods", "GET, POST, OPTIONS, HEAD")
@@ -424,6 +449,7 @@ def run():
     update_client_launchers(local_ip, hostname)
 
     server_address = (HOST, PORT)
+    ThreadingHTTPServer.allow_reuse_address = True
     httpd = ThreadingHTTPServer(server_address, AppHandler)
     httpd.daemon_threads = True
     local_url = f"http://127.0.0.1:{PORT}/"
@@ -443,8 +469,11 @@ def run():
     print("=" * 68)
 
     # Only open browser if run directly with interactive console
-    if sys.stdout and sys.stdout.isatty():
-        webbrowser.open(local_url)
+    try:
+        if hasattr(sys.stdout, "isatty") and sys.stdout.isatty():
+            webbrowser.open(local_url)
+    except Exception:
+        pass
 
     try:
         httpd.serve_forever()
@@ -453,6 +482,15 @@ def run():
         httpd.server_close()
 
 if __name__ == "__main__":
-    run()
+    try:
+        run()
+    except Exception as e:
+        import traceback
+        try:
+            with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "server_error.log"), "w", encoding="utf-8") as f:
+                traceback.print_exc(file=f)
+        except Exception:
+            pass
+
 
 

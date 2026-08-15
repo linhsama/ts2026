@@ -1,11 +1,10 @@
 @echo off
-title Tra Cuu Diem Thi THPT & Tinh Diem Hoc Ba 2026 - Local Server
+title TS2026 Server - Console Mode
 cd /d "%~dp0"
+
 echo =================================================================
-echo   KHOI DONG MAY CHU MANG LAN TRA CUU DIEM THI 2026
-echo   (Cong 8080 - Tu dong tao va dong bo file ToolTS2026.html)
+echo   TS2026 LOCAL & LAN SERVER (CONSOLE MODE)
 echo =================================================================
 echo.
 python server.py
 pause
-

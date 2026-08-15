@@ -43,20 +43,26 @@
 ## 🚀 Hướng Dẫn Sử Dụng Trong Mạng LAN Nội Bộ
 
 ### Bước 1: Khởi động máy chủ (Trên máy Host)
-Bạn có 2 lựa chọn:
+Chỉ cần nhấp đúp vào **1 trong các file sau**:
 
-* **Cách 1 (Khuyên dùng - Tự động chạy ngầm mỗi khi bật máy tính)**:
-  * Nhấp đúp vào file **`install_autostart.bat`** (chạy 1 lần duy nhất).
-  * Server sẽ tự động thêm vào Windows Startup và chạy ngầm trên cổng `8080`.
-* **Cách 2 (Chạy trực tiếp có xem log)**:
-  * Nhấp đúp vào file **`run.bat`**.
+* **🌟 Cách Khuyến Nghị (1-Click: Cài Tự Động Khởi Động & Chạy Ngầm Ngay)**:
+  * Nhấp đúp vào file **`install_autostart.bat`** (hoặc `start_background.bat`).
+  * ⚡ **Tác dụng kép**: Vừa thêm vào Windows Startup / Task Scheduler (mở máy là tự chạy), vừa bật server chạy ngầm ngay lập tức trên cổng `8080`.
+  * 🛡️ **Hoàn toàn độc lập**: Bạn có thể tắt Antigravity, tắt IDE hoặc đóng cửa sổ console thoải mái, server vẫn hoạt động ngầm 24/7.
+* **Cách Xem Log Trực Tiếp (Console Mode)**:
+  * Nhấp đúp vào file **`run.bat`** (hiển thị toàn bộ log truy cập trực tiếp trên màn hình CMD).
 
-> 💡 **Lưu ý quan trọng khi máy khác chưa vào được**:
-> * Nhấp đúp vào file **`mo_khoa_tuong_lua_lan.bat`** (chọn *Yes* khi Windows hỏi quyền Admin) để mở khóa cổng 8080 trên Windows Firewall.
+> 💡 **Để tắt Server khi đang chạy ngầm**:
+> * Nhấp đúp vào file **`stop_server.bat`**.
+> 
+> 🗑️ **Để gỡ bỏ tính năng tự khởi động cùng Windows**:
+> * Nhấp đúp vào file **`uninstall_autostart.bat`**.
 
 ---
 
 ### Bước 2: Sử dụng trên các máy tính / điện thoại khác cùng mạng Wi-Fi / LAN
+* **Mở khóa tường lửa (chỉ cần chạy 1 lần nếu máy khác không vào được)**:
+  * Nhấp chuột phải vào file **`open_firewall_lan.bat`** và chọn **Run as administrator**.
 * **Cách 1 (Mở tự động)**: Gửi file **[`ToolTS2026.html`](./ToolTS2026.html)** sang máy khác (qua Zalo, USB...). Người nhận chỉ cần nhấp đúp mở file `ToolTS2026.html`, trình duyệt sẽ tự động kết nối và mở trang web!
 * **Cách 2 (Nhập trực tiếp trên trình duyệt máy tính hoặc điện thoại)**:
   Mở trình duyệt (Chrome, Safari, Edge...) và gõ địa chỉ IP máy chủ:
@@ -68,15 +74,16 @@ Bạn có 2 lựa chọn:
 
 ```text
 ts2026/
-├── index.html               # Giao diện chính của ứng dụng
-├── ToolTS2026.html          # File gửi cho máy khác để mở web tự động trong mạng LAN
+├── index.html               # Giao diện chính của ứng dụng tra cứu & tính điểm
+├── ToolTS2026.html          # File launcher gửi cho máy khác để mở web tự động trong LAN
 ├── server.py                # Backend Python đa luồng xử lý API và đồng bộ IP mạng LAN
-├── mo_khoa_tuong_lua_lan.bat# Mở khóa tường lửa Windows (Firewall) cho mạng LAN
-├── run.bat                  # File khởi động server trực tiếp xem console log
+├── start_background.bat     # Khởi động server chạy ngầm không hiện cửa sổ console (1-click)
+├── run_background.vbs       # Script VBS kích hoạt pythonw server.py
+├── run.bat                  # Khởi động server trực tiếp xem console log
 ├── install_autostart.bat    # Cài đặt server tự động khởi động ngầm cùng Windows
-├── run_background.vbs       # Khởi động server chạy ngầm không hiện cửa sổ đen
-├── stop_server.bat          # Dừng server đang chạy ngầm trên cổng 8080
+├── stop_server.bat          # Dừng server đang chạy trên cổng 8080
 ├── uninstall_autostart.bat  # Gỡ bỏ tính năng tự khởi động cùng Windows
+├── open_firewall_lan.bat    # Mở khóa tường lửa Windows (Firewall) cho mạng LAN
 ├── .gitignore               # Cấu hình bỏ qua các file tạm của Python
 └── README.md                # Tài liệu hướng dẫn sử dụng chi tiết
 ```
