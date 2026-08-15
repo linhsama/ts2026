@@ -107,8 +107,8 @@
                         class="hidden bg-blue-800 text-white text-[10px] px-1.5 py-0.2 rounded-full font-bold">0</span>
                 </button>
                 <button id="btnResetAll"
-                    class="h-8 px-3 bg-white hover:bg-red-50 hover:text-red-700 hover:border-red-300 active:bg-red-100 text-slate-700 text-xs font-semibold rounded-lg border border-slate-300 flex items-center gap-1.5 transition shadow-2xs"
-                    title="Làm mới dữ liệu (Phím tắt: Esc)">
+                    class="h-8 px-3 bg-white hover:bg-red-50 hover:text-red-700 hover:border-red-300 active:bg-red-100 focus:ring-2 focus:ring-red-500 focus:border-red-500 focus:bg-red-50 focus:text-red-700 outline-none text-slate-700 text-xs font-semibold rounded-lg border border-slate-300 flex items-center gap-1.5 transition shadow-2xs"
+                    title="Xóa & Làm mới dữ liệu (Phím tắt: Esc, nhấn Enter khi focus)">
                     <i class="fa-solid fa-rotate-right text-xs"></i>
                     <span>Nhập lại</span>
                 </button>
@@ -421,26 +421,42 @@
             { code: 'A02', name: 'Toán, Vật lí, Sinh học', subs: ['Toán', 'Vật lí', 'Sinh học'] },
             { code: 'A06', name: 'Toán, Hóa học, Địa lí', subs: ['Toán', 'Hóa học', 'Địa lí'] },
             { code: 'A07', name: 'Toán, Lịch sử, Địa lí', subs: ['Toán', 'Lịch sử', 'Địa lí'] },
+            { code: 'A09', name: 'Toán, Địa lí, GD KTPL', subs: ['Toán', 'Địa lí', 'Giáo dục KTPL'] },
             { code: 'B00', name: 'Toán, Hóa học, Sinh học', subs: ['Toán', 'Hóa học', 'Sinh học'] },
             { code: 'B02', name: 'Toán, Sinh học, Địa lí', subs: ['Toán', 'Sinh học', 'Địa lí'] },
             { code: 'B03', name: 'Toán, Sinh học, Ngữ văn', subs: ['Toán', 'Sinh học', 'Ngữ văn'] },
+            { code: 'B08', name: 'Toán, Sinh học, Ngoại ngữ', subs: ['Toán', 'Sinh học', 'Ngoại ngữ'] },
             { code: 'C00', name: 'Ngữ văn, Lịch sử, Địa lí', subs: ['Ngữ văn', 'Lịch sử', 'Địa lí'] },
             { code: 'C01', name: 'Ngữ văn, Toán, Vật lí', subs: ['Ngữ văn', 'Toán', 'Vật lí'] },
             { code: 'C02', name: 'Ngữ văn, Toán, Hóa học', subs: ['Ngữ văn', 'Toán', 'Hóa học'] },
+            { code: 'C03', name: 'Ngữ văn, Toán, Lịch sử', subs: ['Ngữ văn', 'Toán', 'Lịch sử'] },
             { code: 'C04', name: 'Ngữ văn, Toán, Địa lí', subs: ['Ngữ văn', 'Toán', 'Địa lí'] },
+            { code: 'C14', name: 'Ngữ văn, Toán, GD KTPL', subs: ['Ngữ văn', 'Toán', 'Giáo dục KTPL'] },
+            { code: 'C19', name: 'Ngữ văn, Lịch sử, GD KTPL', subs: ['Ngữ văn', 'Lịch sử', 'Giáo dục KTPL'] },
+            { code: 'C20', name: 'Ngữ văn, Địa lí, GD KTPL', subs: ['Ngữ văn', 'Địa lí', 'Giáo dục KTPL'] },
             { code: 'D01', name: 'Toán, Ngữ văn, Ngoại ngữ', subs: ['Toán', 'Ngữ văn', 'Ngoại ngữ'] },
             { code: 'D07', name: 'Toán, Hóa học, Ngoại ngữ', subs: ['Toán', 'Hóa học', 'Ngoại ngữ'] },
             { code: 'D08', name: 'Toán, Sinh học, Ngoại ngữ', subs: ['Toán', 'Sinh học', 'Ngoại ngữ'] },
+            { code: 'D09', name: 'Toán, Lịch sử, Ngoại ngữ', subs: ['Toán', 'Lịch sử', 'Ngoại ngữ'] },
             { code: 'D10', name: 'Toán, Địa lí, Ngoại ngữ', subs: ['Toán', 'Địa lí', 'Ngoại ngữ'] },
+            { code: 'D11', name: 'Ngữ văn, Vật lí, Ngoại ngữ', subs: ['Ngữ văn', 'Vật lí', 'Ngoại ngữ'] },
+            { code: 'D12', name: 'Ngữ văn, Hóa học, Ngoại ngữ', subs: ['Ngữ văn', 'Hóa học', 'Ngoại ngữ'] },
+            { code: 'D13', name: 'Ngữ văn, Sinh học, Ngoại ngữ', subs: ['Ngữ văn', 'Sinh học', 'Ngoại ngữ'] },
             { code: 'D14', name: 'Ngữ văn, Lịch sử, Ngoại ngữ', subs: ['Ngữ văn', 'Lịch sử', 'Ngoại ngữ'] },
             { code: 'D15', name: 'Ngữ văn, Địa lí, Ngoại ngữ', subs: ['Ngữ văn', 'Địa lí', 'Ngoại ngữ'] },
             { code: 'D66', name: 'Ngữ văn, GD KTPL, Ngoại ngữ', subs: ['Ngữ văn', 'Giáo dục KTPL', 'Ngoại ngữ'] },
             { code: 'D84', name: 'Toán, GD KTPL, Ngoại ngữ', subs: ['Toán', 'Giáo dục KTPL', 'Ngoại ngữ'] },
             { code: 'X01', name: 'Toán, Ngữ văn, Lịch sử', subs: ['Toán', 'Ngữ văn', 'Lịch sử'] },
             { code: 'X02', name: 'Toán, Vật lí, Tin học', subs: ['Toán', 'Vật lí', 'Tin học'] },
+            { code: 'X03', name: 'Toán, Hóa học, Tin học', subs: ['Toán', 'Hóa học', 'Tin học'] },
+            { code: 'X04', name: 'Toán, Sinh học, Tin học', subs: ['Toán', 'Sinh học', 'Tin học'] },
+            { code: 'X05', name: 'Toán, GD KTPL, Tin học', subs: ['Toán', 'Giáo dục KTPL', 'Tin học'] },
             { code: 'X06', name: 'Toán, Vật lí, CNCN', subs: ['Toán', 'Vật lí', 'CNCN'] },
             { code: 'X07', name: 'Toán, Tin học, CNCN', subs: ['Toán', 'Tin học', 'CNCN'] },
+            { code: 'X08', name: 'Toán, Hóa học, CNCN', subs: ['Toán', 'Hóa học', 'CNCN'] },
+            { code: 'X09', name: 'Toán, Sinh học, CNCN', subs: ['Toán', 'Sinh học', 'CNCN'] },
             { code: 'X10', name: 'Toán, Hóa học, CNNN', subs: ['Toán', 'Hóa học', 'CNNN'] },
+            { code: 'X11', name: 'Toán, Sinh học, CNNN', subs: ['Toán', 'Sinh học', 'CNNN'] },
             { code: 'X14', name: 'Toán, Sinh học, CNNN', subs: ['Toán', 'Sinh học', 'CNNN'] },
             { code: 'X21', name: 'Ngữ văn, Lịch sử, GD KTPL', subs: ['Ngữ văn', 'Lịch sử', 'Giáo dục KTPL'] },
             { code: 'X25', name: 'Ngữ văn, Địa lí, GD KTPL', subs: ['Ngữ văn', 'Địa lí', 'Giáo dục KTPL'] },
@@ -459,6 +475,8 @@
 
         const hocbaYrs = [10, 11, 12];
         const hocbaMons = ['m1', 'm2', 'm3'];
+        const hocbaKeys = [];
+        hocbaYrs.forEach(y => hocbaMons.forEach(m => hocbaKeys.push(`${m}_${y}`)));
 
         function showToast(msg) {
             const toast = document.getElementById('toast');
@@ -478,8 +496,8 @@
         function calculateAndRenderCombinations() {
             const container = document.getElementById('comboGrid');
             const section = document.getElementById('comboResultsSection');
-            const toanVanPlusBestEl = document.getElementById('toanVanPlusBest');
-            const bestComboTextEl = document.getElementById('bestComboText');
+            const cardTopCombo = document.getElementById('cardTopCombo');
+            const cardTVB = document.getElementById('cardTVB');
 
             container.innerHTML = '';
 
@@ -508,7 +526,6 @@
             // 1. TÍNH: Toán, Văn và 1 môn cao nhất
             const toanPt = subjectPointMap['Toán'];
             const vanPt = subjectPointMap['Ngữ văn'];
-            const tvbSubjectsEl = document.getElementById('tvbSubjects');
             const tvbScoreEl = document.getElementById('tvbScore');
             const tvbTooltipEl = document.getElementById('tvbTooltip');
 
@@ -527,20 +544,18 @@
                 });
 
                 if (bestOtherName !== null && bestOtherPt >= 0) {
-                    const totalTVPlus = toanPt + vanPt + bestOtherPt;
-                    if (tvbSubjectsEl) tvbSubjectsEl.textContent = `Toán + Văn + ${bestOtherName}`;
+                    const totalTVPlus = Math.round((toanPt + vanPt + bestOtherPt) * 100) / 100;
                     if (tvbScoreEl) tvbScoreEl.textContent = totalTVPlus.toFixed(2);
-                    if (tvbTooltipEl) tvbTooltipEl.textContent = `Toán (${toanPt}) + Ngữ văn (${vanPt}) + ${bestOtherName} (${bestOtherPt}) = ${totalTVPlus.toFixed(2)}`;
+                    if (tvbTooltipEl) tvbTooltipEl.textContent = `Toán (${toanPt.toFixed(2)}) + Ngữ văn (${vanPt.toFixed(2)}) + ${bestOtherName} (${bestOtherPt.toFixed(2)}) = ${totalTVPlus.toFixed(2)}`;
+                    if (cardTVB) cardTVB.classList.remove('hidden');
                 } else {
-                    const totalTV = toanPt + vanPt;
-                    if (tvbSubjectsEl) tvbSubjectsEl.textContent = `Toán + Văn`;
+                    const totalTV = Math.round((toanPt + vanPt) * 100) / 100;
                     if (tvbScoreEl) tvbScoreEl.textContent = totalTV.toFixed(2);
-                    if (tvbTooltipEl) tvbTooltipEl.textContent = `Toán (${toanPt}) + Ngữ văn (${vanPt}) = ${totalTV.toFixed(2)}`;
+                    if (tvbTooltipEl) tvbTooltipEl.textContent = `Toán (${toanPt.toFixed(2)}) + Ngữ văn (${vanPt.toFixed(2)}) = ${totalTV.toFixed(2)}`;
+                    if (cardTVB) cardTVB.classList.remove('hidden');
                 }
             } else {
-                if (tvbSubjectsEl) tvbSubjectsEl.textContent = `Chưa đủ Toán, Văn`;
-                if (tvbScoreEl) tvbScoreEl.textContent = `—`;
-                if (tvbTooltipEl) tvbTooltipEl.textContent = `Chưa đủ điểm môn Toán và Ngữ văn`;
+                if (cardTVB) cardTVB.classList.add('hidden');
             }
 
             // 2. DUYỆT TẤT CẢ TỔ HỢP ĐỂ TÌM CÁC TỔ HỢP ĐỦ 3 MÔN
@@ -549,7 +564,7 @@
                 const pts = c.subs.map(subName => subjectPointMap[subName]);
                 const hasAll3 = pts.every(p => p !== undefined && p !== null && !isNaN(p));
                 if (hasAll3) {
-                    const total = pts.reduce((a, b) => a + b, 0);
+                    const total = Math.round(pts.reduce((a, b) => a + b, 0) * 100) / 100;
                     validCombos.push({
                         code: c.code,
                         name: c.name,
@@ -565,31 +580,26 @@
 
             // 3. TỔ HỢP 3 MÔN CAO NHẤT
             const topBadgeEl = document.getElementById('topComboBadge');
-            const topSubsEl = document.getElementById('topComboSubjects');
             const topScoreEl = document.getElementById('topComboScore');
             const topTooltipEl = document.getElementById('topComboTooltip');
 
             if (validCombos.length > 0) {
                 const topCombo = validCombos[0];
-                const detailStr = topCombo.subs.map((sName, i) => `${sName} (${topCombo.points[i]})`).join(' + ');
+                const detailStr = topCombo.subs.map((sName, i) => `${sName} (${topCombo.points[i].toFixed(2)})`).join(' + ');
                 if (topBadgeEl) {
                     topBadgeEl.textContent = topCombo.code;
-                    topBadgeEl.classList.remove('hidden');
                 }
-                if (topSubsEl) topSubsEl.textContent = topCombo.subs.join(', ');
                 if (topScoreEl) topScoreEl.textContent = topCombo.total.toFixed(2);
-                if (topTooltipEl) topTooltipEl.textContent = `${topCombo.code}: ${detailStr} = ${topCombo.total.toFixed(2)}`;
+                if (topTooltipEl) topTooltipEl.textContent = `${topCombo.code} (${topCombo.name}): ${detailStr} = ${topCombo.total.toFixed(2)}`;
+                if (cardTopCombo) cardTopCombo.classList.remove('hidden');
             } else {
-                if (topBadgeEl) topBadgeEl.classList.add('hidden');
-                if (topSubsEl) topSubsEl.textContent = `Chưa có tổ hợp đủ 3 môn`;
-                if (topScoreEl) topScoreEl.textContent = `—`;
-                if (topTooltipEl) topTooltipEl.textContent = `Chưa có tổ hợp nào đủ điểm 3 môn thi`;
+                if (cardTopCombo) cardTopCombo.classList.add('hidden');
             }
 
             // 4. LIST TẤT CẢ TỔ HỢP CÓ THỂ CÓ (KÈM HOVER TOOLTIP CHI TIẾT)
             if (validCombos.length > 0) {
                 validCombos.forEach((c) => {
-                    const detailStr = c.subs.map((sName, i) => `${sName} (${c.points[i]})`).join(' + ');
+                    const detailStr = c.subs.map((sName, i) => `${sName} (${c.points[i].toFixed(2)})`).join(' + ');
 
                     const wrapper = document.createElement('div');
                     wrapper.className = 'relative group cursor-pointer';
@@ -601,7 +611,7 @@
                         </span>
                         <div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-1.5 hidden group-hover:flex flex-col items-center z-30 pointer-events-none transition-all">
                             <div class="bg-slate-900 text-white text-[11px] font-medium px-2.5 py-1 rounded shadow-lg whitespace-nowrap">
-                                ${c.code}: ${detailStr} = ${c.total.toFixed(2)}
+                                ${c.code} (${c.name}): ${detailStr} = ${c.total.toFixed(2)}
                             </div>
                             <div class="w-1.5 h-1.5 bg-slate-900 rotate-45 -mt-0.5"></div>
                         </div>
@@ -618,37 +628,50 @@
         // =========================================================================
         // 2. AUTO FOCUS & CHUYỂN Ô ĐIỀU HƯỚNG BẢNG HỌC BẠ (3x3)
         // =========================================================================
-        function jumpNextCell(rIdx, cIdx) {
-            let nextCol = cIdx + 1;
-            let nextRow = rIdx;
-            if (nextCol > 2) {
-                nextCol = 0;
-                nextRow++;
+        const normalizeHocbaValue = (v) => {
+            if (!v) return '';
+            if (v === '10') return '10.0';
+            if (v.length === 2) {
+                if (v[0] === '0') return '0.' + v[1];
+                if (v[0] === '.') return '0.' + v[1];
+                if (v[1] === '.') return v[0] + '.0';
+                if (!v.includes('.')) return v[0] + '.' + v[1];
             }
-            if (nextRow <= 2) {
-                const nextM = hocbaMons[nextCol];
-                const nextY = hocbaYrs[nextRow];
-                const nextEl = document.getElementById(`hb_${nextM}_${nextY}`);
+            return v;
+        };
+
+        function jumpNextCell(rIdx, cIdx) {
+            const currentM = hocbaMons[cIdx];
+            const currentY = hocbaYrs[rIdx];
+            const currentKey = `${currentM}_${currentY}`;
+            const idx = hocbaKeys.indexOf(currentKey);
+
+            if (idx >= 0 && idx < hocbaKeys.length - 1) {
+                const nextKey = hocbaKeys[idx + 1];
+                const nextEl = document.getElementById(`hb_${nextKey}`);
                 if (nextEl) {
                     nextEl.focus({ preventScroll: true });
                     nextEl.select();
                 }
             } else {
+                // Nhập xong toàn bộ 9 ô học bạ -> focus ngay tới nút Clear (Nhập lại)
                 saveCurrentStateToHistory();
+                const resetBtn = document.getElementById('btnResetAll');
+                if (resetBtn) {
+                    resetBtn.focus();
+                }
             }
         }
 
         function jumpPrevCell(rIdx, cIdx) {
-            let prevCol = cIdx - 1;
-            let prevRow = rIdx;
-            if (prevCol < 0) {
-                prevCol = 2;
-                prevRow--;
-            }
-            if (prevRow >= 0) {
-                const prevM = hocbaMons[prevCol];
-                const prevY = hocbaYrs[prevRow];
-                const prevEl = document.getElementById(`hb_${prevM}_${prevY}`);
+            const currentM = hocbaMons[cIdx];
+            const currentY = hocbaYrs[rIdx];
+            const currentKey = `${currentM}_${currentY}`;
+            const idx = hocbaKeys.indexOf(currentKey);
+
+            if (idx > 0) {
+                const prevKey = hocbaKeys[idx - 1];
+                const prevEl = document.getElementById(`hb_${prevKey}`);
                 if (prevEl) {
                     prevEl.focus({ preventScroll: true });
                     prevEl.select();
@@ -694,14 +717,9 @@
                     });
 
                     inp.addEventListener('input', (e) => {
-                        let val = e.target.value.replace(/,/g, '.').replace(/[^0-9.]/g, '');
+                        let raw = e.target.value.replace(/,/g, '.').replace(/[^0-9.]/g, '');
 
-                        const parts = val.split('.');
-                        if (parts.length > 2) {
-                            val = parts[0] + '.' + parts.slice(1).join('');
-                        }
-
-                        if (val === '') {
+                        if (raw === '') {
                             currentHocba[m][y] = '';
                             e.target.value = '';
                             calcHocbaTotals();
@@ -709,60 +727,70 @@
                             return;
                         }
 
-                        if (val.endsWith('.')) {
-                            currentHocba[m][y] = val.slice(0, -1);
-                            e.target.value = val;
+                        if (raw === '10') {
+                            currentHocba[m][y] = '10.0';
+                            e.target.value = '10.0';
                             calcHocbaTotals();
                             scheduleSaveHistory();
+                            setTimeout(() => jumpNextCell(rIdx, cIdx), 50);
                             return;
                         }
 
-                        if (val.includes('.')) {
-                            let num = parseFloat(val);
+                        if (raw.length > 4) {
+                            raw = raw.slice(0, 4);
+                        }
+
+                        if (raw.includes('.')) {
+                            const parts = raw.split('.');
+                            const clean = parts[0] + '.' + parts.slice(1).join('');
+                            let num = parseFloat(clean);
                             if (!isNaN(num) && num >= 0 && num <= 10) {
-                                currentHocba[m][y] = val;
-                                e.target.value = val;
+                                currentHocba[m][y] = clean;
+                                e.target.value = clean;
                                 calcHocbaTotals();
                                 scheduleSaveHistory();
-
-                                const decPart = parts[1] || '';
-                                if (decPart.length >= 1) {
-                                    jumpNextCell(rIdx, cIdx);
+                                if (parts[1] && parts[1].length >= 1) {
+                                    setTimeout(() => jumpNextCell(rIdx, cIdx), 50);
                                 }
                                 return;
                             }
                         }
 
-                        if (val === '10') {
-                            currentHocba[m][y] = '10.0';
-                            e.target.value = '10.0';
-                            calcHocbaTotals();
-                            scheduleSaveHistory();
-                            jumpNextCell(rIdx, cIdx);
-                            return;
-                        }
-
-                        if (val.length === 1) {
-                            currentHocba[m][y] = val;
-                            e.target.value = val;
+                        if (raw.length === 1) {
+                            currentHocba[m][y] = raw;
+                            e.target.value = raw;
                             calcHocbaTotals();
                             scheduleSaveHistory();
                             return;
                         }
 
-                        if (val.length >= 2) {
-                            let d1 = val[0];
-                            let d2 = val[1];
-                            let normalized = `${d1}.${d2}`;
-                            let num = parseFloat(normalized);
+                        if (raw.length === 2) {
+                            const norm = normalizeHocbaValue(raw);
+                            let num = parseFloat(norm);
                             if (!isNaN(num) && num >= 0 && num <= 10) {
-                                currentHocba[m][y] = normalized;
-                                e.target.value = normalized;
+                                currentHocba[m][y] = norm;
+                                e.target.value = norm;
                                 calcHocbaTotals();
                                 scheduleSaveHistory();
-                                jumpNextCell(rIdx, cIdx);
+                                setTimeout(() => jumpNextCell(rIdx, cIdx), 50);
                                 return;
                             }
+                        }
+                    });
+
+                    inp.addEventListener('blur', (e) => {
+                        let v = (currentHocba[m][y] || '').trim();
+                        if (v && v.length === 1 && !isNaN(v)) {
+                            const norm = v + '.0';
+                            currentHocba[m][y] = norm;
+                            inp.value = norm;
+                            calcHocbaTotals();
+                            scheduleSaveHistory();
+                        } else if (v === '.') {
+                            currentHocba[m][y] = '';
+                            inp.value = '';
+                            calcHocbaTotals();
+                            scheduleSaveHistory();
                         }
                     });
 
@@ -775,7 +803,7 @@
 
                         if (e.key === 'Enter' || e.key === ' ') {
                             e.preventDefault();
-                            if (inp.value && !inp.value.includes('.') && inp.value.length === 1) {
+                            if (inp.value && !inp.value.includes('.') && inp.value.length === 1 && !isNaN(inp.value)) {
                                 const norm = inp.value + '.0';
                                 currentHocba[m][y] = norm;
                                 inp.value = norm;
@@ -824,7 +852,7 @@
         }
 
         function calcHocbaTotals() {
-            let grandTotal = 0;
+            let sumRoundedAverages = 0;
             let countAvg = 0;
 
             hocbaMons.forEach(m => {
@@ -832,8 +860,9 @@
                 const cell = document.getElementById(`dtb_${m}`);
                 if (vals.length > 0) {
                     const avg = vals.reduce((a, b) => a + b, 0) / vals.length;
-                    cell.textContent = avg.toFixed(2);
-                    grandTotal += avg;
+                    const avgStr = avg.toFixed(2);
+                    cell.textContent = avgStr;
+                    sumRoundedAverages += parseFloat(avgStr);
                     countAvg++;
                 } else {
                     cell.textContent = '—';
@@ -842,7 +871,7 @@
 
             const totalEl = document.getElementById('totalHocba');
             if (countAvg > 0) {
-                totalEl.textContent = grandTotal.toFixed(2);
+                totalEl.textContent = sumRoundedAverages.toFixed(2);
             } else {
                 totalEl.textContent = '—';
             }
@@ -1235,11 +1264,14 @@
 
         function resetAll() {
             const sbdInput = document.getElementById('sbdInput');
-            sbdInput.value = '';
+
+            if (sbdInput) sbdInput.value = '';
             toggleSbdClearButton();
             const sbdTag = document.getElementById('currentSbdTag');
-            sbdTag.className = 'text-xs text-slate-600 font-medium bg-slate-50 border border-slate-300 px-2.5 py-0.5 rounded-md';
-            sbdTag.textContent = 'SBD: —';
+            if (sbdTag) {
+                sbdTag.className = 'text-xs text-slate-600 font-medium bg-slate-50 border border-slate-300 px-2.5 py-0.5 rounded-md';
+                sbdTag.textContent = 'SBD: —';
+            }
             currentSbd = '';
             currentScores = {};
             renderHorizontalTable({});
@@ -1248,15 +1280,18 @@
             clearHocba(false);
 
             setTimeout(() => {
-                sbdInput.focus();
-                sbdInput.select();
-            }, 50);
-            showToast('Đã xóa hết dữ liệu và chuyển về ô tra cứu!');
+                if (sbdInput) {
+                    sbdInput.focus();
+                    sbdInput.select();
+                }
+            }, 60);
+            showToast('Đã làm mới dữ liệu và chuyển về ô tra cứu!');
         }
 
         // Gắn sự kiện
         const sbdEl = document.getElementById('sbdInput');
         const btnClearSbd = document.getElementById('btnClearSbd');
+        const btnResetAll = document.getElementById('btnResetAll');
 
         sbdEl.addEventListener('focus', (e) => {
             setTimeout(() => e.target.select(), 10);
@@ -1289,7 +1324,13 @@
 
         document.getElementById('btnLookup').addEventListener('click', doLookup);
 
-        document.getElementById('btnResetAll').addEventListener('click', resetAll);
+        btnResetAll.addEventListener('click', resetAll);
+        btnResetAll.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                resetAll();
+            }
+        });
 
         document.getElementById('btnOpenHistory').addEventListener('click', () => toggleDrawer(true));
         document.getElementById('btnCloseDrawer').addEventListener('click', () => toggleDrawer(false));

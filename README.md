@@ -11,20 +11,28 @@
 * **Bộ nhớ đệm thông minh (`scoreCache`)**: Tra lại các SBD đã xem tức thì không cần tải lại dữ liệu.
 * **Bảng điểm ngang 12 môn**: Hiển thị đầy đủ 12 môn thi (Ngữ văn, Toán, Vật lí, Hóa học, Sinh học, Lịch sử, Địa lí, GD KTPL, Tin học, CNCN, CNNN, Ngoại ngữ).
 
-### 2. 🏆 Tự Động Tính & Tổng Hợp Tổ Hợp Môn
+### 2. 🏆 Tự Động Tính & Tổng Hợp Tổ Hợp Môn Chuẩn 2026
+* **Bổ sung đầy đủ danh mục tổ hợp xét tuyển 2026**: Hỗ trợ toàn bộ tổ hợp truyền thống và mới theo Chương trình GDPT 2018 (A00–A09, B00–B08, C00–C20, D01–D84, X01–X78...).
 * **Dải Tag Liền Mạch 1 Dòng (Horizontal Tag Ribbon)**:
   * 👑 **Tag Tổ hợp cao nhất (Top 1)**: Nổi bật với huy hiệu xanh đại học, điểm số vàng hổ phách.
   * 🧮 **Tag Toán, Văn + 1 môn max**: Thể hiện điểm số nền tảng Toán + Văn.
-  * 🏷️ **Dải tất cả tổ hợp**: Quét tự động 33 tổ hợp xét tuyển 2026 (A00–D84, X01–X78).
+  * 🏷️ **Dải tất cả tổ hợp**: Tự động tính toán và sắp xếp điểm từ cao xuống thấp, loại bỏ hoàn toàn sai số dấu phẩy động.
 * **Hover Tooltip Chi Tiết**: Rê chuột vào bất kỳ tag tổ hợp nào để xem công thức và điểm số chi tiết từng môn cấu thành.
 
-### 3. 📝 Bảng Tính Điểm Học Bạ 3 Năm (3x3 Realtime)
-* **Gõ số thông minh**: Gõ 2 số tự động chuyển thành số thập phân (VD: `85` ➔ `8.5`) và tự động nhảy sang ô tiếp theo.
+### 3. 📝 Bảng Tính Điểm Học Bạ 3 Năm Chuẩn Quy Chế Tuyển Sinh
+* **Logic làm tròn chuẩn quy chế**:
+  * ĐTB 3 năm từng môn làm tròn đến 2 chữ số thập phân (`.toFixed(2)`).
+  * Tổng ĐTB chung 3 môn được tính bằng tổng của các ĐTB môn đã làm tròn (đảm bảo hiển thị toán học chính xác: VD `8.53 + 8.53 + 8.53 = 25.59`).
+* **Gõ số thông minh**: 
+  * Gõ 2 số tự động chuyển thành số thập phân (VD: `85` ➔ `8.5`, `05` hoặc `.5` ➔ `0.5`, `8.` ➔ `8.0`).
+  * Gõ `10` ➔ `10.0` và tự động nhảy sang ô tiếp theo.
+  * Rời ô (`blur`): gõ `8` ➔ tự động thành `8.0`.
 * **Điều hướng phím tắt**: Hỗ trợ đầy đủ phím mũi tên (↑ ↓ ← →), <kbd>Enter</kbd>, <kbd>Space</kbd>, <kbd>Backspace</kbd>.
 * **Chân bảng chuẩn mực (Success Theme)**: Đồng bộ độ cao `h-9` với thân bảng, 4 ô điểm trung bình và tổng điểm xét tuyển học bạ nổi bật với tông màu xanh lá **Emerald Success**.
 
-### 4. 🔄 Nút "Nhập lại" & Phím tắt Esc
-* Xóa trắng 100% dữ liệu (SBD, 12 môn, tổ hợp, bảng học bạ) và **tự động focus ngay về ô Số Báo Danh** để tiếp tục thí sinh mới.
+### 4. ⚡ Luồng Focus Siêu Tốc & Nút "Nhập lại"
+* **Tự động chuyển focus sau khi nhập xong**: Nhập xong ô thứ 9 (Môn 3 Lớp 12) hệ thống tự động lưu lịch sử và nhảy focus tới nút **"Nhập lại"** (Clear / Reset) có viền sáng nhận diện.
+* **Nhấn <kbd>Enter</kbd> (hoặc <kbd>Space</kbd> / phím tắt <kbd>Esc</kbd>)**: Xóa trắng 100% dữ liệu và **tự động focus ngay về ô Tra Cứu SBD** (`sbdInput`), bôi đen sẵn sàng để nhập lượt tiếp theo siêu tốc.
 
 ### 5. 🕒 Quản Lý Lịch Sử Tra Cứu (LocalStorage)
 * Tự động lưu trữ tối đa 50 lượt tra cứu / tính điểm gần nhất.
