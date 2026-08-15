@@ -4,11 +4,22 @@ import urllib.request
 import urllib.parse
 import json
 import webbrowser
+import socket
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from http.server import HTTPServer, SimpleHTTPRequestHandler
 
 PORT = 8080
-HOST = "127.0.0.1"
+HOST = "0.0.0.0"
+
+def get_local_ip():
+    try:
+        s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        s.connect(("8.8.8.8", 80))
+        ip = s.getsockname()[0]
+        s.close()
+        return ip
+    except Exception:
+        return "127.0.0.1"
 
 def fetch_year(sbd, yr):
     target_url = (
@@ -21,7 +32,7 @@ def fetch_year(sbd, yr):
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
             "Accept": "application/json, text/plain, */*"
         })
-        with urllib.request.urlopen(req, timeout=3.5) as response:
+        with urllib.request.urlopen(req, timeout=3.0) as response:
             if response.status == 200:
                 body = response.read().decode("utf-8")
                 res_json = json.loads(body)
@@ -63,7 +74,7 @@ class AppHandler(SimpleHTTPRequestHandler):
             years_to_try = ["2026", "2025", "2024"]
             result_data = None
             
-            # Chay song song tat ca cac nam qua ThreadPool de phan hoi trong 0.2s
+            # Chạy song song tất cả các năm qua ThreadPool để phản hồi trong dưới 0.2s
             with ThreadPoolExecutor(max_workers=3) as executor:
                 future_to_yr = {executor.submit(fetch_year, sbd, yr): yr for yr in years_to_try}
                 for future in as_completed(future_to_yr):
@@ -95,14 +106,22 @@ def run():
     os.chdir(os.path.dirname(os.path.abspath(__file__)))
     server_address = (HOST, PORT)
     httpd = HTTPServer(server_address, AppHandler)
-    url = f"http://{HOST}:{PORT}/"
-    print("=" * 60)
-    print("  MAY CHU TRA CUU DIEM THI & TINH DIEM HOC BA 2026")
-    print(f"  Dia chi web: {url}")
-    print("  Hoat dong 100% tren may tinh, KHONG BI CHAN CORS!")
-    print("  Nhan Ctrl + C de dung server.")
-    print("=" * 60)
-    webbrowser.open(url)
+    local_ip = get_local_ip()
+    local_url = f"http://127.0.0.1:{PORT}/"
+    lan_url = f"http://{local_ip}:{PORT}/"
+
+    print("=" * 65)
+    print("   MAY CHU TRA CUU DIEM THI & TINH DIEM HOC BA 2026")
+    print("=" * 65)
+    print(f"  [1] Truy cap tren may nay   : {local_url}")
+    print(f"  [2] Cac may khac trong LAN  : {lan_url}")
+    print(f"  [3] Link online truc tiep   : https://linhsama.github.io/ts2026/")
+    print("=" * 65)
+    print("  * Khong bi chan CORS, toc do tra cuu cuc nhanh.")
+    print("  * Nhan Ctrl + C de dung server.")
+    print("=" * 65)
+
+    webbrowser.open(local_url)
     try:
         httpd.serve_forever()
     except KeyboardInterrupt:

@@ -345,7 +345,7 @@
                                 <div class="w-full h-9 flex items-center justify-center gap-2">
                                     <span id="totalHocba"
                                         class="text-lg sm:text-xl font-black text-emerald-700 tracking-tight transition-all duration-200">—</span>
-                                    <span class="text-xs text-emerald-600 font-medium hidden sm:inline">(Điểm xét tuyển học bạ)</span>
+                                    <span class="text-xs text-emerald-600 font-medium hidden sm:inline"></span>
                                 </div>
                             </td>
                         </tr>
@@ -870,8 +870,13 @@
         async function fetchCandidateScore(sbd) {
             if (scoreCache[sbd] !== undefined) return scoreCache[sbd];
 
-            // 1. Kiểm tra trên Local Python server nếu đang chạy máy cục bộ
-            const isLocal = window.location.hostname === '127.0.0.1' || window.location.hostname === 'localhost';
+            // 1. Kiểm tra trên Local Python server nếu đang chạy máy cục bộ / mạng LAN
+            const isLocal = window.location.hostname === '127.0.0.1' || 
+                            window.location.hostname === 'localhost' || 
+                            window.location.port === '8080' || 
+                            window.location.hostname.startsWith('192.168.') || 
+                            window.location.hostname.startsWith('10.') || 
+                            window.location.hostname.startsWith('172.');
             if (isLocal) {
                 try {
                     const resp = await fetch(`/api/score?sbd=${sbd}&year=2026`);
