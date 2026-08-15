@@ -143,7 +143,7 @@ def update_client_launchers(local_ip, hostname):
 </body>
 </html>
 """
-    with open(os.path.join(base_dir, "launcher.html"), "w", encoding="utf-8") as f:
+    with open(os.path.join(base_dir, "tool_launcher.html"), "w", encoding="utf-8") as f:
         f.write(html_content)
 
 def fetch_year(sbd, yr):
@@ -246,7 +246,7 @@ def run():
     print(f"  * Local Host Access   : {local_url}")
     print(f"  * LAN Network Access  : {lan_url}  or  {host_url}")
     print("=" * 68)
-    print(f"  [>] SHARE THIS FILE WITH OTHER CLIENTS: launcher.html")
+    print(f"  [>] SHARE THIS FILE WITH OTHER CLIENTS: tool_launcher.html")
     print("=" * 68)
     print("  Press Ctrl + C to stop the server.")
     print("=" * 68)
