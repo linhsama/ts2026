@@ -46,8 +46,8 @@ Bạn có 2 lựa chọn:
 ---
 
 ### Bước 2: Sử dụng trên các máy tính / điện thoại khác cùng mạng Wi-Fi / LAN
-* Bạn chỉ cần gửi **1 file duy nhất** là **[`tool_launcher.html`](./tool_launcher.html)** sang máy khác (qua Zalo, USB, chia sẻ mạng nội bộ...).
-* Người nhận chỉ cần **nhấp đúp mở file `tool_launcher.html`**:
+* Bạn chỉ cần gửi **1 file duy nhất** là **[`ToolTS2026.html`](./ToolTS2026.html)** sang máy khác (qua Zalo, USB, chia sẻ mạng nội bộ...).
+* Người nhận chỉ cần **nhấp đúp mở file `ToolTS2026.html`**:
   * Trình duyệt sẽ **tự động dò tìm máy chủ nội bộ và mở trang web ngay lập tức** mà **hoàn toàn không cần phải nhập địa chỉ IP**!
 
 ---
@@ -57,7 +57,7 @@ Bạn có 2 lựa chọn:
 ```text
 ts2026/
 ├── index.html               # Giao diện chính của ứng dụng (phóng to 125%, responsive)
-├── tool_launcher.html       # File gửi cho máy khác để mở web tự động trong mạng LAN
+├── ToolTS2026.html          # File gửi cho máy khác để mở web tự động trong mạng LAN
 ├── server.py                # Backend Python đa luồng xử lý API và đồng bộ IP mạng LAN
 ├── run.bat                  # File khởi động server trực tiếp xem console log
 ├── install_autostart.bat    # Cài đặt server tự động khởi động ngầm cùng Windows
