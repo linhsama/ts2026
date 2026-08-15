@@ -64,38 +64,37 @@
     </style>
 </head>
 
-<body class="bg-slate-50/60 text-slate-900 min-h-screen p-3 sm:p-6 font-sans">
+<body class="bg-slate-100 text-slate-900 min-h-screen p-3 sm:p-6 font-sans antialiased">
 
     <div
-        class="max-w-5xl mx-auto flex flex-col gap-5 bg-white border border-slate-200/80 rounded-2xl p-4 sm:p-7 shadow-xs">
+        class="max-w-5xl mx-auto flex flex-col gap-4 bg-white border border-slate-300 rounded-xl p-4 sm:p-6 shadow-sm">
 
         <!-- Header Tiêu Đề & Công Cụ -->
         <div
-            class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 border-b border-slate-200 pb-4">
-            <div class="flex items-center gap-3.5">
+            class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 border-b border-slate-200 pb-3.5">
+            <div class="flex items-center gap-3">
                 <div
-                    class="w-11 h-11 rounded-xl bg-indigo-600 text-white flex items-center justify-center text-xl shadow-md shadow-indigo-100">
+                    class="w-10 h-10 rounded-lg bg-blue-800 text-white flex items-center justify-center text-lg shadow-xs">
                     <i class="fa-solid fa-graduation-cap"></i>
                 </div>
                 <div>
-                    <h1 class="text-xl sm:text-2xl font-black text-slate-900 tracking-tight flex items-center gap-2">
+                    <h1 class="text-lg sm:text-xl font-bold text-slate-900 tracking-tight">
                         TRA CỨU ĐIỂM THI THPT & TÍNH ĐIỂM HỌC BẠ 2026
                     </h1>
-                    <p class="text-xs sm:text-sm text-slate-500 mt-0.5">Tra cứu điểm thi theo SBD • Liệt kê điểm tất cả
-                        tổ hợp môn • Tính điểm học bạ 3 năm</p>
+                    <p class="text-xs text-slate-500 mt-0.5">Tra cứu điểm thi theo SBD • Tổ hợp xét tuyển • Tính điểm học bạ 3 năm</p>
                 </div>
             </div>
             <div class="flex items-center gap-2 self-end sm:self-auto">
                 <button id="btnOpenHistory"
-                    class="h-9 px-3 bg-slate-50 hover:bg-slate-100 active:bg-slate-200 text-slate-700 text-xs font-semibold rounded-lg border border-slate-300 flex items-center gap-1.5 transition shadow-xs">
-                    <i class="fa-solid fa-clock-rotate-left text-slate-500 text-xs"></i>
+                    class="h-8.5 px-3 bg-white hover:bg-slate-50 active:bg-slate-100 text-slate-700 text-xs font-medium rounded-md border border-slate-300 flex items-center gap-1.5 transition">
+                    <i class="fa-regular fa-clock text-slate-500 text-xs"></i>
                     <span>Lịch sử</span>
                     <span id="historyBadge"
-                        class="hidden bg-indigo-600 text-white text-[11px] px-1.5 py-0.2 rounded-full font-bold">0</span>
+                        class="hidden bg-blue-800 text-white text-[10px] px-1.5 py-0.2 rounded-full font-bold">0</span>
                 </button>
                 <button id="btnResetAll"
-                    class="h-9 px-3 bg-slate-50 hover:bg-red-50 hover:text-red-600 hover:border-red-200 active:bg-red-100 text-slate-700 text-xs font-semibold rounded-lg border border-slate-300 flex items-center gap-1.5 transition shadow-xs"
-                    title="Xóa toàn bộ và nhập lại từ đầu (Phím tắt: Esc)">
+                    class="h-8.5 px-3 bg-white hover:bg-red-50 hover:text-red-700 hover:border-red-300 active:bg-red-100 text-slate-700 text-xs font-medium rounded-md border border-slate-300 flex items-center gap-1.5 transition"
+                    title="Làm mới dữ liệu (Phím tắt: Esc)">
                     <i class="fa-solid fa-rotate-right text-xs"></i>
                     <span>Nhập lại</span>
                 </button>
@@ -103,37 +102,35 @@
         </div>
 
         <!-- PHẦN 1: TRA CỨU ĐIỂM THI TỐT NGHIỆP THPT -->
-        <div class="flex flex-col gap-3.5">
+        <div class="flex flex-col gap-3">
 
             <!-- Khung Nhập Số Báo Danh -->
             <div class="flex flex-col gap-1.5">
                 <div class="flex justify-between items-center">
-                    <span class="text-xs font-bold text-slate-800 uppercase tracking-wider flex items-center gap-2">
-                        <i class="fa-solid fa-magnifying-glass text-indigo-600 text-xs"></i>
-                        <span>1. Tra Cứu Điểm Thi Tốt Nghiệp THPT (Theo SBD)</span>
+                    <span class="text-xs font-bold text-slate-800 uppercase tracking-wide">
+                        1. Tra cứu điểm thi tốt nghiệp THPT (theo SBD)
                     </span>
-                    <span class="text-[11px] text-slate-400 font-normal hidden sm:inline">Nhấn Tra Cứu hoặc phím
-                        Enter</span>
+                    <span class="text-[11px] text-slate-400 font-normal hidden sm:inline">Nhấn Tra Cứu hoặc phím Enter</span>
                 </div>
 
                 <div class="flex gap-2">
                     <div class="relative flex-1">
                         <i
-                            class="fa-solid fa-user-graduate absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-sm"></i>
+                            class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
                         <input id="sbdInput" type="text" maxlength="8" inputmode="numeric"
                             placeholder="Nhập Số Báo Danh (8 chữ số)..."
-                            class="w-full h-11 bg-slate-50 border border-slate-300 rounded-xl pl-10 pr-9 text-base sm:text-sm font-semibold outline-none focus:border-indigo-600 focus:bg-white focus:ring-4 focus:ring-indigo-100 transition text-slate-900 tracking-wider placeholder:font-normal placeholder:text-slate-400" />
+                            class="w-full h-10 bg-white border border-slate-300 rounded-lg pl-9 pr-9 text-sm font-semibold outline-none focus:border-blue-700 focus:ring-1 focus:ring-blue-700 transition text-slate-900 tracking-wider placeholder:font-normal placeholder:text-slate-400" />
 
                         <!-- Nút Xóa nhanh SBD -->
                         <button id="btnClearSbd" type="button"
-                            class="hidden absolute right-3 top-1/2 -translate-y-1/2 w-6 h-6 rounded-full bg-slate-200 hover:bg-slate-300 text-slate-500 hover:text-slate-700 items-center justify-center text-xs transition"
+                            class="hidden absolute right-2.5 top-1/2 -translate-y-1/2 w-5 h-5 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-500 items-center justify-center text-xs transition"
                             title="Xóa SBD">
                             <i class="fa-solid fa-xmark"></i>
                         </button>
                     </div>
 
                     <button id="btnLookup"
-                        class="h-11 bg-indigo-600 hover:bg-indigo-700 active:bg-indigo-800 text-white text-sm font-semibold px-6 rounded-xl flex items-center gap-2 transition shrink-0 shadow-sm shadow-indigo-100">
+                        class="h-10 bg-blue-800 hover:bg-blue-900 active:bg-blue-950 text-white text-xs sm:text-sm font-medium px-5 rounded-lg flex items-center gap-1.5 transition shrink-0">
                         <i id="lookupIcon" class="fa-solid fa-magnifying-glass text-xs"></i>
                         <span id="lookupText">Tra Cứu</span>
                     </button>
@@ -142,66 +139,44 @@
 
             <!-- BẢNG ĐIỂM NGANG 12 MÔN THI THPT -->
             <div class="flex flex-col gap-1.5">
-                <div class="text-xs font-bold text-slate-700 flex items-center justify-between">
-                    <span class="text-slate-500 text-xs font-medium">Kết quả chi tiết 12 môn thi:</span>
+                <div class="text-xs font-semibold text-slate-700 flex items-center justify-between">
+                    <span class="text-slate-600">Kết quả chi tiết 12 môn thi:</span>
                     <span id="currentSbdTag"
-                        class="text-xs text-slate-500 font-semibold bg-slate-100 border border-slate-200 px-2.5 py-0.5 rounded-lg shadow-xs">SBD: —</span>
+                        class="text-xs text-slate-600 font-medium bg-slate-50 border border-slate-300 px-2 py-0.5 rounded-md">SBD: —</span>
                 </div>
 
-                <div class="overflow-x-auto border border-slate-200 rounded-xl shadow-xs">
+                <div class="overflow-x-auto border border-slate-200 rounded-lg">
                     <table class="w-full border-collapse text-center text-xs">
                         <thead>
-                            <tr class="bg-slate-100/80 text-slate-800 font-bold border-b border-slate-200">
-                                <th class="py-2.5 px-2 border-r border-slate-200 min-w-[70px] whitespace-nowrap">Ngữ văn
-                                </th>
-                                <th class="py-2.5 px-2 border-r border-slate-200 min-w-[65px] whitespace-nowrap">Toán
-                                </th>
-                                <th class="py-2.5 px-2 border-r border-slate-200 min-w-[65px] whitespace-nowrap">Vật lí
-                                </th>
-                                <th class="py-2.5 px-2 border-r border-slate-200 min-w-[65px] whitespace-nowrap">Hóa học
-                                </th>
-                                <th class="py-2.5 px-2 border-r border-slate-200 min-w-[65px] whitespace-nowrap">Sinh
-                                    học</th>
-                                <th class="py-2.5 px-2 border-r border-slate-200 min-w-[65px] whitespace-nowrap">Lịch sử
-                                </th>
-                                <th class="py-2.5 px-2 border-r border-slate-200 min-w-[65px] whitespace-nowrap">Địa lí
-                                </th>
-                                <th class="py-2.5 px-2 border-r border-slate-200 min-w-[95px] whitespace-nowrap">GD KTPL
-                                </th>
-                                <th class="py-2.5 px-2 border-r border-slate-200 min-w-[65px] whitespace-nowrap">Tin học
-                                </th>
-                                <th class="py-2.5 px-2 border-r border-slate-200 min-w-[65px] whitespace-nowrap">CNCN
-                                </th>
-                                <th class="py-2.5 px-2 border-r border-slate-200 min-w-[65px] whitespace-nowrap">CNNN
-                                </th>
-                                <th class="py-2.5 px-2 min-w-[75px] whitespace-nowrap">Ngoại ngữ</th>
+                            <tr class="bg-slate-50 text-slate-700 font-semibold border-b border-slate-200">
+                                <th class="py-2 px-2 border-r border-slate-200 min-w-[70px] whitespace-nowrap">Ngữ văn</th>
+                                <th class="py-2 px-2 border-r border-slate-200 min-w-[65px] whitespace-nowrap">Toán</th>
+                                <th class="py-2 px-2 border-r border-slate-200 min-w-[65px] whitespace-nowrap">Vật lí</th>
+                                <th class="py-2 px-2 border-r border-slate-200 min-w-[65px] whitespace-nowrap">Hóa học</th>
+                                <th class="py-2 px-2 border-r border-slate-200 min-w-[65px] whitespace-nowrap">Sinh học</th>
+                                <th class="py-2 px-2 border-r border-slate-200 min-w-[65px] whitespace-nowrap">Lịch sử</th>
+                                <th class="py-2 px-2 border-r border-slate-200 min-w-[65px] whitespace-nowrap">Địa lí</th>
+                                <th class="py-2 px-2 border-r border-slate-200 min-w-[90px] whitespace-nowrap">GD KTPL</th>
+                                <th class="py-2 px-2 border-r border-slate-200 min-w-[65px] whitespace-nowrap">Tin học</th>
+                                <th class="py-2 px-2 border-r border-slate-200 min-w-[65px] whitespace-nowrap">CNCN</th>
+                                <th class="py-2 px-2 border-r border-slate-200 min-w-[65px] whitespace-nowrap">CNNN</th>
+                                <th class="py-2 px-2 min-w-[75px] whitespace-nowrap">Ngoại ngữ</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr id="scoresRow" class="bg-white text-slate-900 font-bold text-sm">
-                                <td id="cell_Van"
-                                    class="py-2.5 px-1 border-r border-slate-200 text-slate-400 font-normal">—</td>
-                                <td id="cell_Toan"
-                                    class="py-2.5 px-1 border-r border-slate-200 text-slate-400 font-normal">—</td>
-                                <td id="cell_Li"
-                                    class="py-2.5 px-1 border-r border-slate-200 text-slate-400 font-normal">—</td>
-                                <td id="cell_Hoa"
-                                    class="py-2.5 px-1 border-r border-slate-200 text-slate-400 font-normal">—</td>
-                                <td id="cell_Sinh"
-                                    class="py-2.5 px-1 border-r border-slate-200 text-slate-400 font-normal">—</td>
-                                <td id="cell_Su"
-                                    class="py-2.5 px-1 border-r border-slate-200 text-slate-400 font-normal">—</td>
-                                <td id="cell_Dia"
-                                    class="py-2.5 px-1 border-r border-slate-200 text-slate-400 font-normal">—</td>
-                                <td id="cell_GiaoDucKinhTePhapLuat"
-                                    class="py-2.5 px-1 border-r border-slate-200 text-slate-400 font-normal">—</td>
-                                <td id="cell_TinHoc"
-                                    class="py-2.5 px-1 border-r border-slate-200 text-slate-400 font-normal">—</td>
-                                <td id="cell_CNCN"
-                                    class="py-2.5 px-1 border-r border-slate-200 text-slate-400 font-normal">—</td>
-                                <td id="cell_CNNN"
-                                    class="py-2.5 px-1 border-r border-slate-200 text-slate-400 font-normal">—</td>
-                                <td id="cell_NgoaiNgu" class="py-2.5 px-1 text-slate-400 font-normal">—</td>
+                            <tr id="scoresRow" class="bg-white text-slate-900 font-semibold text-sm">
+                                <td id="cell_Van" class="py-2 px-1 border-r border-slate-200 text-slate-400 font-normal">—</td>
+                                <td id="cell_Toan" class="py-2 px-1 border-r border-slate-200 text-slate-400 font-normal">—</td>
+                                <td id="cell_Li" class="py-2 px-1 border-r border-slate-200 text-slate-400 font-normal">—</td>
+                                <td id="cell_Hoa" class="py-2 px-1 border-r border-slate-200 text-slate-400 font-normal">—</td>
+                                <td id="cell_Sinh" class="py-2 px-1 border-r border-slate-200 text-slate-400 font-normal">—</td>
+                                <td id="cell_Su" class="py-2 px-1 border-r border-slate-200 text-slate-400 font-normal">—</td>
+                                <td id="cell_Dia" class="py-2 px-1 border-r border-slate-200 text-slate-400 font-normal">—</td>
+                                <td id="cell_GiaoDucKinhTePhapLuat" class="py-2 px-1 border-r border-slate-200 text-slate-400 font-normal">—</td>
+                                <td id="cell_TinHoc" class="py-2 px-1 border-r border-slate-200 text-slate-400 font-normal">—</td>
+                                <td id="cell_CNCN" class="py-2 px-1 border-r border-slate-200 text-slate-400 font-normal">—</td>
+                                <td id="cell_CNNN" class="py-2 px-1 border-r border-slate-200 text-slate-400 font-normal">—</td>
+                                <td id="cell_NgoaiNgu" class="py-2 px-1 text-slate-400 font-normal">—</td>
                             </tr>
                         </tbody>
                     </table>
@@ -210,32 +185,23 @@
 
             <!-- TỔNG HỢP ĐIỂM THI THPT & TỔ HỢP XÉT TUYỂN (GỌN GÀNG) -->
             <div id="comboResultsSection"
-                class="hidden flex flex-col gap-1.5 bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs">
+                class="hidden flex flex-col gap-2 bg-slate-50 border border-slate-200 rounded-lg p-2.5 text-xs">
                 
                 <!-- Dòng 1: Toán, Văn và 1 môn cao nhất -->
                 <div class="flex flex-wrap items-center justify-between gap-1">
-                    <span class="font-medium text-slate-600 flex items-center gap-1.5 shrink-0">
-                        <i class="fa-solid fa-calculator text-indigo-600 text-[11px]"></i>
-                        <span>Toán, Văn + 1 môn cao nhất:</span>
-                    </span>
-                    <span id="toanVanPlusBest" class="font-bold text-slate-900">—</span>
+                    <span class="font-medium text-slate-600">Toán, Văn + 1 môn cao nhất:</span>
+                    <span id="toanVanPlusBest" class="font-semibold text-slate-900">—</span>
                 </div>
 
                 <!-- Dòng 2: Tổ hợp 3 môn cao nhất -->
                 <div class="flex flex-wrap items-center justify-between gap-1">
-                    <span class="font-medium text-slate-600 flex items-center gap-1.5 shrink-0">
-                        <i class="fa-solid fa-trophy text-amber-500 text-[11px]"></i>
-                        <span>Tổ hợp 3 môn cao nhất:</span>
-                    </span>
-                    <span id="bestComboText" class="font-bold text-indigo-900">—</span>
+                    <span class="font-medium text-slate-600">Tổ hợp 3 môn cao nhất:</span>
+                    <span id="bestComboText" class="font-semibold text-slate-900">—</span>
                 </div>
 
                 <!-- Dòng 3: List tất cả tổ hợp có thể có -->
-                <div class="flex flex-wrap items-center gap-1.5 pt-1.5 border-t border-slate-200/70">
-                    <span class="font-medium text-slate-600 flex items-center gap-1.5 shrink-0">
-                        <i class="fa-solid fa-list-check text-indigo-600 text-[11px]"></i>
-                        <span>Tất cả tổ hợp có điểm:</span>
-                    </span>
+                <div class="flex flex-wrap items-center gap-1.5 pt-1.5 border-t border-slate-200">
+                    <span class="font-medium text-slate-600 shrink-0">Tất cả tổ hợp có điểm:</span>
                     <div id="comboGrid" class="flex flex-wrap items-center gap-1">
                         <!-- Rendered via JS -->
                     </div>
@@ -246,24 +212,20 @@
         </div>
 
         <!-- PHẦN 2: BẢNG TÍNH ĐIỂM HỌC BẠ (3 MÔN x 3 NĂM) -->
-        <div class="flex flex-col gap-3 pt-3 border-t border-slate-200">
-            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
+        <div class="flex flex-col gap-2.5 pt-3 border-t border-slate-200">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-1.5">
                 <div>
-                    <span class="text-xs font-bold text-slate-900 uppercase tracking-wider flex items-center gap-2">
-                        <i class="fa-solid fa-table-list text-indigo-600 text-xs"></i>
-                        <span>2. Bảng Tính Điểm Học Bạ THPT (3 Môn x 3 Năm Lớp 10, 11, 12)</span>
+                    <span class="text-xs font-bold text-slate-800 uppercase tracking-wide">
+                        2. Bảng tính điểm học bạ THPT (3 môn x 3 năm lớp 10, 11, 12)
                     </span>
                     <div class="text-[11px] text-slate-500 font-normal mt-0.5">
-                        ⚡ <strong></strong> Gõ 2 số tự động nhảy ô (VD: <span
-                            class="text-indigo-600 font-semibold">85</span> ➔ <strong>8.5</strong>) • Phím mũi tên (↑ ↓
-                        ← →) • <kbd
-                            class="px-1 py-0.5 bg-slate-100 border border-slate-300 rounded text-[10px]">Enter</kbd>
+                        Hướng dẫn: Gõ 2 số tự động chuyển thập phân (VD: <span class="font-semibold text-slate-700">85</span> ➔ <strong>8.5</strong>) • Phím mũi tên (↑ ↓ ← →) để di chuyển
                     </div>
                 </div>
 
                 <div class="flex items-center gap-2 self-end sm:self-auto">
                     <button id="btnClearHocba"
-                        class="h-8 px-2.5 bg-slate-50 hover:bg-slate-100 text-slate-600 text-xs font-medium rounded-lg border border-slate-300 flex items-center gap-1.5 transition"
+                        class="h-7.5 px-2.5 bg-white hover:bg-slate-50 text-slate-600 text-xs font-medium rounded-md border border-slate-300 flex items-center gap-1 transition"
                         title="Xóa nhanh dữ liệu bảng học bạ">
                         <i class="fa-regular fa-trash-can text-slate-400 text-xs"></i>
                         <span>Xóa HB</span>
@@ -272,24 +234,24 @@
             </div>
 
             <!-- BẢNG HỌC BẠ 3x3 -->
-            <div class="overflow-x-auto border border-slate-200 rounded-xl shadow-xs">
+            <div class="overflow-x-auto border border-slate-200 rounded-lg">
                 <table class="w-full border-collapse text-center text-xs sm:text-sm">
                     <thead>
-                        <tr class="bg-slate-100/80 text-slate-800 font-bold border-b border-slate-200">
-                            <th class="py-2.5 px-3 text-left pl-4 w-[34%] border-r border-slate-200">
+                        <tr class="bg-slate-50 text-slate-700 font-semibold border-b border-slate-200">
+                            <th class="py-2 px-3 text-left pl-4 w-[34%] border-r border-slate-200">
                                 Năm Học / ĐTB
                             </th>
-                            <th class="py-2 px-2 border-r border-slate-200 w-[22%]">
+                            <th class="py-1.5 px-2 border-r border-slate-200 w-[22%]">
                                 <input id="subName_m1" type="text" value="Môn 1" placeholder="Môn 1"
-                                    class="w-full text-center font-bold text-xs sm:text-sm bg-transparent outline-none focus:bg-white focus:ring-1 focus:ring-indigo-400 rounded py-1" />
+                                    class="w-full text-center font-bold text-xs sm:text-sm bg-transparent outline-none focus:bg-white focus:ring-1 focus:ring-blue-600 rounded py-1" />
                             </th>
-                            <th class="py-2 px-2 border-r border-slate-200 w-[22%]">
+                            <th class="py-1.5 px-2 border-r border-slate-200 w-[22%]">
                                 <input id="subName_m2" type="text" value="Môn 2" placeholder="Môn 2"
-                                    class="w-full text-center font-bold text-xs sm:text-sm bg-transparent outline-none focus:bg-white focus:ring-1 focus:ring-indigo-400 rounded py-1" />
+                                    class="w-full text-center font-bold text-xs sm:text-sm bg-transparent outline-none focus:bg-white focus:ring-1 focus:ring-blue-600 rounded py-1" />
                             </th>
-                            <th class="py-2 px-2 w-[22%]">
+                            <th class="py-1.5 px-2 w-[22%]">
                                 <input id="subName_m3" type="text" value="Môn 3" placeholder="Môn 3"
-                                    class="w-full text-center font-bold text-xs sm:text-sm bg-transparent outline-none focus:bg-white focus:ring-1 focus:ring-indigo-400 rounded py-1" />
+                                    class="w-full text-center font-bold text-xs sm:text-sm bg-transparent outline-none focus:bg-white focus:ring-1 focus:ring-blue-600 rounded py-1" />
                             </th>
                         </tr>
                     </thead>
@@ -297,26 +259,25 @@
                         <!-- Rendered via JS -->
                     </tbody>
                     <tfoot>
-                        <tr
-                            class="bg-slate-50 border-t border-slate-200 font-semibold text-slate-800 text-xs sm:text-sm">
-                            <td class="py-2.5 px-3 text-left pl-4 border-r border-slate-200 text-slate-600 font-medium">
+                        <tr class="bg-slate-50/70 border-t border-slate-200 font-medium text-slate-700 text-xs sm:text-sm">
+                            <td class="py-2 px-3 text-left pl-4 border-r border-slate-200 text-slate-600">
                                 ĐTB 3 năm từng môn
                             </td>
                             <td id="dtb_m1"
-                                class="py-2.5 px-2 border-r border-slate-200 font-bold text-indigo-950 text-sm sm:text-base">
+                                class="py-2 px-2 border-r border-slate-200 font-bold text-slate-900 text-sm sm:text-base">
                                 —</td>
                             <td id="dtb_m2"
-                                class="py-2.5 px-2 border-r border-slate-200 font-bold text-indigo-950 text-sm sm:text-base">
+                                class="py-2 px-2 border-r border-slate-200 font-bold text-slate-900 text-sm sm:text-base">
                                 —</td>
-                            <td id="dtb_m3" class="py-2.5 px-2 font-bold text-indigo-950 text-sm sm:text-base">—</td>
+                            <td id="dtb_m3" class="py-2 px-2 font-bold text-slate-900 text-sm sm:text-base">—</td>
                         </tr>
-                        <tr class="bg-indigo-50/90 border-t-2 border-indigo-200 text-indigo-950 font-black">
+                        <tr class="bg-blue-50/70 border-t-2 border-blue-200 text-slate-900 font-bold">
                             <td
-                                class="py-3 px-3 text-left pl-4 border-r border-indigo-200 text-xs sm:text-sm uppercase tracking-wider">
+                                class="py-2.5 px-3 text-left pl-4 border-r border-blue-200 text-xs sm:text-sm uppercase tracking-wider">
                                 Tổng ĐTB chung cả 3 môn
                             </td>
                             <td id="totalHocba" colspan="3"
-                                class="py-3 px-2 text-2xl sm:text-3xl text-indigo-900 font-black tracking-tight transition-all duration-200">
+                                class="py-2.5 px-2 text-2xl sm:text-3xl text-blue-900 font-extrabold tracking-tight transition-all duration-200">
                                 —</td>
                         </tr>
                     </tfoot>
@@ -328,19 +289,19 @@
 
     <!-- Drawer Overlay -->
     <div id="drawerOverlay"
-        class="fixed inset-0 bg-slate-900/40 backdrop-blur-xs z-40 transition-opacity opacity-0 pointer-events-none duration-300">
+        class="fixed inset-0 bg-slate-900/30 z-40 transition-opacity opacity-0 pointer-events-none duration-300">
     </div>
 
     <!-- Drawer Lịch Sử -->
     <div id="drawer"
-        class="fixed top-0 right-0 w-84 max-w-[88vw] h-full bg-white shadow-2xl z-50 flex flex-col transform transition-transform duration-300 translate-x-full border-l border-slate-200">
-        <div class="p-4 border-b border-slate-200 flex justify-between items-center bg-slate-50">
-            <span class="font-bold text-slate-900 text-xs sm:text-sm uppercase tracking-wider flex items-center gap-2">
-                <i class="fa-solid fa-clock-rotate-left text-indigo-600"></i>
+        class="fixed top-0 right-0 w-84 max-w-[88vw] h-full bg-white shadow-xl z-50 flex flex-col transform transition-transform duration-300 translate-x-full border-l border-slate-200">
+        <div class="p-3.5 border-b border-slate-200 flex justify-between items-center bg-slate-50">
+            <span class="font-bold text-slate-800 text-xs sm:text-sm uppercase tracking-wider flex items-center gap-2">
+                <i class="fa-regular fa-clock text-blue-800"></i>
                 <span>Lịch Sử Tra Cứu & Tính Điểm</span>
             </span>
             <button id="btnCloseDrawer"
-                class="w-7 h-7 rounded-lg hover:bg-slate-200 text-slate-400 hover:text-slate-700 flex items-center justify-center transition">
+                class="w-7 h-7 rounded-md hover:bg-slate-200 text-slate-400 hover:text-slate-700 flex items-center justify-center transition">
                 <i class="fa-solid fa-xmark text-sm"></i>
             </button>
         </div>
@@ -483,10 +444,10 @@
 
                 if (bestOtherName !== null && bestOtherPt >= 0) {
                     const totalTVPlus = toanPt + vanPt + bestOtherPt;
-                    toanVanPlusBestEl.innerHTML = `Toán (${toanPt}) + Ngữ văn (${vanPt}) + ${bestOtherName} (${bestOtherPt}) = <span class="text-indigo-600 font-black text-sm">${totalTVPlus.toFixed(2)}</span>`;
+                    toanVanPlusBestEl.innerHTML = `Toán (${toanPt}) + Ngữ văn (${vanPt}) + ${bestOtherName} (${bestOtherPt}) = <span class="text-blue-800 font-bold">${totalTVPlus.toFixed(2)}</span>`;
                 } else {
                     const totalTV = toanPt + vanPt;
-                    toanVanPlusBestEl.innerHTML = `Toán (${toanPt}) + Ngữ văn (${vanPt}) = <span class="text-indigo-600 font-black text-sm">${totalTV.toFixed(2)}</span>`;
+                    toanVanPlusBestEl.innerHTML = `Toán (${toanPt}) + Ngữ văn (${vanPt}) = <span class="text-blue-800 font-bold">${totalTV.toFixed(2)}</span>`;
                 }
             } else {
                 toanVanPlusBestEl.innerHTML = `<span class="text-slate-400 font-normal italic">Chưa đủ điểm Toán và Ngữ văn</span>`;
@@ -515,7 +476,7 @@
             // 3. TỔ HỢP 3 MÔN CAO NHẤT
             if (validCombos.length > 0) {
                 const topCombo = validCombos[0];
-                bestComboTextEl.innerHTML = `<span class="bg-indigo-600 text-white px-2 py-0.5 rounded font-bold mr-1">${topCombo.code}</span> (${topCombo.name}): <span class="text-indigo-600 font-black text-sm">${topCombo.total.toFixed(2)}</span>`;
+                bestComboTextEl.innerHTML = `<span class="bg-blue-800 text-white px-2 py-0.5 rounded font-bold mr-1">${topCombo.code}</span> (${topCombo.name}): <span class="text-blue-800 font-bold">${topCombo.total.toFixed(2)}</span>`;
             } else {
                 bestComboTextEl.innerHTML = `<span class="text-slate-400 font-normal italic">Chưa có tổ hợp nào đủ 3 môn thi</span>`;
             }
@@ -524,8 +485,8 @@
             if (validCombos.length > 0) {
                 validCombos.forEach((c, idx) => {
                     const item = document.createElement('span');
-                    item.className = `px-2 py-0.5 rounded-md text-[11px] font-semibold flex items-center gap-1 ${idx === 0 ? 'bg-indigo-600 text-white font-bold' : 'bg-white text-slate-700 border border-slate-200'}`;
-                    item.innerHTML = `<span>${c.code}:</span> <span class="${idx === 0 ? 'text-white' : 'text-indigo-700 font-bold'}">${c.total.toFixed(2)}</span>`;
+                    item.className = `px-2 py-0.5 rounded text-[11px] font-semibold flex items-center gap-1 ${idx === 0 ? 'bg-blue-800 text-white' : 'bg-white text-slate-800 border border-slate-300'}`;
+                    item.innerHTML = `<span>${c.code}:</span> <span class="${idx === 0 ? 'text-white font-bold' : 'text-blue-800 font-bold'}">${c.total.toFixed(2)}</span>`;
                     container.appendChild(item);
                 });
             } else {
@@ -788,10 +749,10 @@
 
                 if (pt !== null && pt !== undefined && pt !== '') {
                     cell.textContent = pt;
-                    cell.className = 'py-2.5 px-1 border-r border-slate-200 last:border-r-0 text-emerald-700 font-bold text-sm bg-emerald-50/70';
+                    cell.className = 'py-2 px-1 border-r border-slate-200 last:border-r-0 text-blue-950 font-bold text-sm bg-blue-50/60';
                 } else {
                     cell.textContent = '—';
-                    cell.className = 'py-2.5 px-1 border-r border-slate-200 last:border-r-0 text-slate-400 font-normal text-sm';
+                    cell.className = 'py-2 px-1 border-r border-slate-200 last:border-r-0 text-slate-400 font-normal text-sm';
                 }
             });
         }
@@ -868,15 +829,15 @@
             const sbdTag = document.getElementById('currentSbdTag');
 
             if (!sbd || sbd.length !== 8) {
-                sbdTag.className = 'text-xs text-red-600 font-semibold bg-red-50 border border-red-200 px-2.5 py-0.5 rounded-lg';
-                sbdTag.innerHTML = '<i class="fa-solid fa-triangle-exclamation text-red-500 mr-1"></i>SBD phải đủ 8 số';
+                sbdTag.className = 'text-xs text-red-700 font-medium bg-red-50 border border-red-200 px-2 py-0.5 rounded-md';
+                sbdTag.innerHTML = '<i class="fa-solid fa-triangle-exclamation text-red-600 mr-1"></i>SBD phải đủ 8 số';
                 sbdInput.focus();
                 sbdInput.select();
                 return;
             }
 
             currentSbd = sbd;
-            sbdTag.className = 'text-xs text-indigo-700 font-semibold bg-indigo-50 border border-indigo-200 px-2.5 py-0.5 rounded-lg';
+            sbdTag.className = 'text-xs text-blue-800 font-medium bg-blue-50 border border-blue-200 px-2 py-0.5 rounded-md';
             sbdTag.innerHTML = `<i class="fa-solid fa-spinner fa-spin mr-1"></i>Đang tra SBD: ${sbd}...`;
             renderHorizontalTable({});
             calculateAndRenderCombinations();
@@ -901,7 +862,7 @@
                 renderHorizontalTable(scoreMap);
                 calculateAndRenderCombinations();
 
-                sbdTag.className = 'text-xs text-emerald-800 font-bold bg-emerald-50 border border-emerald-200 px-2.5 py-0.5 rounded-lg';
+                sbdTag.className = 'text-xs text-emerald-800 font-semibold bg-emerald-50 border border-emerald-300 px-2 py-0.5 rounded-md';
                 sbdTag.innerHTML = `<i class="fa-solid fa-circle-check text-emerald-600 mr-1"></i>SBD: ${sbd} (${candData.examCluster || 'Đã có điểm'})`;
 
                 setTimeout(() => {
@@ -918,7 +879,7 @@
                 renderHorizontalTable({});
                 calculateAndRenderCombinations();
 
-                sbdTag.className = 'text-xs text-amber-800 font-bold bg-amber-50 border border-amber-200 px-2.5 py-0.5 rounded-lg';
+                sbdTag.className = 'text-xs text-amber-800 font-semibold bg-amber-50 border border-amber-300 px-2 py-0.5 rounded-md';
                 sbdTag.innerHTML = `<i class="fa-solid fa-circle-exclamation text-amber-600 mr-1"></i>Không tìm thấy SBD: ${sbd}`;
 
                 setTimeout(() => {
@@ -1017,20 +978,20 @@
                 </div>
                 <ul class="divide-y divide-slate-100">
                     ${list.map((item, i) => `
-                        <li class="p-3.5 hover:bg-slate-50 flex items-center gap-2.5 transition text-xs">
-                            <span class="text-slate-300 font-bold w-4 shrink-0">${list.length - i}</span>
+                        <li class="p-3 hover:bg-slate-50 flex items-center gap-2.5 transition text-xs">
+                            <span class="text-slate-400 font-medium w-4 shrink-0">${list.length - i}</span>
                             <div class="flex-1 min-w-0">
-                                <div class="font-bold text-slate-900 text-sm flex items-center gap-1.5 flex-wrap">
+                                <div class="font-semibold text-slate-900 text-sm flex items-center gap-1.5 flex-wrap">
                                     <span>${item.isActualSbd ? 'SBD: ' + item.sbd : 'Học bạ #' + item.sbd.replace('HB-', '')}</span>
-                                    ${item.totalHocba && item.totalHocba !== '—' ? `<span class="text-indigo-900 text-[11px] font-bold bg-indigo-50 px-1.5 py-0.2 rounded border border-indigo-200">HB: ${item.totalHocba}</span>` : ''}
+                                    ${item.totalHocba && item.totalHocba !== '—' ? `<span class="text-blue-900 text-[11px] font-bold bg-blue-50 px-1.5 py-0.2 rounded border border-blue-200">HB: ${item.totalHocba}</span>` : ''}
                                 </div>
                                 <div class="text-[10px] text-slate-400 mt-0.5">${item.date}</div>
                             </div>
                             <div class="flex gap-1 shrink-0">
-                                <button class="btn-load-h w-7 h-7 rounded-lg border border-slate-200 text-indigo-700 hover:bg-indigo-50 flex items-center justify-center text-xs transition" data-id="${item.id}" title="Nạp lại dữ liệu này">
+                                <button class="btn-load-h w-7 h-7 rounded border border-slate-300 text-blue-800 hover:bg-blue-50 flex items-center justify-center text-xs transition" data-id="${item.id}" title="Nạp lại dữ liệu này">
                                     <i class="fa-solid fa-arrow-rotate-left"></i>
                                 </button>
-                                <button class="btn-del-h w-7 h-7 rounded-lg border border-slate-200 text-red-500 hover:bg-red-50 flex items-center justify-center text-xs transition" data-id="${item.id}" title="Xóa">
+                                <button class="btn-del-h w-7 h-7 rounded border border-slate-300 text-red-600 hover:bg-red-50 flex items-center justify-center text-xs transition" data-id="${item.id}" title="Xóa">
                                     <i class="fa-solid fa-xmark"></i>
                                 </button>
                             </div>
@@ -1055,10 +1016,10 @@
                         document.getElementById('sbdInput').value = currentSbd;
                         const sbdTag = document.getElementById('currentSbdTag');
                         if (item.isActualSbd) {
-                            sbdTag.className = 'text-xs text-emerald-800 font-bold bg-emerald-50 border border-emerald-200 px-2.5 py-0.5 rounded-lg';
+                            sbdTag.className = 'text-xs text-emerald-800 font-semibold bg-emerald-50 border border-emerald-300 px-2 py-0.5 rounded-md';
                             sbdTag.innerHTML = `<i class="fa-solid fa-circle-check text-emerald-600 mr-1"></i>SBD: ${item.sbd}`;
                         } else {
-                            sbdTag.className = 'text-xs text-slate-500 font-semibold bg-slate-100 border border-slate-200 px-2.5 py-0.5 rounded-lg shadow-xs';
+                            sbdTag.className = 'text-xs text-slate-600 font-medium bg-slate-50 border border-slate-300 px-2 py-0.5 rounded-md';
                             sbdTag.textContent = 'SBD: —';
                         }
                         currentScores = item.scores || {};
