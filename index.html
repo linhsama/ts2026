@@ -146,14 +146,8 @@
             <div class="flex flex-col gap-1.5">
                 <div class="text-xs font-bold text-slate-700 flex items-center justify-between">
                     <span class="text-slate-500 text-xs font-medium">Kết quả chi tiết 12 môn thi:</span>
-                    <div class="flex items-center gap-2">
-                        <span id="currentSbdTag"
-                            class="text-xs text-slate-700 font-bold bg-slate-100 border border-slate-200 px-2.5 py-0.5 rounded-lg shadow-xs">SBD:
-                            —</span>
-                        <button id="btnClearScores"
-                            class="hidden text-[11px] text-slate-500 hover:text-red-600 font-medium transition underline"
-                            title="Xóa bảng điểm thi">Xóa điểm thi</button>
-                    </div>
+                    <span id="currentSbdTag"
+                        class="text-xs text-slate-700 font-bold bg-slate-100 border border-slate-200 px-2.5 py-0.5 rounded-lg shadow-xs">SBD: —</span>
                 </div>
 
                 <div class="overflow-x-auto border border-slate-200 rounded-xl shadow-xs">
@@ -241,7 +235,7 @@
                     <div class="text-[11px] text-slate-500 font-normal mt-0.5">
                         ⚡ <strong>Nhập siêu tốc:</strong> Gõ 2 số tự động nhảy ô (VD: <span
                             class="text-indigo-600 font-semibold">85</span> ➔ <strong>8.5</strong>) • Phím mũi tên (↑ ↓
-                        ← →) • <kbd
+                            ← →) • <kbd
                             class="px-1 py-0.5 bg-slate-100 border border-slate-300 rounded text-[10px]">Enter</kbd>
                     </div>
                 </div>
@@ -306,18 +300,6 @@
                         </tr>
                     </tfoot>
                 </table>
-            </div>
-
-            <!-- Thanh chức năng phụ (Sao chép kết quả) -->
-            <div class="flex justify-between items-center pt-1">
-                <span id="autoFocusNotice" class="text-[11px] text-slate-400 italic">
-                    💡 Nhập xong môn cuối (Lớp 12), hệ thống sẽ tự động lưu và chuyển về ô SBD để tiếp tục thí sinh mới.
-                </span>
-                <button id="btnCopySummary"
-                    class="h-8 px-3 bg-white hover:bg-slate-50 text-indigo-700 text-xs font-semibold rounded-lg border border-indigo-200 flex items-center gap-1.5 transition shadow-xs">
-                    <i class="fa-regular fa-copy text-xs"></i>
-                    <span>Sao chép kết quả</span>
-                </button>
             </div>
         </div>
 
@@ -515,15 +497,6 @@
                 }
             } else {
                 saveCurrentStateToHistory();
-
-                setTimeout(() => {
-                    const sbdInput = document.getElementById('sbdInput');
-                    if (sbdInput) {
-                        sbdInput.focus();
-                        sbdInput.select();
-                    }
-                    showToast('Đã tính & lưu học bạ thành công!');
-                }, 120);
             }
         }
 
@@ -741,7 +714,6 @@
         // 3. TRA CỨU ĐIỂM THI THPT THEO SBD
         // =========================================================================
         function renderHorizontalTable(scores) {
-            let hasAnyScore = false;
             SUBJECTS.forEach(s => {
                 const cell = document.getElementById(`cell_${s.key}`);
                 if (!cell) return;
@@ -759,19 +731,11 @@
                 if (pt !== null && pt !== undefined && pt !== '') {
                     cell.textContent = pt;
                     cell.className = 'py-2.5 px-1 border-r border-slate-200 last:border-r-0 text-emerald-700 font-bold text-sm bg-emerald-50/70';
-                    hasAnyScore = true;
                 } else {
                     cell.textContent = '—';
                     cell.className = 'py-2.5 px-1 border-r border-slate-200 last:border-r-0 text-slate-400 font-normal text-sm';
                 }
             });
-
-            const btnClearScores = document.getElementById('btnClearScores');
-            if (hasAnyScore) {
-                btnClearScores.classList.remove('hidden');
-            } else {
-                btnClearScores.classList.add('hidden');
-            }
         }
 
         const scoreCache = {};
@@ -908,15 +872,16 @@
 
                 saveCurrentStateToHistory();
             } else {
+                currentScores = {};
+                renderHorizontalTable({});
+                calculateAndRenderCombinations();
+
                 alertBox.className = 'text-xs py-2 px-3.5 rounded-xl font-medium bg-amber-50 text-amber-800 border border-amber-200 block';
-                alertBox.innerHTML = `<i class="fa-solid fa-triangle-exclamation text-amber-600 mr-1"></i> Không tìm thấy dữ liệu điểm thi cho SBD: <strong>${sbd}</strong> (hoặc dữ liệu kỳ thi chưa được công bố)`;
+                alertBox.innerHTML = `<i class="fa-solid fa-circle-exclamation text-amber-600 mr-1"></i> Không tìm thấy dữ liệu điểm thi cho SBD: <strong>${sbd}</strong>`;
 
                 setTimeout(() => {
-                    const firstHb = document.getElementById('hb_m1_10');
-                    if (firstHb) {
-                        firstHb.focus();
-                        firstHb.select();
-                    }
+                    sbdInput.focus();
+                    sbdInput.select();
                 }, 80);
             }
         }
@@ -1184,12 +1149,6 @@
 
         document.getElementById('btnLookup').addEventListener('click', doLookup);
 
-        document.getElementById('btnClearScores').addEventListener('click', () => {
-            currentScores = {};
-            renderHorizontalTable({});
-            calculateAndRenderCombinations();
-        });
-
         document.getElementById('btnClearHocba').addEventListener('click', () => {
             clearHocba();
             showToast('Đã xóa dữ liệu bảng học bạ');
@@ -1201,28 +1160,8 @@
         document.getElementById('btnCloseDrawer').addEventListener('click', () => toggleDrawer(false));
         document.getElementById('drawerOverlay').addEventListener('click', () => toggleDrawer(false));
 
-        // Nút Sao chép kết quả tóm tắt
-        document.getElementById('btnCopySummary').addEventListener('click', () => {
-            const m1Name = document.getElementById('subName_m1').value || 'Môn 1';
-            const m2Name = document.getElementById('subName_m2').value || 'Môn 2';
-            const m3Name = document.getElementById('subName_m3').value || 'Môn 3';
-            const dtb1 = document.getElementById('dtb_m1').textContent;
-            const dtb2 = document.getElementById('dtb_m2').textContent;
-            const dtb3 = document.getElementById('dtb_m3').textContent;
-            const total = document.getElementById('totalHocba').textContent;
-            const sbd = currentSbd ? `SBD: ${currentSbd}` : 'Tính học bạ THPT';
-
-            const summaryText = `📋 KẾT QUẢ XÉT TUYỂN HỌC BẠ 2026 (${sbd})\n` +
-                `• ${m1Name} : ${dtb1}\n` +
-                `• ${m2Name} : ${dtb2}\n` +
-                `• ${m3Name} : ${dtb3}\n` +
-                `👉 TỔNG ĐIỂM XÉT TUYỂN: ${total}`;
-
-            navigator.clipboard.writeText(summaryText).then(() => {
-                showToast('Đã sao chép kết quả vào bộ nhớ tạm!');
-            }).catch(() => {
-                showToast('Không thể sao chép tự động.');
-            });
+        ['subName_m1', 'subName_m2', 'subName_m3'].forEach(id => {
+            document.getElementById(id)?.addEventListener('input', scheduleSaveHistory);
         });
 
         document.addEventListener('keydown', (e) => {

@@ -4,10 +4,36 @@ import urllib.request
 import urllib.parse
 import json
 import webbrowser
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from http.server import HTTPServer, SimpleHTTPRequestHandler
 
 PORT = 8080
 HOST = "127.0.0.1"
+
+def fetch_year(sbd, yr):
+    target_url = (
+        f"https://vietnamnet.vn/newsapi-edu/EducationStudentScore/CheckCandidateNumber?"
+        f"ComponentId=COMPONENT002298&PageId=fa4119c27edb45558886cde08459bb1b&"
+        f"sbd={sbd}&type=2&year={yr}"
+    )
+    try:
+        req = urllib.request.Request(target_url, headers={
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+            "Accept": "application/json, text/plain, */*"
+        })
+        with urllib.request.urlopen(req, timeout=3.5) as response:
+            if response.status == 200:
+                body = response.read().decode("utf-8")
+                res_json = json.loads(body)
+                if (
+                    res_json.get("status") is True
+                    and res_json.get("data", {}).get("model") is True
+                    and res_json.get("data", {}).get("data")
+                ):
+                    return res_json
+    except Exception:
+        pass
+    return None
 
 class AppHandler(SimpleHTTPRequestHandler):
     def end_headers(self):
@@ -26,7 +52,6 @@ class AppHandler(SimpleHTTPRequestHandler):
         if parsed.path == "/api/score":
             query = urllib.parse.parse_qs(parsed.query)
             sbd = query.get("sbd", [""])[0]
-            year = query.get("year", ["2026"])[0]
             
             if not sbd:
                 self.send_response(400)
@@ -35,37 +60,17 @@ class AppHandler(SimpleHTTPRequestHandler):
                 self.wfile.write(json.dumps({"status": False, "message": "Thieu SBD"}).encode("utf-8"))
                 return
 
-            years_to_try = [year, "2026", "2025", "2024"]
-            years_to_try = list(dict.fromkeys(years_to_try))
-            
+            years_to_try = ["2026", "2025", "2024"]
             result_data = None
-            found_year = None
             
-            for yr in years_to_try:
-                target_url = (
-                    f"https://vietnamnet.vn/newsapi-edu/EducationStudentScore/CheckCandidateNumber?"
-                    f"ComponentId=COMPONENT002298&PageId=fa4119c27edb45558886cde08459bb1b&"
-                    f"sbd={sbd}&type=2&year={yr}"
-                )
-                try:
-                    req = urllib.request.Request(target_url, headers={
-                        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-                        "Accept": "application/json, text/plain, */*"
-                    })
-                    with urllib.request.urlopen(req, timeout=4) as response:
-                        if response.status == 200:
-                            body = response.read().decode("utf-8")
-                            res_json = json.loads(body)
-                            if (
-                                res_json.get("status") is True
-                                and res_json.get("data", {}).get("model") is True
-                                and res_json.get("data", {}).get("data")
-                            ):
-                                result_data = res_json
-                                found_year = yr
-                                break
-                except Exception:
-                    continue
+            # Chay song song tat ca cac nam qua ThreadPool de phan hoi trong 0.2s
+            with ThreadPoolExecutor(max_workers=3) as executor:
+                future_to_yr = {executor.submit(fetch_year, sbd, yr): yr for yr in years_to_try}
+                for future in as_completed(future_to_yr):
+                    res = future.result()
+                    if res:
+                        result_data = res
+                        break
 
             self.send_response(200)
             self.send_header("Content-Type", "application/json; charset=utf-8")
