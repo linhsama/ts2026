@@ -67,33 +67,30 @@
 <body class="bg-slate-100 text-slate-900 min-h-screen p-3 sm:p-6 font-sans antialiased">
 
     <div
-        class="max-w-5xl mx-auto flex flex-col gap-4 bg-white border border-slate-300 rounded-xl p-4 sm:p-6 shadow-sm">
+        class="max-w-5xl mx-auto flex flex-col gap-3.5 bg-white border border-slate-300 rounded-xl p-3.5 sm:p-5 shadow-xs">
 
         <!-- Header Tiêu Đề & Công Cụ -->
         <div
-            class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 border-b border-slate-200 pb-3.5">
-            <div class="flex items-center gap-3">
-                <div
-                    class="w-10 h-10 rounded-lg bg-blue-800 text-white flex items-center justify-center text-lg shadow-xs">
-                    <i class="fa-solid fa-graduation-cap"></i>
-                </div>
+            class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 border-b border-slate-200 pb-3">
+            <div class="flex items-center gap-2.5">
+                <i class="fa-solid fa-graduation-cap text-blue-800 text-xl shrink-0"></i>
                 <div>
-                    <h1 class="text-lg sm:text-xl font-bold text-slate-900 tracking-tight">
+                    <h1 class="text-base sm:text-lg font-bold text-slate-900 leading-snug">
                         TRA CỨU ĐIỂM THI THPT & TÍNH ĐIỂM HỌC BẠ 2026
                     </h1>
-                    <p class="text-xs text-slate-500 mt-0.5">Tra cứu điểm thi theo SBD • Tổ hợp xét tuyển • Tính điểm học bạ 3 năm</p>
+                    <p class="text-xs text-slate-500">Tra cứu điểm thi theo SBD • Tổ hợp xét tuyển • Tính điểm học bạ 3 năm</p>
                 </div>
             </div>
-            <div class="flex items-center gap-2 self-end sm:self-auto">
+            <div class="flex items-center gap-1.5 self-end sm:self-auto">
                 <button id="btnOpenHistory"
-                    class="h-8.5 px-3 bg-white hover:bg-slate-50 active:bg-slate-100 text-slate-700 text-xs font-medium rounded-md border border-slate-300 flex items-center gap-1.5 transition">
+                    class="h-7.5 px-2.5 bg-white hover:bg-slate-50 active:bg-slate-100 text-slate-700 text-xs font-medium rounded-md border border-slate-300 flex items-center gap-1.5 transition">
                     <i class="fa-regular fa-clock text-slate-500 text-xs"></i>
                     <span>Lịch sử</span>
                     <span id="historyBadge"
                         class="hidden bg-blue-800 text-white text-[10px] px-1.5 py-0.2 rounded-full font-bold">0</span>
                 </button>
                 <button id="btnResetAll"
-                    class="h-8.5 px-3 bg-white hover:bg-red-50 hover:text-red-700 hover:border-red-300 active:bg-red-100 text-slate-700 text-xs font-medium rounded-md border border-slate-300 flex items-center gap-1.5 transition"
+                    class="h-7.5 px-2.5 bg-white hover:bg-red-50 hover:text-red-700 hover:border-red-300 active:bg-red-100 text-slate-700 text-xs font-medium rounded-md border border-slate-300 flex items-center gap-1.5 transition"
                     title="Làm mới dữ liệu (Phím tắt: Esc)">
                     <i class="fa-solid fa-rotate-right text-xs"></i>
                     <span>Nhập lại</span>
@@ -102,10 +99,10 @@
         </div>
 
         <!-- PHẦN 1: TRA CỨU ĐIỂM THI TỐT NGHIỆP THPT -->
-        <div class="flex flex-col gap-3">
+        <div class="flex flex-col gap-2.5">
 
             <!-- Khung Nhập Số Báo Danh -->
-            <div class="flex flex-col gap-1.5">
+            <div class="flex flex-col gap-1">
                 <div class="flex justify-between items-center">
                     <span class="text-xs font-bold text-slate-800 uppercase tracking-wide">
                         1. Tra cứu điểm thi tốt nghiệp THPT (theo SBD)
@@ -116,67 +113,67 @@
                 <div class="flex gap-2">
                     <div class="relative flex-1">
                         <i
-                            class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
+                            class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
                         <input id="sbdInput" type="text" maxlength="8" inputmode="numeric"
                             placeholder="Nhập Số Báo Danh (8 chữ số)..."
-                            class="w-full h-10 bg-white border border-slate-300 rounded-lg pl-9 pr-9 text-sm font-semibold outline-none focus:border-blue-700 focus:ring-1 focus:ring-blue-700 transition text-slate-900 tracking-wider placeholder:font-normal placeholder:text-slate-400" />
+                            class="w-full h-8.5 bg-white border border-slate-300 rounded-md pl-8 pr-8 text-xs sm:text-sm font-semibold outline-none focus:border-blue-700 focus:ring-1 focus:ring-blue-700 transition text-slate-900 tracking-wider placeholder:font-normal placeholder:text-slate-400" />
 
                         <!-- Nút Xóa nhanh SBD -->
                         <button id="btnClearSbd" type="button"
-                            class="hidden absolute right-2.5 top-1/2 -translate-y-1/2 w-5 h-5 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-500 items-center justify-center text-xs transition"
+                            class="hidden absolute right-2 top-1/2 -translate-y-1/2 w-4.5 h-4.5 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-500 items-center justify-center text-[10px] transition"
                             title="Xóa SBD">
                             <i class="fa-solid fa-xmark"></i>
                         </button>
                     </div>
 
                     <button id="btnLookup"
-                        class="h-10 bg-blue-800 hover:bg-blue-900 active:bg-blue-950 text-white text-xs sm:text-sm font-medium px-5 rounded-lg flex items-center gap-1.5 transition shrink-0">
-                        <i id="lookupIcon" class="fa-solid fa-magnifying-glass text-xs"></i>
+                        class="h-8.5 bg-blue-800 hover:bg-blue-900 active:bg-blue-950 text-white text-xs font-medium px-4 rounded-md flex items-center gap-1.5 transition shrink-0">
+                        <i id="lookupIcon" class="fa-solid fa-magnifying-glass text-[11px]"></i>
                         <span id="lookupText">Tra Cứu</span>
                     </button>
                 </div>
             </div>
 
             <!-- BẢNG ĐIỂM NGANG 12 MÔN THI THPT -->
-            <div class="flex flex-col gap-1.5">
+            <div class="flex flex-col gap-1">
                 <div class="text-xs font-semibold text-slate-700 flex items-center justify-between">
                     <span class="text-slate-600">Kết quả chi tiết 12 môn thi:</span>
                     <span id="currentSbdTag"
                         class="text-xs text-slate-600 font-medium bg-slate-50 border border-slate-300 px-2 py-0.5 rounded-md">SBD: —</span>
                 </div>
 
-                <div class="overflow-x-auto border border-slate-200 rounded-lg">
+                <div class="overflow-x-auto border border-slate-200 rounded-md">
                     <table class="w-full border-collapse text-center text-xs">
                         <thead>
-                            <tr class="bg-slate-50 text-slate-700 font-semibold border-b border-slate-200">
-                                <th class="py-2 px-2 border-r border-slate-200 min-w-[70px] whitespace-nowrap">Ngữ văn</th>
-                                <th class="py-2 px-2 border-r border-slate-200 min-w-[65px] whitespace-nowrap">Toán</th>
-                                <th class="py-2 px-2 border-r border-slate-200 min-w-[65px] whitespace-nowrap">Vật lí</th>
-                                <th class="py-2 px-2 border-r border-slate-200 min-w-[65px] whitespace-nowrap">Hóa học</th>
-                                <th class="py-2 px-2 border-r border-slate-200 min-w-[65px] whitespace-nowrap">Sinh học</th>
-                                <th class="py-2 px-2 border-r border-slate-200 min-w-[65px] whitespace-nowrap">Lịch sử</th>
-                                <th class="py-2 px-2 border-r border-slate-200 min-w-[65px] whitespace-nowrap">Địa lí</th>
-                                <th class="py-2 px-2 border-r border-slate-200 min-w-[90px] whitespace-nowrap">GD KTPL</th>
-                                <th class="py-2 px-2 border-r border-slate-200 min-w-[65px] whitespace-nowrap">Tin học</th>
-                                <th class="py-2 px-2 border-r border-slate-200 min-w-[65px] whitespace-nowrap">CNCN</th>
-                                <th class="py-2 px-2 border-r border-slate-200 min-w-[65px] whitespace-nowrap">CNNN</th>
-                                <th class="py-2 px-2 min-w-[75px] whitespace-nowrap">Ngoại ngữ</th>
+                            <tr class="bg-slate-50 text-slate-700 font-semibold border-b border-slate-200 text-[11px]">
+                                <th class="py-1.5 px-1.5 border-r border-slate-200 min-w-[65px] whitespace-nowrap">Ngữ văn</th>
+                                <th class="py-1.5 px-1.5 border-r border-slate-200 min-w-[60px] whitespace-nowrap">Toán</th>
+                                <th class="py-1.5 px-1.5 border-r border-slate-200 min-w-[60px] whitespace-nowrap">Vật lí</th>
+                                <th class="py-1.5 px-1.5 border-r border-slate-200 min-w-[60px] whitespace-nowrap">Hóa học</th>
+                                <th class="py-1.5 px-1.5 border-r border-slate-200 min-w-[60px] whitespace-nowrap">Sinh học</th>
+                                <th class="py-1.5 px-1.5 border-r border-slate-200 min-w-[60px] whitespace-nowrap">Lịch sử</th>
+                                <th class="py-1.5 px-1.5 border-r border-slate-200 min-w-[60px] whitespace-nowrap">Địa lí</th>
+                                <th class="py-1.5 px-1.5 border-r border-slate-200 min-w-[80px] whitespace-nowrap">GD KTPL</th>
+                                <th class="py-1.5 px-1.5 border-r border-slate-200 min-w-[60px] whitespace-nowrap">Tin học</th>
+                                <th class="py-1.5 px-1.5 border-r border-slate-200 min-w-[60px] whitespace-nowrap">CNCN</th>
+                                <th class="py-1.5 px-1.5 border-r border-slate-200 min-w-[60px] whitespace-nowrap">CNNN</th>
+                                <th class="py-1.5 px-1.5 min-w-[70px] whitespace-nowrap">Ngoại ngữ</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr id="scoresRow" class="bg-white text-slate-900 font-semibold text-sm">
-                                <td id="cell_Van" class="py-2 px-1 border-r border-slate-200 text-slate-400 font-normal">—</td>
-                                <td id="cell_Toan" class="py-2 px-1 border-r border-slate-200 text-slate-400 font-normal">—</td>
-                                <td id="cell_Li" class="py-2 px-1 border-r border-slate-200 text-slate-400 font-normal">—</td>
-                                <td id="cell_Hoa" class="py-2 px-1 border-r border-slate-200 text-slate-400 font-normal">—</td>
-                                <td id="cell_Sinh" class="py-2 px-1 border-r border-slate-200 text-slate-400 font-normal">—</td>
-                                <td id="cell_Su" class="py-2 px-1 border-r border-slate-200 text-slate-400 font-normal">—</td>
-                                <td id="cell_Dia" class="py-2 px-1 border-r border-slate-200 text-slate-400 font-normal">—</td>
-                                <td id="cell_GiaoDucKinhTePhapLuat" class="py-2 px-1 border-r border-slate-200 text-slate-400 font-normal">—</td>
-                                <td id="cell_TinHoc" class="py-2 px-1 border-r border-slate-200 text-slate-400 font-normal">—</td>
-                                <td id="cell_CNCN" class="py-2 px-1 border-r border-slate-200 text-slate-400 font-normal">—</td>
-                                <td id="cell_CNNN" class="py-2 px-1 border-r border-slate-200 text-slate-400 font-normal">—</td>
-                                <td id="cell_NgoaiNgu" class="py-2 px-1 text-slate-400 font-normal">—</td>
+                            <tr id="scoresRow" class="bg-white text-slate-900 font-semibold text-xs">
+                                <td id="cell_Van" class="py-1.5 px-1 border-r border-slate-200 text-slate-400 font-normal">—</td>
+                                <td id="cell_Toan" class="py-1.5 px-1 border-r border-slate-200 text-slate-400 font-normal">—</td>
+                                <td id="cell_Li" class="py-1.5 px-1 border-r border-slate-200 text-slate-400 font-normal">—</td>
+                                <td id="cell_Hoa" class="py-1.5 px-1 border-r border-slate-200 text-slate-400 font-normal">—</td>
+                                <td id="cell_Sinh" class="py-1.5 px-1 border-r border-slate-200 text-slate-400 font-normal">—</td>
+                                <td id="cell_Su" class="py-1.5 px-1 border-r border-slate-200 text-slate-400 font-normal">—</td>
+                                <td id="cell_Dia" class="py-1.5 px-1 border-r border-slate-200 text-slate-400 font-normal">—</td>
+                                <td id="cell_GiaoDucKinhTePhapLuat" class="py-1.5 px-1 border-r border-slate-200 text-slate-400 font-normal">—</td>
+                                <td id="cell_TinHoc" class="py-1.5 px-1 border-r border-slate-200 text-slate-400 font-normal">—</td>
+                                <td id="cell_CNCN" class="py-1.5 px-1 border-r border-slate-200 text-slate-400 font-normal">—</td>
+                                <td id="cell_CNNN" class="py-1.5 px-1 border-r border-slate-200 text-slate-400 font-normal">—</td>
+                                <td id="cell_NgoaiNgu" class="py-1.5 px-1 text-slate-400 font-normal">—</td>
                             </tr>
                         </tbody>
                     </table>
@@ -185,7 +182,7 @@
 
             <!-- TỔNG HỢP ĐIỂM THI THPT & TỔ HỢP XÉT TUYỂN (GỌN GÀNG) -->
             <div id="comboResultsSection"
-                class="hidden flex flex-col gap-2 bg-slate-50 border border-slate-200 rounded-lg p-2.5 text-xs">
+                class="hidden flex flex-col gap-1.5 bg-slate-50 border border-slate-200 rounded-md p-2 text-xs">
                 
                 <!-- Dòng 1: Toán, Văn và 1 môn cao nhất -->
                 <div class="flex flex-wrap items-center justify-between gap-1">
@@ -200,7 +197,7 @@
                 </div>
 
                 <!-- Dòng 3: List tất cả tổ hợp có thể có -->
-                <div class="flex flex-wrap items-center gap-1.5 pt-1.5 border-t border-slate-200">
+                <div class="flex flex-wrap items-center gap-1.5 pt-1 border-t border-slate-200">
                     <span class="font-medium text-slate-600 shrink-0">Tất cả tổ hợp có điểm:</span>
                     <div id="comboGrid" class="flex flex-wrap items-center gap-1">
                         <!-- Rendered via JS -->
@@ -212,8 +209,8 @@
         </div>
 
         <!-- PHẦN 2: BẢNG TÍNH ĐIỂM HỌC BẠ (3 MÔN x 3 NĂM) -->
-        <div class="flex flex-col gap-2.5 pt-3 border-t border-slate-200">
-            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-1.5">
+        <div class="flex flex-col gap-2 pt-2.5 border-t border-slate-200">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-1">
                 <div>
                     <span class="text-xs font-bold text-slate-800 uppercase tracking-wide">
                         2. Bảng tính điểm học bạ THPT (3 môn x 3 năm lớp 10, 11, 12)
@@ -225,24 +222,24 @@
             </div>
 
             <!-- BẢNG HỌC BẠ 3x3 -->
-            <div class="overflow-x-auto border border-slate-200 rounded-lg">
+            <div class="overflow-x-auto border border-slate-200 rounded-md">
                 <table class="w-full border-collapse text-center text-xs sm:text-sm">
                     <thead>
-                        <tr class="bg-slate-50 text-slate-700 font-semibold border-b border-slate-200">
-                            <th class="py-2 px-3 text-left pl-4 w-[34%] border-r border-slate-200">
+                        <tr class="bg-slate-50 text-slate-700 font-semibold border-b border-slate-200 text-xs">
+                            <th class="py-1.5 px-3 text-left pl-3.5 w-[34%] border-r border-slate-200">
                                 Năm Học / ĐTB
                             </th>
-                            <th class="py-1.5 px-2 border-r border-slate-200 w-[22%]">
+                            <th class="py-1 px-2 border-r border-slate-200 w-[22%]">
                                 <input id="subName_m1" type="text" value="Môn 1" placeholder="Môn 1"
-                                    class="w-full text-center font-bold text-xs sm:text-sm bg-transparent outline-none focus:bg-white focus:ring-1 focus:ring-blue-600 rounded py-1" />
+                                    class="w-full text-center font-bold text-xs sm:text-sm bg-transparent outline-none focus:bg-white focus:ring-1 focus:ring-blue-600 rounded py-0.5" />
                             </th>
-                            <th class="py-1.5 px-2 border-r border-slate-200 w-[22%]">
+                            <th class="py-1 px-2 border-r border-slate-200 w-[22%]">
                                 <input id="subName_m2" type="text" value="Môn 2" placeholder="Môn 2"
-                                    class="w-full text-center font-bold text-xs sm:text-sm bg-transparent outline-none focus:bg-white focus:ring-1 focus:ring-blue-600 rounded py-1" />
+                                    class="w-full text-center font-bold text-xs sm:text-sm bg-transparent outline-none focus:bg-white focus:ring-1 focus:ring-blue-600 rounded py-0.5" />
                             </th>
-                            <th class="py-1.5 px-2 w-[22%]">
+                            <th class="py-1 px-2 w-[22%]">
                                 <input id="subName_m3" type="text" value="Môn 3" placeholder="Môn 3"
-                                    class="w-full text-center font-bold text-xs sm:text-sm bg-transparent outline-none focus:bg-white focus:ring-1 focus:ring-blue-600 rounded py-1" />
+                                    class="w-full text-center font-bold text-xs sm:text-sm bg-transparent outline-none focus:bg-white focus:ring-1 focus:ring-blue-600 rounded py-0.5" />
                             </th>
                         </tr>
                     </thead>
@@ -250,25 +247,25 @@
                         <!-- Rendered via JS -->
                     </tbody>
                     <tfoot>
-                        <tr class="bg-slate-50/70 border-t border-slate-200 font-medium text-slate-700 text-xs sm:text-sm">
-                            <td class="py-2 px-3 text-left pl-4 border-r border-slate-200 text-slate-600">
+                        <tr class="bg-slate-50/70 border-t border-slate-200 font-medium text-slate-700 text-xs">
+                            <td class="py-1.5 px-3 text-left pl-3.5 border-r border-slate-200 text-slate-600">
                                 ĐTB 3 năm từng môn
                             </td>
                             <td id="dtb_m1"
-                                class="py-2 px-2 border-r border-slate-200 font-bold text-slate-900 text-sm sm:text-base">
+                                class="py-1.5 px-2 border-r border-slate-200 font-bold text-slate-900 text-xs sm:text-sm">
                                 —</td>
                             <td id="dtb_m2"
-                                class="py-2 px-2 border-r border-slate-200 font-bold text-slate-900 text-sm sm:text-base">
+                                class="py-1.5 px-2 border-r border-slate-200 font-bold text-slate-900 text-xs sm:text-sm">
                                 —</td>
-                            <td id="dtb_m3" class="py-2 px-2 font-bold text-slate-900 text-sm sm:text-base">—</td>
+                            <td id="dtb_m3" class="py-1.5 px-2 font-bold text-slate-900 text-xs sm:text-sm">—</td>
                         </tr>
-                        <tr class="bg-blue-50/70 border-t-2 border-blue-200 text-slate-900 font-bold">
+                        <tr class="bg-blue-50/70 border-t border-blue-200 text-slate-900 font-bold">
                             <td
-                                class="py-2.5 px-3 text-left pl-4 border-r border-blue-200 text-xs sm:text-sm uppercase tracking-wider">
+                                class="py-2 px-3 text-left pl-3.5 border-r border-blue-200 text-xs uppercase tracking-wide">
                                 Tổng ĐTB chung cả 3 môn
                             </td>
                             <td id="totalHocba" colspan="3"
-                                class="py-2.5 px-2 text-2xl sm:text-3xl text-blue-900 font-extrabold tracking-tight transition-all duration-200">
+                                class="py-2 px-2 text-lg sm:text-xl text-blue-900 font-bold tracking-tight transition-all duration-200">
                                 —</td>
                         </tr>
                     </tfoot>
@@ -474,10 +471,10 @@
 
             // 4. LIST TẤT CẢ TỔ HỢP CÓ THỂ CÓ
             if (validCombos.length > 0) {
-                validCombos.forEach((c, idx) => {
+                validCombos.forEach((c) => {
                     const item = document.createElement('span');
-                    item.className = `px-2 py-0.5 rounded text-[11px] font-semibold flex items-center gap-1 ${idx === 0 ? 'bg-blue-800 text-white' : 'bg-white text-slate-800 border border-slate-300'}`;
-                    item.innerHTML = `<span>${c.code}:</span> <span class="${idx === 0 ? 'text-white font-bold' : 'text-blue-800 font-bold'}">${c.total.toFixed(2)}</span>`;
+                    item.className = 'px-2 py-0.5 rounded text-[11px] font-semibold flex items-center gap-1 bg-blue-800 text-white';
+                    item.innerHTML = `<span>${c.code}:</span> <span class="text-white font-bold">${c.total.toFixed(2)}</span>`;
                     container.appendChild(item);
                 });
             } else {
