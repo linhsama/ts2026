@@ -1,12 +1,12 @@
 @echo off
-title Cai Dat Tu Dong Khoi Dong Server TS2026 Cung Windows
+title Install TS2026 Server Windows Auto-Start
 cd /d "%~dp0"
 
 set "STARTUP_FOLDER=%APPDATA%\Microsoft\Windows\Start Menu\Programs\Startup"
 set "VBS_TARGET=%STARTUP_FOLDER%\ServerTS2026.vbs"
 
 echo =================================================================
-echo   CAI DAT TU DONG KHOI DONG SERVER TS2026 KHI BAT MAY TINH
+echo   INSTALL AUTO-START TS2026 SERVER WITH WINDOWS
 echo =================================================================
 echo.
 
@@ -16,14 +16,14 @@ echo WshShell.CurrentDirectory = "%~dp0"
 echo WshShell.Run "python server.py", 0, False
 ) > "%VBS_TARGET%"
 
-echo [OK] Da cai dat thanh cong!
-echo Tu gio tro di, moi khi ban bat may tinh, Server TS2026 se tu dong
-echo khoi dong chay ngam trong he thong ma khong can phai mo cua so cmd.
+echo [OK] Auto-start successfully installed!
+echo The TS2026 server will now start automatically in the background
+echo whenever Windows boots up.
 echo.
 echo =================================================================
-echo Dang khoi dong Server ngay bay gio...
+echo Starting Server now in background...
 start "" "%VBS_TARGET%"
-echo [OK] Server da duoc bat va dang chay ngam!
+echo [OK] Server is running in the background on port 8080!
 echo =================================================================
 echo.
 pause

@@ -24,13 +24,13 @@ def get_local_ip():
 def update_client_launchers(local_ip, hostname):
     base_dir = os.path.dirname(os.path.abspath(__file__))
     
-    # Tạo file duy nhất gửi cho các máy khác trong mạng LAN
+    # Generate single client launcher file for LAN access
     html_content = f"""<!DOCTYPE html>
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tra Cứu Điểm Thi THPT 2026 và Tính Điểm Học Bạ...</title>
+    <title>Tra Cứu Điểm Thi THPT 2026 và Tính Điểm Học Bạ</title>
     <style>
         body {{
             font-family: system-ui, -apple-system, sans-serif;
@@ -117,12 +117,12 @@ def update_client_launchers(local_ip, hostname):
         }}
 
         async function autoDiscover() {{
-            // 1. Thử ngay IP và Tên máy chủ đã biết
+            // 1. Try known server IP and hostname first
             if (await ping(KNOWN_IP)) return;
             if (await ping(KNOWN_HOSTNAME)) return;
             if (await ping("localhost")) return;
 
-            // 2. Quét nhanh dải IP nội bộ nếu máy chủ bị đổi IP
+            // 2. Fast scan local subnet if IP has changed
             const prefix = KNOWN_IP.substring(0, KNOWN_IP.lastIndexOf('.') + 1);
             const promises = [];
             for (let i = 1; i <= 254; i++) {{
@@ -143,7 +143,7 @@ def update_client_launchers(local_ip, hostname):
 </body>
 </html>
 """
-    with open(os.path.join(base_dir, "ToolTs2026.html"), "w", encoding="utf-8") as f:
+    with open(os.path.join(base_dir, "launcher.html"), "w", encoding="utf-8") as f:
         f.write(html_content)
 
 def fetch_year(sbd, yr):
@@ -193,7 +193,7 @@ class AppHandler(SimpleHTTPRequestHandler):
                 self.send_response(400)
                 self.send_header("Content-Type", "application/json; charset=utf-8")
                 self.end_headers()
-                self.wfile.write(json.dumps({"status": False, "message": "Thieu SBD"}).encode("utf-8"))
+                self.wfile.write(json.dumps({"status": False, "message": "Missing SBD parameter"}).encode("utf-8"))
                 return
 
             years_to_try = ["2026", "2025", "2024"]
@@ -231,7 +231,7 @@ def run():
     local_ip = get_local_ip()
     hostname = socket.gethostname()
     
-    # Tự động cập nhật file ToolTs2026.html
+    # Automatically generate launcher.html
     update_client_launchers(local_ip, hostname)
 
     server_address = (HOST, PORT)
@@ -241,21 +241,21 @@ def run():
     host_url = f"http://{hostname}:{PORT}/"
 
     print("=" * 68)
-    print("      MAY CHU TRA CUU DIEM THI & TINH DIEM HOC BA 2026")
+    print("      TS2026 SERVER - LOCAL EXAM LOOKUP & HIGH SCHOOL TRANSCRIPT")
     print("=" * 68)
-    print(f"  * Tren may chu nay     : {local_url}")
-    print(f"  * Cac may khac cung LAN: {lan_url}  hoac  {host_url}")
+    print(f"  * Local Host Access   : {local_url}")
+    print(f"  * LAN Network Access  : {lan_url}  or  {host_url}")
     print("=" * 68)
-    print(f"  [>] GUI 1 FILE DUY NHAT CHO MAY KHAC: ToolTs2026.html")
+    print(f"  [>] SHARE THIS FILE WITH OTHER CLIENTS: launcher.html")
     print("=" * 68)
-    print("  Nhan Ctrl + C de dung server.")
+    print("  Press Ctrl + C to stop the server.")
     print("=" * 68)
 
     webbrowser.open(local_url)
     try:
         httpd.serve_forever()
     except KeyboardInterrupt:
-        print("\nDa dung server.")
+        print("\nServer stopped.")
         httpd.server_close()
 
 if __name__ == "__main__":
