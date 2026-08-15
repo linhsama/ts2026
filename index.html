@@ -1,0 +1,1201 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tra Cứu Điểm Thi THPT & Tính Điểm Học Bạ 2026</title>
+    <meta name="description"
+        content="Công cụ tra cứu điểm thi THPT theo SBD, tự động tính điểm tất cả tổ hợp môn và tính điểm xét tuyển học bạ 3 năm THPT">
+    <link rel="icon" type="image/png" href="https://xettuyen.tdu.edu.vn/images/favicon.png">
+
+    <!-- OpenGraph Metadata -->
+    <meta property="og:title" content="Tra Cứu Điểm Thi THPT & Tính Điểm Học Bạ 2026">
+    <meta property="og:description"
+        content="Tra cứu điểm thi THPT theo SBD, tự động tính điểm tất cả tổ hợp môn và tính điểm xét tuyển học bạ 3 năm THPT">
+    <meta property="og:type" content="website">
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            font-size: 15px;
+        }
+
+        /* Focus nổi bật cho ô nhập học bạ */
+        .hb-cell:focus-within {
+            background-color: #eef2ff !important;
+            box-shadow: inset 0 0 0 2px #4f46e5;
+        }
+
+        .hb-input:focus {
+            outline: none;
+            background-color: #eef2ff;
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+    </style>
+</head>
+
+<body class="bg-slate-50/60 text-slate-900 min-h-screen p-3 sm:p-6 font-sans">
+
+    <div class="max-w-5xl mx-auto flex flex-col gap-5 bg-white border border-slate-200/80 rounded-2xl p-4 sm:p-7 shadow-xs">
+
+        <!-- Header Tiêu Đề & Công Cụ -->
+        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 border-b border-slate-200 pb-4">
+            <div class="flex items-center gap-3.5">
+                <div
+                    class="w-11 h-11 rounded-xl bg-indigo-600 text-white flex items-center justify-center text-xl shadow-md shadow-indigo-100">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                </div>
+                <div>
+                    <h1 class="text-xl sm:text-2xl font-black text-slate-900 tracking-tight flex items-center gap-2">
+                        TRA CỨU ĐIỂM THI THPT & TÍNH ĐIỂM HỌC BẠ 2026
+                    </h1>
+                    <p class="text-xs sm:text-sm text-slate-500 mt-0.5">Tra cứu điểm thi theo SBD • Liệt kê điểm tất cả tổ hợp môn • Tính điểm học bạ 3 năm</p>
+                </div>
+            </div>
+            <div class="flex items-center gap-2 self-end sm:self-auto">
+                <button id="btnOpenHistory"
+                    class="h-9 px-3 bg-slate-50 hover:bg-slate-100 active:bg-slate-200 text-slate-700 text-xs font-semibold rounded-lg border border-slate-300 flex items-center gap-1.5 transition shadow-xs">
+                    <i class="fa-solid fa-clock-rotate-left text-slate-500 text-xs"></i>
+                    <span>Lịch sử</span>
+                    <span id="historyBadge"
+                        class="hidden bg-indigo-600 text-white text-[11px] px-1.5 py-0.2 rounded-full font-bold">0</span>
+                </button>
+                <button id="btnResetAll"
+                    class="h-9 px-3 bg-slate-50 hover:bg-red-50 hover:text-red-600 hover:border-red-200 active:bg-red-100 text-slate-700 text-xs font-semibold rounded-lg border border-slate-300 flex items-center gap-1.5 transition shadow-xs"
+                    title="Xóa toàn bộ và nhập lại từ đầu (Phím tắt: Esc)">
+                    <i class="fa-solid fa-rotate-right text-xs"></i>
+                    <span>Nhập lại</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- PHẦN 1: TRA CỨU ĐIỂM THI TỐT NGHIỆP THPT -->
+        <div class="flex flex-col gap-3.5">
+
+            <!-- Khung Nhập Số Báo Danh -->
+            <div class="flex flex-col gap-1.5">
+                <div class="flex justify-between items-center">
+                    <span class="text-xs font-bold text-slate-800 uppercase tracking-wider flex items-center gap-2">
+                        <i class="fa-solid fa-magnifying-glass text-indigo-600 text-xs"></i>
+                        <span>1. Tra Cứu Điểm Thi Tốt Nghiệp THPT (Theo SBD)</span>
+                    </span>
+                    <span class="text-[11px] text-slate-400 font-normal hidden sm:inline">Gõ đủ 8 số tự động tra cứu • Phím Enter</span>
+                </div>
+
+                <div class="flex gap-2">
+                    <div class="relative flex-1">
+                        <i class="fa-solid fa-user-graduate absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-sm"></i>
+                        <input id="sbdInput" type="text" maxlength="8" inputmode="numeric" placeholder="Nhập Số Báo Danh (8 chữ số)..."
+                            class="w-full h-11 bg-slate-50 border border-slate-300 rounded-xl pl-10 pr-9 text-base sm:text-sm font-semibold outline-none focus:border-indigo-600 focus:bg-white focus:ring-4 focus:ring-indigo-100 transition text-slate-900 tracking-wider placeholder:font-normal placeholder:text-slate-400" />
+                        
+                        <!-- Nút Xóa nhanh SBD -->
+                        <button id="btnClearSbd" type="button"
+                            class="hidden absolute right-3 top-1/2 -translate-y-1/2 w-6 h-6 rounded-full bg-slate-200 hover:bg-slate-300 text-slate-500 hover:text-slate-700 items-center justify-center text-xs transition"
+                            title="Xóa SBD">
+                            <i class="fa-solid fa-xmark"></i>
+                        </button>
+                    </div>
+
+                    <button id="btnLookup"
+                        class="h-11 bg-indigo-600 hover:bg-indigo-700 active:bg-indigo-800 text-white text-sm font-semibold px-6 rounded-xl flex items-center gap-2 transition shrink-0 shadow-sm shadow-indigo-100">
+                        <i id="lookupIcon" class="fa-solid fa-magnifying-glass text-xs"></i>
+                        <span id="lookupText">Tra Cứu</span>
+                    </button>
+                </div>
+
+                <!-- Thông báo trạng thái -->
+                <div id="lookupAlert" class="hidden text-xs py-2 px-3.5 rounded-xl font-medium transition-all"></div>
+            </div>
+
+            <!-- BẢNG ĐIỂM NGANG 12 MÔN THI THPT -->
+            <div class="flex flex-col gap-1.5">
+                <div class="text-xs font-bold text-slate-700 flex items-center justify-between">
+                    <span class="text-slate-500 text-xs font-medium">Kết quả chi tiết 12 môn thi:</span>
+                    <div class="flex items-center gap-2">
+                        <span id="currentSbdTag"
+                            class="text-xs text-slate-700 font-bold bg-slate-100 border border-slate-200 px-2.5 py-0.5 rounded-lg shadow-xs">SBD: —</span>
+                        <button id="btnClearScores"
+                            class="hidden text-[11px] text-slate-500 hover:text-red-600 font-medium transition underline"
+                            title="Xóa bảng điểm thi">Xóa điểm thi</button>
+                    </div>
+                </div>
+
+                <div class="overflow-x-auto border border-slate-200 rounded-xl shadow-xs">
+                    <table class="w-full border-collapse text-center text-xs">
+                        <thead>
+                            <tr class="bg-slate-100/80 text-slate-800 font-bold border-b border-slate-200">
+                                <th class="py-2.5 px-2 border-r border-slate-200 min-w-[70px] whitespace-nowrap">Ngữ văn</th>
+                                <th class="py-2.5 px-2 border-r border-slate-200 min-w-[65px] whitespace-nowrap">Toán</th>
+                                <th class="py-2.5 px-2 border-r border-slate-200 min-w-[65px] whitespace-nowrap">Vật lí</th>
+                                <th class="py-2.5 px-2 border-r border-slate-200 min-w-[65px] whitespace-nowrap">Hóa học</th>
+                                <th class="py-2.5 px-2 border-r border-slate-200 min-w-[65px] whitespace-nowrap">Sinh học</th>
+                                <th class="py-2.5 px-2 border-r border-slate-200 min-w-[65px] whitespace-nowrap">Lịch sử</th>
+                                <th class="py-2.5 px-2 border-r border-slate-200 min-w-[65px] whitespace-nowrap">Địa lí</th>
+                                <th class="py-2.5 px-2 border-r border-slate-200 min-w-[95px] whitespace-nowrap">GD KTPL</th>
+                                <th class="py-2.5 px-2 border-r border-slate-200 min-w-[65px] whitespace-nowrap">Tin học</th>
+                                <th class="py-2.5 px-2 border-r border-slate-200 min-w-[65px] whitespace-nowrap">CNCN</th>
+                                <th class="py-2.5 px-2 border-r border-slate-200 min-w-[65px] whitespace-nowrap">CNNN</th>
+                                <th class="py-2.5 px-2 min-w-[75px] whitespace-nowrap">Ngoại ngữ</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr id="scoresRow" class="bg-white text-slate-900 font-bold text-sm">
+                                <td id="cell_Van" class="py-2.5 px-1 border-r border-slate-200 text-slate-400 font-normal">—</td>
+                                <td id="cell_Toan" class="py-2.5 px-1 border-r border-slate-200 text-slate-400 font-normal">—</td>
+                                <td id="cell_Li" class="py-2.5 px-1 border-r border-slate-200 text-slate-400 font-normal">—</td>
+                                <td id="cell_Hoa" class="py-2.5 px-1 border-r border-slate-200 text-slate-400 font-normal">—</td>
+                                <td id="cell_Sinh" class="py-2.5 px-1 border-r border-slate-200 text-slate-400 font-normal">—</td>
+                                <td id="cell_Su" class="py-2.5 px-1 border-r border-slate-200 text-slate-400 font-normal">—</td>
+                                <td id="cell_Dia" class="py-2.5 px-1 border-r border-slate-200 text-slate-400 font-normal">—</td>
+                                <td id="cell_GiaoDucKinhTePhapLuat" class="py-2.5 px-1 border-r border-slate-200 text-slate-400 font-normal">—</td>
+                                <td id="cell_TinHoc" class="py-2.5 px-1 border-r border-slate-200 text-slate-400 font-normal">—</td>
+                                <td id="cell_CNCN" class="py-2.5 px-1 border-r border-slate-200 text-slate-400 font-normal">—</td>
+                                <td id="cell_CNNN" class="py-2.5 px-1 border-r border-slate-200 text-slate-400 font-normal">—</td>
+                                <td id="cell_NgoaiNgu" class="py-2.5 px-1 text-slate-400 font-normal">—</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- DANH SÁCH TẤT CẢ CÁC TỔ HỢP CÓ ĐIỂM (TÍNH SẴN CHO THÍ SINH) -->
+            <div id="comboResultsSection" class="hidden flex flex-col gap-2 bg-slate-50 border border-slate-200 rounded-xl p-3.5">
+                <div class="flex justify-between items-center">
+                    <span class="text-xs font-bold text-slate-800 uppercase tracking-wider flex items-center gap-1.5">
+                        <i class="fa-solid fa-list-check text-indigo-600"></i>
+                        <span>Điểm Tổng Các Tổ Hợp Xét Tuyển (Thí sinh có đủ 3 môn thi)</span>
+                    </span>
+                    <span id="comboCountBadge" class="text-[11px] font-semibold text-indigo-700 bg-indigo-50 border border-indigo-200 px-2 py-0.5 rounded-md">
+                        0 tổ hợp
+                    </span>
+                </div>
+
+                <!-- Lưới hiển thị các tổ hợp tính sẵn điểm -->
+                <div id="comboGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2 pt-1">
+                    <!-- Rendered via JS -->
+                </div>
+            </div>
+
+        </div>
+
+        <!-- PHẦN 2: BẢNG TÍNH ĐIỂM HỌC BẠ (3 MÔN x 3 NĂM) -->
+        <div class="flex flex-col gap-3 pt-3 border-t border-slate-200">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
+                <div>
+                    <span class="text-xs font-bold text-slate-900 uppercase tracking-wider flex items-center gap-2">
+                        <i class="fa-solid fa-table-list text-indigo-600 text-xs"></i>
+                        <span>2. Bảng Tính Điểm Học Bạ THPT (3 Môn x 3 Năm Lớp 10, 11, 12)</span>
+                    </span>
+                    <div class="text-[11px] text-slate-500 font-normal mt-0.5">
+                        ⚡ <strong>Nhập siêu tốc:</strong> Gõ 2 số tự động nhảy ô (VD: <span class="text-indigo-600 font-semibold">85</span> ➔ <strong>8.5</strong>) • Phím mũi tên (↑ ↓ ← →) • <kbd class="px-1 py-0.5 bg-slate-100 border border-slate-300 rounded text-[10px]">Enter</kbd>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-2 self-end sm:self-auto">
+                    <button id="btnClearHocba"
+                        class="h-8 px-2.5 bg-slate-50 hover:bg-slate-100 text-slate-600 text-xs font-medium rounded-lg border border-slate-300 flex items-center gap-1.5 transition"
+                        title="Xóa nhanh dữ liệu bảng học bạ">
+                        <i class="fa-regular fa-trash-can text-slate-400 text-xs"></i>
+                        <span>Xóa HB</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- BẢNG HỌC BẠ 3x3 -->
+            <div class="overflow-x-auto border border-slate-200 rounded-xl shadow-xs">
+                <table class="w-full border-collapse text-center text-xs sm:text-sm">
+                    <thead>
+                        <tr class="bg-slate-100/80 text-slate-800 font-bold border-b border-slate-200">
+                            <th class="py-2.5 px-3 text-left pl-4 w-[34%] border-r border-slate-200">
+                                Năm Học / ĐTB
+                            </th>
+                            <th class="py-2 px-2 border-r border-slate-200 w-[22%]">
+                                <input id="subName_m1" type="text" value="Môn 1" placeholder="Môn 1"
+                                    class="w-full text-center font-bold text-xs sm:text-sm bg-transparent outline-none focus:bg-white focus:ring-1 focus:ring-indigo-400 rounded py-1" />
+                            </th>
+                            <th class="py-2 px-2 border-r border-slate-200 w-[22%]">
+                                <input id="subName_m2" type="text" value="Môn 2" placeholder="Môn 2"
+                                    class="w-full text-center font-bold text-xs sm:text-sm bg-transparent outline-none focus:bg-white focus:ring-1 focus:ring-indigo-400 rounded py-1" />
+                            </th>
+                            <th class="py-2 px-2 w-[22%]">
+                                <input id="subName_m3" type="text" value="Môn 3" placeholder="Môn 3"
+                                    class="w-full text-center font-bold text-xs sm:text-sm bg-transparent outline-none focus:bg-white focus:ring-1 focus:ring-indigo-400 rounded py-1" />
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody id="hocbaTableBody">
+                        <!-- Rendered via JS -->
+                    </tbody>
+                    <tfoot>
+                        <tr class="bg-slate-50 border-t border-slate-200 font-semibold text-slate-800 text-xs sm:text-sm">
+                            <td class="py-2.5 px-3 text-left pl-4 border-r border-slate-200 text-slate-600 font-medium">
+                                ĐTB 3 năm từng môn
+                            </td>
+                            <td id="dtb_m1" class="py-2.5 px-2 border-r border-slate-200 font-bold text-indigo-950 text-sm sm:text-base">—</td>
+                            <td id="dtb_m2" class="py-2.5 px-2 border-r border-slate-200 font-bold text-indigo-950 text-sm sm:text-base">—</td>
+                            <td id="dtb_m3" class="py-2.5 px-2 font-bold text-indigo-950 text-sm sm:text-base">—</td>
+                        </tr>
+                        <tr class="bg-indigo-50/90 border-t-2 border-indigo-200 text-indigo-950 font-black">
+                            <td class="py-3 px-3 text-left pl-4 border-r border-indigo-200 text-xs sm:text-sm uppercase tracking-wider">
+                                TỔNG ĐIỂM HỌC BẠ (3 MÔN)
+                            </td>
+                            <td id="totalHocba" colspan="3"
+                                class="py-3 px-2 text-2xl sm:text-3xl text-indigo-900 font-black tracking-tight transition-all duration-200">—</td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+
+            <!-- Thanh chức năng phụ (Sao chép kết quả) -->
+            <div class="flex justify-between items-center pt-1">
+                <span id="autoFocusNotice" class="text-[11px] text-slate-400 italic">
+                    💡 Nhập xong môn cuối (Lớp 12), hệ thống sẽ tự động lưu và chuyển về ô SBD để tiếp tục thí sinh mới.
+                </span>
+                <button id="btnCopySummary"
+                    class="h-8 px-3 bg-white hover:bg-slate-50 text-indigo-700 text-xs font-semibold rounded-lg border border-indigo-200 flex items-center gap-1.5 transition shadow-xs">
+                    <i class="fa-regular fa-copy text-xs"></i>
+                    <span>Sao chép kết quả</span>
+                </button>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Drawer Overlay -->
+    <div id="drawerOverlay"
+        class="fixed inset-0 bg-slate-900/40 backdrop-blur-xs z-40 transition-opacity opacity-0 pointer-events-none duration-300">
+    </div>
+
+    <!-- Drawer Lịch Sử -->
+    <div id="drawer"
+        class="fixed top-0 right-0 w-84 max-w-[88vw] h-full bg-white shadow-2xl z-50 flex flex-col transform transition-transform duration-300 translate-x-full border-l border-slate-200">
+        <div class="p-4 border-b border-slate-200 flex justify-between items-center bg-slate-50">
+            <span class="font-bold text-slate-900 text-xs sm:text-sm uppercase tracking-wider flex items-center gap-2">
+                <i class="fa-solid fa-clock-rotate-left text-indigo-600"></i>
+                <span>Lịch Sử Tra Cứu & Tính Điểm</span>
+            </span>
+            <button id="btnCloseDrawer"
+                class="w-7 h-7 rounded-lg hover:bg-slate-200 text-slate-400 hover:text-slate-700 flex items-center justify-center transition">
+                <i class="fa-solid fa-xmark text-sm"></i>
+            </button>
+        </div>
+
+        <div id="drawerContent" class="flex-1 overflow-y-auto"></div>
+    </div>
+
+    <!-- Toast thông báo nhỏ -->
+    <div id="toast"
+        class="fixed bottom-5 right-5 bg-slate-900 text-white text-xs px-4 py-2.5 rounded-xl shadow-lg transform translate-y-16 opacity-0 transition-all duration-300 z-50 flex items-center gap-2">
+        <i class="fa-solid fa-circle-check text-emerald-400"></i>
+        <span id="toastMsg">Đã sao chép kết quả!</span>
+    </div>
+
+    <!-- JAVASCRIPT THUẦN (100% GITHUB PAGES READY) -->
+    <script>
+        // 12 Môn thi tốt nghiệp THPT
+        const SUBJECTS = [
+            { key: 'Van', name: 'Ngữ văn', apiKeys: ['van', 'nguvan', 'ngữ văn', 'ngữ_văn', 'ngu_van'] },
+            { key: 'Toan', name: 'Toán', apiKeys: ['toan', 'toán'] },
+            { key: 'Li', name: 'Vật lí', apiKeys: ['li', 'vatli', 'vatly', 'vật lí', 'vật lý', 'vật_lí', 'vat_ly', 'vat_li'] },
+            { key: 'Hoa', name: 'Hóa học', apiKeys: ['hoa', 'hoahoc', 'hóa học', 'hóa_học', 'hoa_hoc'] },
+            { key: 'Sinh', name: 'Sinh học', apiKeys: ['sinh', 'sinhhoc', 'sinh học', 'sinh_học', 'sinh_hoc'] },
+            { key: 'Su', name: 'Lịch sử', apiKeys: ['su', 'lichsu', 'lịch sử', 'lịch_sử', 'lich_su'] },
+            { key: 'Dia', name: 'Địa lí', apiKeys: ['dia', 'diali', 'dialy', 'địa lí', 'địa lý', 'địa_lí', 'dia_ly', 'dia_li'] },
+            { key: 'GiaoDucKinhTePhapLuat', name: 'Giáo dục KTPL', apiKeys: ['giaoduckintephapluat', 'giaoduckinhtephapluat', 'gdkt&pl', 'gdcd', 'gdktpl', 'giao_duc_ktpl', 'ktpl'] },
+            { key: 'TinHoc', name: 'Tin học', apiKeys: ['tinhoc', 'tin học', 'tin_học', 'tin'] },
+            { key: 'CNCN', name: 'CNCN', apiKeys: ['cncn', 'congnghecongnghiep', 'congnghe', 'cong_nghe_cn', 'cong_nghe'] },
+            { key: 'CNNN', name: 'CNNN', apiKeys: ['cnnn', 'congnghenongnghiep', 'cong_nghe_nn'] },
+            { key: 'NgoaiNgu', name: 'Ngoại ngữ', apiKeys: ['ngoaingu', 'tienganh', 'tiếng anh', 'ngoại ngữ', 'tieng_anh', 'ngoai_ngu', 'nn'] }
+        ];
+
+        // Danh mục đầy đủ các tổ hợp môn xét tuyển 2026 (Truyền thống & Mới theo CT GDPT 2018)
+        const ALL_COMBINATIONS = [
+            { code: 'A00', name: 'Toán, Vật lí, Hóa học', subs: ['Toán', 'Vật lí', 'Hóa học'] },
+            { code: 'A01', name: 'Toán, Vật lí, Ngoại ngữ', subs: ['Toán', 'Vật lí', 'Ngoại ngữ'] },
+            { code: 'A02', name: 'Toán, Vật lí, Sinh học', subs: ['Toán', 'Vật lí', 'Sinh học'] },
+            { code: 'A06', name: 'Toán, Hóa học, Địa lí', subs: ['Toán', 'Hóa học', 'Địa lí'] },
+            { code: 'A07', name: 'Toán, Lịch sử, Địa lí', subs: ['Toán', 'Lịch sử', 'Địa lí'] },
+            { code: 'B00', name: 'Toán, Hóa học, Sinh học', subs: ['Toán', 'Hóa học', 'Sinh học'] },
+            { code: 'B02', name: 'Toán, Sinh học, Địa lí', subs: ['Toán', 'Sinh học', 'Địa lí'] },
+            { code: 'B03', name: 'Toán, Sinh học, Ngữ văn', subs: ['Toán', 'Sinh học', 'Ngữ văn'] },
+            { code: 'C00', name: 'Ngữ văn, Lịch sử, Địa lí', subs: ['Ngữ văn', 'Lịch sử', 'Địa lí'] },
+            { code: 'C01', name: 'Ngữ văn, Toán, Vật lí', subs: ['Ngữ văn', 'Toán', 'Vật lí'] },
+            { code: 'C02', name: 'Ngữ văn, Toán, Hóa học', subs: ['Ngữ văn', 'Toán', 'Hóa học'] },
+            { code: 'C04', name: 'Ngữ văn, Toán, Địa lí', subs: ['Ngữ văn', 'Toán', 'Địa lí'] },
+            { code: 'D01', name: 'Toán, Ngữ văn, Ngoại ngữ', subs: ['Toán', 'Ngữ văn', 'Ngoại ngữ'] },
+            { code: 'D07', name: 'Toán, Hóa học, Ngoại ngữ', subs: ['Toán', 'Hóa học', 'Ngoại ngữ'] },
+            { code: 'D08', name: 'Toán, Sinh học, Ngoại ngữ', subs: ['Toán', 'Sinh học', 'Ngoại ngữ'] },
+            { code: 'D10', name: 'Toán, Địa lí, Ngoại ngữ', subs: ['Toán', 'Địa lí', 'Ngoại ngữ'] },
+            { code: 'D14', name: 'Ngữ văn, Lịch sử, Ngoại ngữ', subs: ['Ngữ văn', 'Lịch sử', 'Ngoại ngữ'] },
+            { code: 'D15', name: 'Ngữ văn, Địa lí, Ngoại ngữ', subs: ['Ngữ văn', 'Địa lí', 'Ngoại ngữ'] },
+            { code: 'D66', name: 'Ngữ văn, GD KTPL, Ngoại ngữ', subs: ['Ngữ văn', 'Giáo dục KTPL', 'Ngoại ngữ'] },
+            { code: 'D84', name: 'Toán, GD KTPL, Ngoại ngữ', subs: ['Toán', 'Giáo dục KTPL', 'Ngoại ngữ'] },
+            { code: 'X01', name: 'Toán, Ngữ văn, Lịch sử', subs: ['Toán', 'Ngữ văn', 'Lịch sử'] },
+            { code: 'X02', name: 'Toán, Vật lí, Tin học', subs: ['Toán', 'Vật lí', 'Tin học'] },
+            { code: 'X06', name: 'Toán, Vật lí, CNCN', subs: ['Toán', 'Vật lí', 'CNCN'] },
+            { code: 'X07', name: 'Toán, Tin học, CNCN', subs: ['Toán', 'Tin học', 'CNCN'] },
+            { code: 'X10', name: 'Toán, Hóa học, CNNN', subs: ['Toán', 'Hóa học', 'CNNN'] },
+            { code: 'X14', name: 'Toán, Sinh học, CNNN', subs: ['Toán', 'Sinh học', 'CNNN'] },
+            { code: 'X21', name: 'Ngữ văn, Lịch sử, GD KTPL', subs: ['Ngữ văn', 'Lịch sử', 'Giáo dục KTPL'] },
+            { code: 'X25', name: 'Ngữ văn, Địa lí, GD KTPL', subs: ['Ngữ văn', 'Địa lí', 'Giáo dục KTPL'] },
+            { code: 'X26', name: 'Toán, Tin học, Ngoại ngữ', subs: ['Toán', 'Tin học', 'Ngoại ngữ'] },
+            { code: 'X56', name: 'Toán, CNCN, Ngoại ngữ', subs: ['Toán', 'CNCN', 'Ngoại ngữ'] },
+            { code: 'X70', name: 'Ngữ văn, Lịch sử, Tin học', subs: ['Ngữ văn', 'Lịch sử', 'Tin học'] },
+            { code: 'X74', name: 'Ngữ văn, Địa lí, Tin học', subs: ['Ngữ văn', 'Địa lí', 'Tin học'] },
+            { code: 'X78', name: 'Ngữ văn, GD KTPL, Tin học', subs: ['Ngữ văn', 'Giáo dục KTPL', 'Tin học'] }
+        ];
+
+        let currentScores = {};
+        let currentHocba = { m1: { 10: '', 11: '', 12: '' }, m2: { 10: '', 11: '', 12: '' }, m3: { 10: '', 11: '', 12: '' } };
+        let currentSbd = '';
+        let saveTimeout = null;
+        let lookupDebounce = null;
+
+        const hocbaYrs = [10, 11, 12];
+        const hocbaMons = ['m1', 'm2', 'm3'];
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            const toastMsg = document.getElementById('toastMsg');
+            toastMsg.textContent = msg;
+            toast.classList.remove('translate-y-16', 'opacity-0');
+            toast.classList.add('translate-y-0', 'opacity-100');
+            setTimeout(() => {
+                toast.classList.remove('translate-y-0', 'opacity-100');
+                toast.classList.add('translate-y-16', 'opacity-0');
+            }, 2000);
+        }
+
+        // =========================================================================
+        // 1. TÍNH & LIỆT KÊ ĐIỂM TẤT CẢ CÁC TỔ HỢP CÓ ĐỦ ĐIỂM
+        // =========================================================================
+        function calculateAndRenderCombinations() {
+            const container = document.getElementById('comboGrid');
+            const section = document.getElementById('comboResultsSection');
+            const badge = document.getElementById('comboCountBadge');
+
+            container.innerHTML = '';
+
+            const hasScores = Object.keys(currentScores).length > 0;
+            if (!hasScores) {
+                section.classList.add('hidden');
+                return;
+            }
+
+            // Lấy điểm từng môn dưới dạng Map (Key chuẩn hoá)
+            const subjectPointMap = {};
+            SUBJECTS.forEach(s => {
+                const scoreKeys = Object.keys(currentScores);
+                for (const k of scoreKeys) {
+                    const cleanK = k.toLowerCase().replace(/[\s_]/g, '');
+                    if (s.apiKeys.some(ak => ak.toLowerCase().replace(/[\s_]/g, '') === cleanK)) {
+                        const pt = parseFloat(currentScores[k]);
+                        if (!isNaN(pt)) {
+                            subjectPointMap[s.name] = pt;
+                        }
+                        break;
+                    }
+                }
+            });
+
+            // Duyệt tất cả tổ hợp để tìm các tổ hợp mà thí sinh ĐÃ THI ĐỦ 3 MÔN
+            const validCombos = [];
+            ALL_COMBINATIONS.forEach(c => {
+                const pts = c.subs.map(subName => subjectPointMap[subName]);
+                const hasAll3 = pts.every(p => p !== undefined && p !== null && !isNaN(p));
+                if (hasAll3) {
+                    const total = pts.reduce((a, b) => a + b, 0);
+                    validCombos.push({
+                        code: c.code,
+                        name: c.name,
+                        subs: c.subs,
+                        points: pts,
+                        total: total
+                    });
+                }
+            });
+
+            // Sắp xếp điểm tổng từ cao xuống thấp
+            validCombos.sort((a, b) => b.total - a.total);
+
+            if (validCombos.length === 0) {
+                section.classList.add('hidden');
+                return;
+            }
+
+            section.classList.remove('hidden');
+            badge.textContent = `${validCombos.length} tổ hợp có điểm`;
+
+            validCombos.forEach((c, idx) => {
+                const card = document.createElement('div');
+                card.className = `p-3 rounded-xl border transition cursor-pointer flex flex-col justify-between ${idx === 0 ? 'bg-indigo-50/90 border-indigo-300 ring-2 ring-indigo-200' : 'bg-white border-slate-200 hover:border-indigo-300 hover:shadow-xs'}`;
+                card.title = 'Nhấn để áp dụng 3 môn này vào bảng học bạ';
+                card.innerHTML = `
+                    <div>
+                        <div class="flex justify-between items-center mb-1">
+                            <span class="font-black text-sm text-slate-900">${c.code}</span>
+                            ${idx === 0 ? '<span class="text-[10px] font-bold bg-indigo-600 text-white px-1.5 py-0.2 rounded">Cao nhất</span>' : ''}
+                        </div>
+                        <div class="text-[11px] text-slate-500 font-medium leading-tight mb-2">
+                            ${c.subs[0]} (${c.points[0]}) + ${c.subs[1]} (${c.points[1]}) + ${c.subs[2]} (${c.points[2]})
+                        </div>
+                    </div>
+                    <div class="pt-1.5 border-t border-slate-100 flex justify-between items-center">
+                        <span class="text-[10px] text-slate-400">Tổng điểm:</span>
+                        <span class="font-black text-base ${idx === 0 ? 'text-indigo-900' : 'text-slate-900'}">${c.total.toFixed(2)}</span>
+                    </div>
+                `;
+
+                // Khi click vào thẻ tổ hợp: Tự động gán 3 môn này vào Bảng Học Bạ
+                card.addEventListener('click', () => {
+                    document.getElementById('subName_m1').value = c.subs[0];
+                    document.getElementById('subName_m2').value = c.subs[1];
+                    document.getElementById('subName_m3').value = c.subs[2];
+                    showToast(`Đã áp dụng tổ hợp ${c.code} (${c.subs.join(', ')}) vào bảng học bạ!`);
+
+                    // Focus vào ô học bạ đầu tiên
+                    const firstHb = document.getElementById('hb_m1_10');
+                    if (firstHb) {
+                        firstHb.focus();
+                        firstHb.select();
+                    }
+                });
+
+                container.appendChild(card);
+            });
+        }
+
+        // =========================================================================
+        // 2. AUTO FOCUS & CHUYỂN Ô ĐIỀU HƯỚNG BẢNG HỌC BẠ (3x3)
+        // =========================================================================
+        function jumpNextCell(rIdx, cIdx) {
+            let nextCol = cIdx + 1;
+            let nextRow = rIdx;
+            if (nextCol > 2) {
+                nextCol = 0;
+                nextRow++;
+            }
+            if (nextRow <= 2) {
+                const nextM = hocbaMons[nextCol];
+                const nextY = hocbaYrs[nextRow];
+                const nextEl = document.getElementById(`hb_${nextM}_${nextY}`);
+                if (nextEl) {
+                    nextEl.focus();
+                    nextEl.select();
+                }
+            } else {
+                saveCurrentStateToHistory();
+
+                setTimeout(() => {
+                    const sbdInput = document.getElementById('sbdInput');
+                    if (sbdInput) {
+                        sbdInput.focus();
+                        sbdInput.select();
+                    }
+                    showToast('Đã tính & lưu học bạ thành công!');
+                }, 120);
+            }
+        }
+
+        function jumpPrevCell(rIdx, cIdx) {
+            let prevCol = cIdx - 1;
+            let prevRow = rIdx;
+            if (prevCol < 0) {
+                prevCol = 2;
+                prevRow--;
+            }
+            if (prevRow >= 0) {
+                const prevM = hocbaMons[prevCol];
+                const prevY = hocbaYrs[prevRow];
+                const prevEl = document.getElementById(`hb_${prevM}_${prevY}`);
+                if (prevEl) {
+                    prevEl.focus();
+                    prevEl.select();
+                }
+            }
+        }
+
+        function initHocbaTable() {
+            const tbody = document.getElementById('hocbaTableBody');
+            tbody.innerHTML = '';
+
+            hocbaYrs.forEach((y, rIdx) => {
+                const tr = document.createElement('tr');
+                tr.className = 'border-b border-slate-200 transition-colors hover:bg-slate-50/70';
+                tr.innerHTML = `
+                    <td class="py-2 px-3 text-left pl-4 font-medium text-slate-700 border-r border-slate-200">
+                        ĐTB cả năm lớp ${y}
+                    </td>
+                    ${hocbaMons.map((m, cIdx) => `
+                        <td class="p-1 border-r border-slate-200 last:border-r-0 hb-cell">
+                            <input type="text" id="hb_${m}_${y}" data-row="${rIdx}" data-col="${cIdx}" maxlength="4" inputmode="decimal" placeholder="—"
+                                class="hb-input w-full h-9 text-center font-bold text-xs sm:text-base text-slate-800 bg-transparent rounded-lg transition" />
+                        </td>
+                    `).join('')}
+                `;
+                tbody.appendChild(tr);
+            });
+
+            hocbaYrs.forEach((y, rIdx) => {
+                hocbaMons.forEach((m, cIdx) => {
+                    const inp = document.getElementById(`hb_${m}_${y}`);
+                    if (!inp) return;
+
+                    inp.addEventListener('focus', (e) => {
+                        setTimeout(() => e.target.select(), 10);
+                    });
+                    inp.addEventListener('click', (e) => {
+                        e.target.select();
+                    });
+                    inp.addEventListener('mouseup', (e) => {
+                        e.preventDefault();
+                        inp.select();
+                    });
+
+                    inp.addEventListener('input', (e) => {
+                        let val = e.target.value.replace(/,/g, '.').replace(/[^0-9.]/g, '');
+
+                        const parts = val.split('.');
+                        if (parts.length > 2) {
+                            val = parts[0] + '.' + parts.slice(1).join('');
+                        }
+
+                        if (val === '') {
+                            currentHocba[m][y] = '';
+                            e.target.value = '';
+                            calcHocbaTotals();
+                            scheduleSaveHistory();
+                            return;
+                        }
+
+                        if (val.endsWith('.')) {
+                            currentHocba[m][y] = val.slice(0, -1);
+                            e.target.value = val;
+                            calcHocbaTotals();
+                            scheduleSaveHistory();
+                            return;
+                        }
+
+                        if (val.includes('.')) {
+                            let num = parseFloat(val);
+                            if (!isNaN(num) && num >= 0 && num <= 10) {
+                                currentHocba[m][y] = val;
+                                e.target.value = val;
+                                calcHocbaTotals();
+                                scheduleSaveHistory();
+
+                                const decPart = parts[1] || '';
+                                if (decPart.length >= 1) {
+                                    jumpNextCell(rIdx, cIdx);
+                                }
+                                return;
+                            }
+                        }
+
+                        if (val === '10') {
+                            currentHocba[m][y] = '10.0';
+                            e.target.value = '10.0';
+                            calcHocbaTotals();
+                            scheduleSaveHistory();
+                            jumpNextCell(rIdx, cIdx);
+                            return;
+                        }
+
+                        if (val.length === 1) {
+                            currentHocba[m][y] = val;
+                            e.target.value = val;
+                            calcHocbaTotals();
+                            scheduleSaveHistory();
+                            return;
+                        }
+
+                        if (val.length >= 2) {
+                            let d1 = val[0];
+                            let d2 = val[1];
+                            let normalized = `${d1}.${d2}`;
+                            let num = parseFloat(normalized);
+                            if (!isNaN(num) && num >= 0 && num <= 10) {
+                                currentHocba[m][y] = normalized;
+                                e.target.value = normalized;
+                                calcHocbaTotals();
+                                scheduleSaveHistory();
+                                jumpNextCell(rIdx, cIdx);
+                                return;
+                            }
+                        }
+                    });
+
+                    inp.addEventListener('keydown', (e) => {
+                        if (e.key === 'Backspace' && inp.value === '') {
+                            e.preventDefault();
+                            jumpPrevCell(rIdx, cIdx);
+                            return;
+                        }
+
+                        if (e.key === 'Enter' || e.key === ' ') {
+                            e.preventDefault();
+                            if (inp.value && !inp.value.includes('.') && inp.value.length === 1) {
+                                const norm = inp.value + '.0';
+                                currentHocba[m][y] = norm;
+                                inp.value = norm;
+                                calcHocbaTotals();
+                                scheduleSaveHistory();
+                            }
+                            jumpNextCell(rIdx, cIdx);
+                            return;
+                        }
+
+                        let targetRow = rIdx;
+                        let targetCol = cIdx;
+
+                        if (e.key === 'ArrowRight') {
+                            targetCol++;
+                            if (targetCol > 2) { targetCol = 0; targetRow++; }
+                        } else if (e.key === 'ArrowLeft') {
+                            targetCol--;
+                            if (targetCol < 0) { targetCol = 2; targetRow--; }
+                        } else if (e.key === 'ArrowDown') {
+                            e.preventDefault();
+                            targetRow++;
+                            if (targetRow > 2) { targetRow = 0; targetCol++; }
+                            if (targetCol > 2) targetCol = 0;
+                        } else if (e.key === 'ArrowUp') {
+                            e.preventDefault();
+                            targetRow--;
+                            if (targetRow < 0) { targetRow = 2; targetCol--; }
+                            if (targetCol < 0) targetCol = 2;
+                        } else {
+                            return;
+                        }
+
+                        if (targetRow >= 0 && targetRow <= 2 && targetCol >= 0 && targetCol <= 2) {
+                            const nextM = hocbaMons[targetCol];
+                            const nextY = hocbaYrs[targetRow];
+                            const nextEl = document.getElementById(`hb_${nextM}_${nextY}`);
+                            if (nextEl) {
+                                nextEl.focus();
+                                nextEl.select();
+                            }
+                        }
+                    });
+                });
+            });
+        }
+
+        function calcHocbaTotals() {
+            let grandTotal = 0;
+            let countAvg = 0;
+
+            hocbaMons.forEach(m => {
+                const vals = hocbaYrs.map(y => parseFloat(currentHocba[m][y])).filter(v => !isNaN(v));
+                const cell = document.getElementById(`dtb_${m}`);
+                if (vals.length > 0) {
+                    const avg = vals.reduce((a, b) => a + b, 0) / vals.length;
+                    cell.textContent = avg.toFixed(2);
+                    grandTotal += avg;
+                    countAvg++;
+                } else {
+                    cell.textContent = '—';
+                }
+            });
+
+            const totalEl = document.getElementById('totalHocba');
+            if (countAvg > 0) {
+                totalEl.textContent = grandTotal.toFixed(2);
+            } else {
+                totalEl.textContent = '—';
+            }
+        }
+
+        // =========================================================================
+        // 3. TRA CỨU ĐIỂM THI THPT THEO SBD
+        // =========================================================================
+        function renderHorizontalTable(scores) {
+            let hasAnyScore = false;
+            SUBJECTS.forEach(s => {
+                const cell = document.getElementById(`cell_${s.key}`);
+                if (!cell) return;
+
+                let pt = null;
+                const scoreKeys = Object.keys(scores);
+                for (const k of scoreKeys) {
+                    const cleanK = k.toLowerCase().replace(/[\s_]/g, '');
+                    if (s.apiKeys.some(ak => ak.toLowerCase().replace(/[\s_]/g, '') === cleanK)) {
+                        pt = scores[k];
+                        break;
+                    }
+                }
+
+                if (pt !== null && pt !== undefined && pt !== '') {
+                    cell.textContent = pt;
+                    cell.className = 'py-2.5 px-1 border-r border-slate-200 last:border-r-0 text-emerald-700 font-bold text-sm bg-emerald-50/70';
+                    hasAnyScore = true;
+                } else {
+                    cell.textContent = '—';
+                    cell.className = 'py-2.5 px-1 border-r border-slate-200 last:border-r-0 text-slate-400 font-normal text-sm';
+                }
+            });
+
+            const btnClearScores = document.getElementById('btnClearScores');
+            if (hasAnyScore) {
+                btnClearScores.classList.remove('hidden');
+            } else {
+                btnClearScores.classList.add('hidden');
+            }
+        }
+
+        async function doLookup() {
+            const sbdInput = document.getElementById('sbdInput');
+            const sbd = sbdInput.value.trim();
+            const btn = document.getElementById('btnLookup');
+            const icon = document.getElementById('lookupIcon');
+            const text = document.getElementById('lookupText');
+            const alertBox = document.getElementById('lookupAlert');
+            const sbdTag = document.getElementById('currentSbdTag');
+
+            alertBox.className = 'hidden';
+            alertBox.innerHTML = '';
+
+            if (!sbd || sbd.length !== 8) {
+                alertBox.className = 'text-xs py-2 px-3.5 rounded-xl font-medium bg-red-50 text-red-600 border border-red-200 block';
+                alertBox.textContent = 'Số Báo Danh phải gồm đúng 8 chữ số.';
+                sbdInput.focus();
+                sbdInput.select();
+                return;
+            }
+
+            currentSbd = sbd;
+            sbdTag.textContent = `SBD: ${sbd}`;
+            renderHorizontalTable({});
+            calculateAndRenderCombinations();
+
+            btn.disabled = true;
+            icon.className = 'fa-solid fa-spinner fa-spin text-xs';
+            text.textContent = 'Đang tra...';
+
+            const isFile = window.location.protocol === 'file:';
+            const targetUrl = `https://vietnamnet.vn/newsapi-edu/EducationStudentScore/CheckCandidateNumber?ComponentId=COMPONENT002298&PageId=fa4119c27edb45558886cde08459bb1b&sbd=${sbd}&type=2&year=2026`;
+
+            const endpoints = [];
+            if (!isFile) {
+                endpoints.push(`/api/score?sbd=${sbd}&year=2026`);
+            }
+            endpoints.push(`http://127.0.0.1:8080/api/score?sbd=${sbd}&year=2026`);
+            endpoints.push(`http://localhost:8080/api/score?sbd=${sbd}&year=2026`);
+            endpoints.push(targetUrl);
+
+            let candData = null;
+
+            for (const ep of endpoints) {
+                try {
+                    const resp = await fetch(ep);
+                    if (resp.ok) {
+                        const json = await resp.json();
+                        if (json && json.status && json.data && json.data.data) {
+                            candData = json.data.data;
+                            break;
+                        }
+                    }
+                } catch (e) { }
+            }
+
+            btn.disabled = false;
+            icon.className = 'fa-solid fa-magnifying-glass text-xs';
+            text.textContent = 'Tra Cứu';
+
+            if (candData) {
+                const rawSubs = candData.subjectScores || {};
+                const scoreMap = {};
+                Object.keys(rawSubs).forEach(k => {
+                    scoreMap[k] = rawSubs[k].point;
+                });
+                currentScores = scoreMap;
+                renderHorizontalTable(scoreMap);
+                calculateAndRenderCombinations();
+
+                alertBox.className = 'text-xs py-2 px-3.5 rounded-xl font-medium bg-emerald-50 text-emerald-800 border border-emerald-200 block';
+                alertBox.innerHTML = `<i class="fa-solid fa-circle-check text-emerald-600 mr-1"></i> Tra cứu thành công SBD: <strong>${sbd}</strong> (${candData.examCluster || 'Đã có điểm'})`;
+
+                setTimeout(() => {
+                    const firstHb = document.getElementById('hb_m1_10');
+                    if (firstHb) {
+                        firstHb.focus();
+                        firstHb.select();
+                    }
+                }, 80);
+
+                saveCurrentStateToHistory();
+            } else {
+                alertBox.className = 'text-xs py-2 px-3.5 rounded-xl font-medium bg-amber-50 text-amber-800 border border-amber-200 block';
+                alertBox.innerHTML = `<i class="fa-solid fa-triangle-exclamation text-amber-600 mr-1"></i> Không tìm thấy dữ liệu điểm thi hoặc chưa kết nối máy chủ cho SBD: <strong>${sbd}</strong>`;
+
+                setTimeout(() => {
+                    const firstHb = document.getElementById('hb_m1_10');
+                    if (firstHb) {
+                        firstHb.focus();
+                        firstHb.select();
+                    }
+                }, 80);
+            }
+        }
+
+        // =========================================================================
+        // 4. QUẢN LÝ LỊCH SỬ TRA CỨU & LOCALSTORAGE
+        // =========================================================================
+        function getHistory() {
+            try {
+                const s = localStorage.getItem('ts_tracuu_hocba_v9');
+                return s ? JSON.parse(s) : [];
+            } catch (e) { return []; }
+        }
+
+        function setHistory(list) {
+            try {
+                localStorage.setItem('ts_tracuu_hocba_v9', JSON.stringify(list));
+            } catch (e) {
+                console.warn('LocalStorage error:', e);
+            }
+            updateHistoryBadge();
+        }
+
+        function updateHistoryBadge() {
+            const list = getHistory();
+            const badge = document.getElementById('historyBadge');
+            if (list.length > 0) {
+                badge.textContent = list.length;
+                badge.classList.remove('hidden');
+            } else {
+                badge.classList.add('hidden');
+            }
+        }
+
+        function saveCurrentStateToHistory() {
+            const totalHocbaVal = document.getElementById('totalHocba').textContent;
+            const hasHocba = Object.values(currentHocba).some(m => Object.values(m).some(v => v !== ''));
+            const hasScores = Object.keys(currentScores).length > 0;
+
+            if (!hasHocba && !hasScores && !currentSbd) return;
+
+            const list = getHistory();
+            const sbdDisplay = currentSbd ? currentSbd : `HB-${Date.now().toString().slice(-4)}`;
+            const isActualSbd = Boolean(currentSbd);
+
+            const entry = {
+                id: Date.now(),
+                sbd: sbdDisplay,
+                isActualSbd: isActualSbd,
+                scores: currentScores,
+                hocba: JSON.parse(JSON.stringify(currentHocba)),
+                subNames: [
+                    document.getElementById('subName_m1').value,
+                    document.getElementById('subName_m2').value,
+                    document.getElementById('subName_m3').value
+                ],
+                totalHocba: totalHocbaVal,
+                date: new Date().toLocaleString('vi-VN', { hour: '2-digit', minute: '2-digit', day: '2-digit', month: '2-digit' })
+            };
+
+            const filtered = isActualSbd ? list.filter(h => h.sbd !== sbdDisplay) : list;
+            const newList = [entry, ...filtered].slice(0, 50);
+            setHistory(newList);
+        }
+
+        function scheduleSaveHistory() {
+            clearTimeout(saveTimeout);
+            saveTimeout = setTimeout(() => {
+                saveCurrentStateToHistory();
+            }, 600);
+        }
+
+        function renderHistoryDrawer() {
+            const list = getHistory();
+            const container = document.getElementById('drawerContent');
+
+            if (list.length === 0) {
+                container.innerHTML = `
+                    <div class="p-10 text-center text-slate-400 text-xs">
+                        <i class="fa-regular fa-clock text-3xl mb-2.5 block text-slate-300"></i>
+                        Chưa có lịch sử tra cứu hoặc tính điểm
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = `
+                <div class="px-4 py-2.5 bg-slate-50 border-b border-slate-200 flex justify-between items-center text-xs">
+                    <span class="text-slate-500 font-medium">${list.length} lượt đã lưu</span>
+                    <button id="btnClearAllHistory" class="text-red-600 hover:text-red-700 font-semibold transition">Xóa tất cả</button>
+                </div>
+                <ul class="divide-y divide-slate-100">
+                    ${list.map((item, i) => `
+                        <li class="p-3.5 hover:bg-slate-50 flex items-center gap-2.5 transition text-xs">
+                            <span class="text-slate-300 font-bold w-4 shrink-0">${list.length - i}</span>
+                            <div class="flex-1 min-w-0">
+                                <div class="font-bold text-slate-900 text-sm flex items-center gap-1.5 flex-wrap">
+                                    <span>${item.isActualSbd ? 'SBD: ' + item.sbd : 'Học bạ #' + item.sbd.replace('HB-', '')}</span>
+                                    ${item.totalHocba && item.totalHocba !== '—' ? `<span class="text-indigo-900 text-[11px] font-bold bg-indigo-50 px-1.5 py-0.2 rounded border border-indigo-200">HB: ${item.totalHocba}</span>` : ''}
+                                </div>
+                                <div class="text-[10px] text-slate-400 mt-0.5">${item.date}</div>
+                            </div>
+                            <div class="flex gap-1 shrink-0">
+                                <button class="btn-load-h w-7 h-7 rounded-lg border border-slate-200 text-indigo-700 hover:bg-indigo-50 flex items-center justify-center text-xs transition" data-id="${item.id}" title="Nạp lại dữ liệu này">
+                                    <i class="fa-solid fa-arrow-rotate-left"></i>
+                                </button>
+                                <button class="btn-del-h w-7 h-7 rounded-lg border border-slate-200 text-red-500 hover:bg-red-50 flex items-center justify-center text-xs transition" data-id="${item.id}" title="Xóa">
+                                    <i class="fa-solid fa-xmark"></i>
+                                </button>
+                            </div>
+                        </li>
+                    `).join('')}
+                </ul>
+            `;
+
+            document.getElementById('btnClearAllHistory')?.addEventListener('click', () => {
+                if (confirm('Xóa toàn bộ lịch sử đã lưu?')) {
+                    setHistory([]);
+                    renderHistoryDrawer();
+                }
+            });
+
+            container.querySelectorAll('.btn-load-h').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const id = parseInt(btn.getAttribute('data-id'));
+                    const item = getHistory().find(h => h.id === id);
+                    if (item) {
+                        currentSbd = item.isActualSbd ? item.sbd : '';
+                        document.getElementById('sbdInput').value = currentSbd;
+                        document.getElementById('currentSbdTag').textContent = item.isActualSbd ? `SBD: ${item.sbd}` : 'SBD: —';
+                        currentScores = item.scores || {};
+                        renderHorizontalTable(currentScores);
+                        calculateAndRenderCombinations();
+
+                        if (item.subNames) {
+                            document.getElementById('subName_m1').value = item.subNames[0] || 'Môn 1';
+                            document.getElementById('subName_m2').value = item.subNames[1] || 'Môn 2';
+                            document.getElementById('subName_m3').value = item.subNames[2] || 'Môn 3';
+                        }
+
+                        currentHocba = JSON.parse(JSON.stringify(item.hocba || { m1: { 10: '', 11: '', 12: '' }, m2: { 10: '', 11: '', 12: '' }, m3: { 10: '', 11: '', 12: '' } }));
+                        hocbaYrs.forEach(y => {
+                            hocbaMons.forEach(m => {
+                                const inp = document.getElementById(`hb_${m}_${y}`);
+                                if (inp) inp.value = (currentHocba[m] && currentHocba[m][y]) || '';
+                            });
+                        });
+                        calcHocbaTotals();
+                        toggleSbdClearButton();
+
+                        toggleDrawer(false);
+                        showToast('Đã tải lại dữ liệu từ lịch sử!');
+                    }
+                });
+            });
+
+            container.querySelectorAll('.btn-del-h').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const id = parseInt(btn.getAttribute('data-id'));
+                    const newList = getHistory().filter(h => h.id !== id);
+                    setHistory(newList);
+                    renderHistoryDrawer();
+                });
+            });
+        }
+
+        function toggleDrawer(open) {
+            const drawer = document.getElementById('drawer');
+            const overlay = document.getElementById('drawerOverlay');
+            if (open) {
+                renderHistoryDrawer();
+                drawer.classList.remove('translate-x-full');
+                drawer.classList.add('translate-x-0');
+                overlay.classList.remove('opacity-0', 'pointer-events-none');
+                overlay.classList.add('opacity-100', 'pointer-events-auto');
+            } else {
+                drawer.classList.remove('translate-x-0');
+                drawer.classList.add('translate-x-full');
+                overlay.classList.remove('opacity-100', 'pointer-events-auto');
+                overlay.classList.add('opacity-0', 'pointer-events-none');
+            }
+        }
+
+        // =========================================================================
+        // 5. XỬ LÝ CLEAR & RESET UX
+        // =========================================================================
+        function toggleSbdClearButton() {
+            const sbdVal = document.getElementById('sbdInput').value;
+            const btnClear = document.getElementById('btnClearSbd');
+            if (sbdVal.length > 0) {
+                btnClear.classList.remove('hidden');
+                btnClear.classList.add('flex');
+            } else {
+                btnClear.classList.add('hidden');
+                btnClear.classList.remove('flex');
+            }
+        }
+
+        function clearHocba() {
+            currentHocba = { m1: { 10: '', 11: '', 12: '' }, m2: { 10: '', 11: '', 12: '' }, m3: { 10: '', 11: '', 12: '' } };
+            hocbaYrs.forEach(y => {
+                hocbaMons.forEach(m => {
+                    const inp = document.getElementById(`hb_${m}_${y}`);
+                    if (inp) inp.value = '';
+                });
+            });
+            calcHocbaTotals();
+
+            const firstHb = document.getElementById('hb_m1_10');
+            if (firstHb) {
+                firstHb.focus();
+                firstHb.select();
+            }
+        }
+
+        function resetAll() {
+            const sbdInput = document.getElementById('sbdInput');
+            sbdInput.value = '';
+            toggleSbdClearButton();
+            document.getElementById('lookupAlert').className = 'hidden';
+            document.getElementById('currentSbdTag').textContent = 'SBD: —';
+            currentSbd = '';
+            currentScores = {};
+            renderHorizontalTable({});
+            calculateAndRenderCombinations();
+            clearHocba();
+
+            sbdInput.focus();
+            sbdInput.select();
+            showToast('Đã làm mới dữ liệu!');
+        }
+
+        // Gắn sự kiện
+        const sbdEl = document.getElementById('sbdInput');
+        const btnClearSbd = document.getElementById('btnClearSbd');
+
+        sbdEl.addEventListener('focus', (e) => {
+            setTimeout(() => e.target.select(), 10);
+        });
+        sbdEl.addEventListener('click', (e) => {
+            e.target.select();
+        });
+        sbdEl.addEventListener('mouseup', (e) => {
+            e.preventDefault();
+            sbdEl.select();
+        });
+
+        sbdEl.addEventListener('input', (e) => {
+            e.target.value = e.target.value.replace(/[^0-9]/g, '').slice(0, 8);
+            toggleSbdClearButton();
+
+            if (e.target.value.length === 8) {
+                clearTimeout(lookupDebounce);
+                lookupDebounce = setTimeout(() => {
+                    doLookup();
+                }, 200);
+            }
+        });
+
+        sbdEl.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                doLookup();
+            }
+        });
+
+        btnClearSbd.addEventListener('click', () => {
+            sbdEl.value = '';
+            toggleSbdClearButton();
+            sbdEl.focus();
+        });
+
+        document.getElementById('btnLookup').addEventListener('click', doLookup);
+
+        document.getElementById('btnClearScores').addEventListener('click', () => {
+            currentScores = {};
+            renderHorizontalTable({});
+            calculateAndRenderCombinations();
+        });
+
+        document.getElementById('btnClearHocba').addEventListener('click', () => {
+            clearHocba();
+            showToast('Đã xóa dữ liệu bảng học bạ');
+        });
+
+        document.getElementById('btnResetAll').addEventListener('click', resetAll);
+
+        document.getElementById('btnOpenHistory').addEventListener('click', () => toggleDrawer(true));
+        document.getElementById('btnCloseDrawer').addEventListener('click', () => toggleDrawer(false));
+        document.getElementById('drawerOverlay').addEventListener('click', () => toggleDrawer(false));
+
+        // Nút Sao chép kết quả tóm tắt
+        document.getElementById('btnCopySummary').addEventListener('click', () => {
+            const m1Name = document.getElementById('subName_m1').value || 'Môn 1';
+            const m2Name = document.getElementById('subName_m2').value || 'Môn 2';
+            const m3Name = document.getElementById('subName_m3').value || 'Môn 3';
+            const dtb1 = document.getElementById('dtb_m1').textContent;
+            const dtb2 = document.getElementById('dtb_m2').textContent;
+            const dtb3 = document.getElementById('dtb_m3').textContent;
+            const total = document.getElementById('totalHocba').textContent;
+            const sbd = currentSbd ? `SBD: ${currentSbd}` : 'Tính học bạ THPT';
+
+            const summaryText = `📋 KẾT QUẢ XÉT TUYỂN HỌC BẠ 2026 (${sbd})\n` +
+                `• ${m1Name} (3 năm): ${dtb1}\n` +
+                `• ${m2Name} (3 năm): ${dtb2}\n` +
+                `• ${m3Name} (3 năm): ${dtb3}\n` +
+                `👉 TỔNG ĐIỂM XÉT TUYỂN: ${total}`;
+
+            navigator.clipboard.writeText(summaryText).then(() => {
+                showToast('Đã sao chép kết quả vào bộ nhớ tạm!');
+            }).catch(() => {
+                showToast('Không thể sao chép tự động.');
+            });
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                const drawer = document.getElementById('drawer');
+                if (!drawer.classList.contains('translate-x-full')) {
+                    toggleDrawer(false);
+                } else {
+                    resetAll();
+                }
+            }
+        });
+
+        // Khởi tạo ban đầu
+        renderHorizontalTable(currentScores);
+        initHocbaTable();
+        calcHocbaTotals();
+        updateHistoryBadge();
+
+        setTimeout(() => {
+            if (sbdEl) {
+                sbdEl.focus();
+                sbdEl.select();
+            }
+        }, 80);
+    </script>
+</body>
+
+</html>
