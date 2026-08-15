@@ -48,13 +48,16 @@
             width: 6px;
             height: 6px;
         }
+
         ::-webkit-scrollbar-track {
             background: #f1f5f9;
         }
+
         ::-webkit-scrollbar-thumb {
             background: #cbd5e1;
             border-radius: 4px;
         }
+
         ::-webkit-scrollbar-thumb:hover {
             background: #94a3b8;
         }
@@ -63,10 +66,12 @@
 
 <body class="bg-slate-50/60 text-slate-900 min-h-screen p-3 sm:p-6 font-sans">
 
-    <div class="max-w-5xl mx-auto flex flex-col gap-5 bg-white border border-slate-200/80 rounded-2xl p-4 sm:p-7 shadow-xs">
+    <div
+        class="max-w-5xl mx-auto flex flex-col gap-5 bg-white border border-slate-200/80 rounded-2xl p-4 sm:p-7 shadow-xs">
 
         <!-- Header Tiêu Đề & Công Cụ -->
-        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 border-b border-slate-200 pb-4">
+        <div
+            class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 border-b border-slate-200 pb-4">
             <div class="flex items-center gap-3.5">
                 <div
                     class="w-11 h-11 rounded-xl bg-indigo-600 text-white flex items-center justify-center text-xl shadow-md shadow-indigo-100">
@@ -76,7 +81,8 @@
                     <h1 class="text-xl sm:text-2xl font-black text-slate-900 tracking-tight flex items-center gap-2">
                         TRA CỨU ĐIỂM THI THPT & TÍNH ĐIỂM HỌC BẠ 2026
                     </h1>
-                    <p class="text-xs sm:text-sm text-slate-500 mt-0.5">Tra cứu điểm thi theo SBD • Liệt kê điểm tất cả tổ hợp môn • Tính điểm học bạ 3 năm</p>
+                    <p class="text-xs sm:text-sm text-slate-500 mt-0.5">Tra cứu điểm thi theo SBD • Liệt kê điểm tất cả
+                        tổ hợp môn • Tính điểm học bạ 3 năm</p>
                 </div>
             </div>
             <div class="flex items-center gap-2 self-end sm:self-auto">
@@ -106,15 +112,18 @@
                         <i class="fa-solid fa-magnifying-glass text-indigo-600 text-xs"></i>
                         <span>1. Tra Cứu Điểm Thi Tốt Nghiệp THPT (Theo SBD)</span>
                     </span>
-                    <span class="text-[11px] text-slate-400 font-normal hidden sm:inline">Gõ đủ 8 số tự động tra cứu • Phím Enter</span>
+                    <span class="text-[11px] text-slate-400 font-normal hidden sm:inline">Gõ đủ 8 số tự động tra cứu •
+                        Phím Enter</span>
                 </div>
 
                 <div class="flex gap-2">
                     <div class="relative flex-1">
-                        <i class="fa-solid fa-user-graduate absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-sm"></i>
-                        <input id="sbdInput" type="text" maxlength="8" inputmode="numeric" placeholder="Nhập Số Báo Danh (8 chữ số)..."
+                        <i
+                            class="fa-solid fa-user-graduate absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-sm"></i>
+                        <input id="sbdInput" type="text" maxlength="8" inputmode="numeric"
+                            placeholder="Nhập Số Báo Danh (8 chữ số)..."
                             class="w-full h-11 bg-slate-50 border border-slate-300 rounded-xl pl-10 pr-9 text-base sm:text-sm font-semibold outline-none focus:border-indigo-600 focus:bg-white focus:ring-4 focus:ring-indigo-100 transition text-slate-900 tracking-wider placeholder:font-normal placeholder:text-slate-400" />
-                        
+
                         <!-- Nút Xóa nhanh SBD -->
                         <button id="btnClearSbd" type="button"
                             class="hidden absolute right-3 top-1/2 -translate-y-1/2 w-6 h-6 rounded-full bg-slate-200 hover:bg-slate-300 text-slate-500 hover:text-slate-700 items-center justify-center text-xs transition"
@@ -140,7 +149,8 @@
                     <span class="text-slate-500 text-xs font-medium">Kết quả chi tiết 12 môn thi:</span>
                     <div class="flex items-center gap-2">
                         <span id="currentSbdTag"
-                            class="text-xs text-slate-700 font-bold bg-slate-100 border border-slate-200 px-2.5 py-0.5 rounded-lg shadow-xs">SBD: —</span>
+                            class="text-xs text-slate-700 font-bold bg-slate-100 border border-slate-200 px-2.5 py-0.5 rounded-lg shadow-xs">SBD:
+                            —</span>
                         <button id="btnClearScores"
                             class="hidden text-[11px] text-slate-500 hover:text-red-600 font-medium transition underline"
                             title="Xóa bảng điểm thi">Xóa điểm thi</button>
@@ -151,33 +161,55 @@
                     <table class="w-full border-collapse text-center text-xs">
                         <thead>
                             <tr class="bg-slate-100/80 text-slate-800 font-bold border-b border-slate-200">
-                                <th class="py-2.5 px-2 border-r border-slate-200 min-w-[70px] whitespace-nowrap">Ngữ văn</th>
-                                <th class="py-2.5 px-2 border-r border-slate-200 min-w-[65px] whitespace-nowrap">Toán</th>
-                                <th class="py-2.5 px-2 border-r border-slate-200 min-w-[65px] whitespace-nowrap">Vật lí</th>
-                                <th class="py-2.5 px-2 border-r border-slate-200 min-w-[65px] whitespace-nowrap">Hóa học</th>
-                                <th class="py-2.5 px-2 border-r border-slate-200 min-w-[65px] whitespace-nowrap">Sinh học</th>
-                                <th class="py-2.5 px-2 border-r border-slate-200 min-w-[65px] whitespace-nowrap">Lịch sử</th>
-                                <th class="py-2.5 px-2 border-r border-slate-200 min-w-[65px] whitespace-nowrap">Địa lí</th>
-                                <th class="py-2.5 px-2 border-r border-slate-200 min-w-[95px] whitespace-nowrap">GD KTPL</th>
-                                <th class="py-2.5 px-2 border-r border-slate-200 min-w-[65px] whitespace-nowrap">Tin học</th>
-                                <th class="py-2.5 px-2 border-r border-slate-200 min-w-[65px] whitespace-nowrap">CNCN</th>
-                                <th class="py-2.5 px-2 border-r border-slate-200 min-w-[65px] whitespace-nowrap">CNNN</th>
+                                <th class="py-2.5 px-2 border-r border-slate-200 min-w-[70px] whitespace-nowrap">Ngữ văn
+                                </th>
+                                <th class="py-2.5 px-2 border-r border-slate-200 min-w-[65px] whitespace-nowrap">Toán
+                                </th>
+                                <th class="py-2.5 px-2 border-r border-slate-200 min-w-[65px] whitespace-nowrap">Vật lí
+                                </th>
+                                <th class="py-2.5 px-2 border-r border-slate-200 min-w-[65px] whitespace-nowrap">Hóa học
+                                </th>
+                                <th class="py-2.5 px-2 border-r border-slate-200 min-w-[65px] whitespace-nowrap">Sinh
+                                    học</th>
+                                <th class="py-2.5 px-2 border-r border-slate-200 min-w-[65px] whitespace-nowrap">Lịch sử
+                                </th>
+                                <th class="py-2.5 px-2 border-r border-slate-200 min-w-[65px] whitespace-nowrap">Địa lí
+                                </th>
+                                <th class="py-2.5 px-2 border-r border-slate-200 min-w-[95px] whitespace-nowrap">GD KTPL
+                                </th>
+                                <th class="py-2.5 px-2 border-r border-slate-200 min-w-[65px] whitespace-nowrap">Tin học
+                                </th>
+                                <th class="py-2.5 px-2 border-r border-slate-200 min-w-[65px] whitespace-nowrap">CNCN
+                                </th>
+                                <th class="py-2.5 px-2 border-r border-slate-200 min-w-[65px] whitespace-nowrap">CNNN
+                                </th>
                                 <th class="py-2.5 px-2 min-w-[75px] whitespace-nowrap">Ngoại ngữ</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr id="scoresRow" class="bg-white text-slate-900 font-bold text-sm">
-                                <td id="cell_Van" class="py-2.5 px-1 border-r border-slate-200 text-slate-400 font-normal">—</td>
-                                <td id="cell_Toan" class="py-2.5 px-1 border-r border-slate-200 text-slate-400 font-normal">—</td>
-                                <td id="cell_Li" class="py-2.5 px-1 border-r border-slate-200 text-slate-400 font-normal">—</td>
-                                <td id="cell_Hoa" class="py-2.5 px-1 border-r border-slate-200 text-slate-400 font-normal">—</td>
-                                <td id="cell_Sinh" class="py-2.5 px-1 border-r border-slate-200 text-slate-400 font-normal">—</td>
-                                <td id="cell_Su" class="py-2.5 px-1 border-r border-slate-200 text-slate-400 font-normal">—</td>
-                                <td id="cell_Dia" class="py-2.5 px-1 border-r border-slate-200 text-slate-400 font-normal">—</td>
-                                <td id="cell_GiaoDucKinhTePhapLuat" class="py-2.5 px-1 border-r border-slate-200 text-slate-400 font-normal">—</td>
-                                <td id="cell_TinHoc" class="py-2.5 px-1 border-r border-slate-200 text-slate-400 font-normal">—</td>
-                                <td id="cell_CNCN" class="py-2.5 px-1 border-r border-slate-200 text-slate-400 font-normal">—</td>
-                                <td id="cell_CNNN" class="py-2.5 px-1 border-r border-slate-200 text-slate-400 font-normal">—</td>
+                                <td id="cell_Van"
+                                    class="py-2.5 px-1 border-r border-slate-200 text-slate-400 font-normal">—</td>
+                                <td id="cell_Toan"
+                                    class="py-2.5 px-1 border-r border-slate-200 text-slate-400 font-normal">—</td>
+                                <td id="cell_Li"
+                                    class="py-2.5 px-1 border-r border-slate-200 text-slate-400 font-normal">—</td>
+                                <td id="cell_Hoa"
+                                    class="py-2.5 px-1 border-r border-slate-200 text-slate-400 font-normal">—</td>
+                                <td id="cell_Sinh"
+                                    class="py-2.5 px-1 border-r border-slate-200 text-slate-400 font-normal">—</td>
+                                <td id="cell_Su"
+                                    class="py-2.5 px-1 border-r border-slate-200 text-slate-400 font-normal">—</td>
+                                <td id="cell_Dia"
+                                    class="py-2.5 px-1 border-r border-slate-200 text-slate-400 font-normal">—</td>
+                                <td id="cell_GiaoDucKinhTePhapLuat"
+                                    class="py-2.5 px-1 border-r border-slate-200 text-slate-400 font-normal">—</td>
+                                <td id="cell_TinHoc"
+                                    class="py-2.5 px-1 border-r border-slate-200 text-slate-400 font-normal">—</td>
+                                <td id="cell_CNCN"
+                                    class="py-2.5 px-1 border-r border-slate-200 text-slate-400 font-normal">—</td>
+                                <td id="cell_CNNN"
+                                    class="py-2.5 px-1 border-r border-slate-200 text-slate-400 font-normal">—</td>
                                 <td id="cell_NgoaiNgu" class="py-2.5 px-1 text-slate-400 font-normal">—</td>
                             </tr>
                         </tbody>
@@ -186,7 +218,8 @@
             </div>
 
             <!-- DANH SÁCH TỔ HỢP XÉT TUYỂN CÓ ĐIỂM (DẠNG TEXT GỌN GÀNG) -->
-            <div id="comboResultsSection" class="hidden flex flex-wrap items-center gap-2 bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2 text-xs">
+            <div id="comboResultsSection"
+                class="hidden flex flex-wrap items-center gap-2 bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2 text-xs">
                 <span class="font-bold text-slate-700 flex items-center gap-1.5 shrink-0">
                     <i class="fa-solid fa-list-check text-indigo-600 text-xs"></i>
                     <span>Tổ hợp xét tuyển:</span>
@@ -207,7 +240,10 @@
                         <span>2. Bảng Tính Điểm Học Bạ THPT (3 Môn x 3 Năm Lớp 10, 11, 12)</span>
                     </span>
                     <div class="text-[11px] text-slate-500 font-normal mt-0.5">
-                        ⚡ <strong>Nhập siêu tốc:</strong> Gõ 2 số tự động nhảy ô (VD: <span class="text-indigo-600 font-semibold">85</span> ➔ <strong>8.5</strong>) • Phím mũi tên (↑ ↓ ← →) • <kbd class="px-1 py-0.5 bg-slate-100 border border-slate-300 rounded text-[10px]">Enter</kbd>
+                        ⚡ <strong>Nhập siêu tốc:</strong> Gõ 2 số tự động nhảy ô (VD: <span
+                            class="text-indigo-600 font-semibold">85</span> ➔ <strong>8.5</strong>) • Phím mũi tên (↑ ↓
+                        ← →) • <kbd
+                            class="px-1 py-0.5 bg-slate-100 border border-slate-300 rounded text-[10px]">Enter</kbd>
                     </div>
                 </div>
 
@@ -247,20 +283,27 @@
                         <!-- Rendered via JS -->
                     </tbody>
                     <tfoot>
-                        <tr class="bg-slate-50 border-t border-slate-200 font-semibold text-slate-800 text-xs sm:text-sm">
+                        <tr
+                            class="bg-slate-50 border-t border-slate-200 font-semibold text-slate-800 text-xs sm:text-sm">
                             <td class="py-2.5 px-3 text-left pl-4 border-r border-slate-200 text-slate-600 font-medium">
                                 ĐTB 3 năm từng môn
                             </td>
-                            <td id="dtb_m1" class="py-2.5 px-2 border-r border-slate-200 font-bold text-indigo-950 text-sm sm:text-base">—</td>
-                            <td id="dtb_m2" class="py-2.5 px-2 border-r border-slate-200 font-bold text-indigo-950 text-sm sm:text-base">—</td>
+                            <td id="dtb_m1"
+                                class="py-2.5 px-2 border-r border-slate-200 font-bold text-indigo-950 text-sm sm:text-base">
+                                —</td>
+                            <td id="dtb_m2"
+                                class="py-2.5 px-2 border-r border-slate-200 font-bold text-indigo-950 text-sm sm:text-base">
+                                —</td>
                             <td id="dtb_m3" class="py-2.5 px-2 font-bold text-indigo-950 text-sm sm:text-base">—</td>
                         </tr>
                         <tr class="bg-indigo-50/90 border-t-2 border-indigo-200 text-indigo-950 font-black">
-                            <td class="py-3 px-3 text-left pl-4 border-r border-indigo-200 text-xs sm:text-sm uppercase tracking-wider">
+                            <td
+                                class="py-3 px-3 text-left pl-4 border-r border-indigo-200 text-xs sm:text-sm uppercase tracking-wider">
                                 TỔNG ĐIỂM HỌC BẠ (3 MÔN)
                             </td>
                             <td id="totalHocba" colspan="3"
-                                class="py-3 px-2 text-2xl sm:text-3xl text-indigo-900 font-black tracking-tight transition-all duration-200">—</td>
+                                class="py-3 px-2 text-2xl sm:text-3xl text-indigo-900 font-black tracking-tight transition-all duration-200">
+                                —</td>
                         </tr>
                     </tfoot>
                 </table>
@@ -748,57 +791,63 @@
             }
         }
 
+        const scoreCache = {};
+
         async function fetchCandidateScore(sbd) {
+            if (scoreCache[sbd]) return scoreCache[sbd];
+
             const years = ['2026', '2025', '2024'];
+            const allPromises = [];
+
+            // Helper gửi request độc lập có timeout 3.5s
+            const fetchSingle = (url, isWrapped, yr) => {
+                return new Promise(async (resolve, reject) => {
+                    try {
+                        const controller = new AbortController();
+                        const timer = setTimeout(() => controller.abort(), 3500);
+
+                        const resp = await fetch(url, { signal: controller.signal });
+                        clearTimeout(timer);
+
+                        if (!resp.ok) return reject(new Error('HTTP Error'));
+
+                        let json = null;
+                        if (isWrapped) {
+                            const w = await resp.json();
+                            if (w && w.contents) {
+                                json = typeof w.contents === 'string' ? JSON.parse(w.contents) : w.contents;
+                            }
+                        } else {
+                            json = await resp.json();
+                        }
+
+                        if (json && json.status && json.data && json.data.data && json.data.model !== false) {
+                            return resolve({ ...json.data.data, foundYear: yr });
+                        }
+                        reject(new Error('No candidate data'));
+                    } catch (err) {
+                        reject(err);
+                    }
+                });
+            };
 
             for (const yr of years) {
                 const targetApi = `https://vietnamnet.vn/newsapi-edu/EducationStudentScore/CheckCandidateNumber?ComponentId=COMPONENT002298&PageId=fa4119c27edb45558886cde08459bb1b&sbd=${sbd}&type=2&year=${yr}`;
 
-                // Tạo các fetch promise chạy song song qua các CORS proxy
-                const makeFetch = (proxyUrl, isWrapped = false) => {
-                    return new Promise(async (resolve, reject) => {
-                        try {
-                            const controller = new AbortController();
-                            const timer = setTimeout(() => controller.abort(), 4000);
+                // Chạy song song AllOrigins Raw và AllOrigins Wrap cho từng năm
+                allPromises.push(fetchSingle(`https://api.allorigins.win/raw?url=${encodeURIComponent(targetApi)}`, false, yr));
+                allPromises.push(fetchSingle(`https://api.allorigins.win/get?url=${encodeURIComponent(targetApi)}`, true, yr));
+            }
 
-                            const resp = await fetch(proxyUrl, { signal: controller.signal });
-                            clearTimeout(timer);
-
-                            if (!resp.ok) return reject(new Error('Response error'));
-
-                            let json = null;
-                            if (isWrapped) {
-                                const w = await resp.json();
-                                if (w && w.contents) {
-                                    json = typeof w.contents === 'string' ? JSON.parse(w.contents) : w.contents;
-                                }
-                            } else {
-                                const t = await resp.text();
-                                json = JSON.parse(t);
-                            }
-
-                            if (json && json.status && json.data && json.data.data && json.data.model !== false) {
-                                return resolve({ ...json.data.data, foundYear: yr });
-                            }
-                            reject(new Error('No candidate data'));
-                        } catch (err) {
-                            reject(err);
-                        }
-                    });
-                };
-
-                const proxies = [
-                    makeFetch(`https://api.allorigins.win/raw?url=${encodeURIComponent(targetApi)}`, false),
-                    makeFetch(`https://api.allorigins.win/get?url=${encodeURIComponent(targetApi)}`, true),
-                    makeFetch(`https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(targetApi)}`, false)
-                ];
-
-                try {
-                    const result = await Promise.any(proxies);
-                    if (result) return result;
-                } catch (e) {
-                    // Thử năm tiếp theo nếu năm này không có dữ liệu
+            try {
+                // Đồng thời kích hoạt tất cả các năm & proxy, cái nào có kết quả trước trả về ngay tức thì!
+                const result = await Promise.any(allPromises);
+                if (result) {
+                    scoreCache[sbd] = result;
+                    return result;
                 }
+            } catch (e) {
+                // Không tìm thấy dữ liệu cho SBD này
             }
             return null;
         }
@@ -1173,9 +1222,9 @@
             const sbd = currentSbd ? `SBD: ${currentSbd}` : 'Tính học bạ THPT';
 
             const summaryText = `📋 KẾT QUẢ XÉT TUYỂN HỌC BẠ 2026 (${sbd})\n` +
-                `• ${m1Name} (3 năm): ${dtb1}\n` +
-                `• ${m2Name} (3 năm): ${dtb2}\n` +
-                `• ${m3Name} (3 năm): ${dtb3}\n` +
+                `• ${m1Name} : ${dtb1}\n` +
+                `• ${m2Name} : ${dtb2}\n` +
+                `• ${m3Name} : ${dtb3}\n` +
                 `👉 TỔNG ĐIỂM XÉT TUYỂN: ${total}`;
 
             navigator.clipboard.writeText(summaryText).then(() => {
