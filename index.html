@@ -9,6 +9,11 @@
         content="Công cụ tra cứu điểm thi THPT theo SBD, tự động tính điểm tất cả tổ hợp môn và tính điểm xét tuyển học bạ 3 năm THPT">
     <link rel="icon" type="image/png" href="https://xettuyen.tdu.edu.vn/images/favicon.png">
 
+    <!-- Cache Control: Đảm bảo tải bản mới nhất trên GitHub Pages -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+
     <!-- OpenGraph Metadata -->
     <meta property="og:title" content="Tra Cứu Điểm Thi THPT & Tính Điểm Học Bạ 2026">
     <meta property="og:description"
@@ -318,7 +323,7 @@
         const SUBJECTS = [
             { key: 'Van', name: 'Ngữ văn', apiKeys: ['van', 'nguvan', 'ngữ văn', 'ngữ_văn', 'ngu_van'] },
             { key: 'Toan', name: 'Toán', apiKeys: ['toan', 'toán'] },
-            { key: 'Li', name: 'Vật lí', apiKeys: ['li', 'vatli', 'vatly', 'vật lí', 'vật lý', 'vật_lí', 'vat_ly', 'vat_li'] },
+            { key: 'Li', name: 'Vật lí', apiKeys: ['li', 'ly', 'vatli', 'vatly', 'vật lí', 'vật lý', 'vật_lí', 'vat_ly', 'vat_li'] },
             { key: 'Hoa', name: 'Hóa học', apiKeys: ['hoa', 'hoahoc', 'hóa học', 'hóa_học', 'hoa_hoc'] },
             { key: 'Sinh', name: 'Sinh học', apiKeys: ['sinh', 'sinhhoc', 'sinh học', 'sinh_học', 'sinh_hoc'] },
             { key: 'Su', name: 'Lịch sử', apiKeys: ['su', 'lichsu', 'lịch sử', 'lịch_sử', 'lich_su'] },
@@ -772,41 +777,50 @@
             for (const yr of years) {
                 const targetApi = `https://vietnamnet.vn/newsapi-edu/EducationStudentScore/CheckCandidateNumber?ComponentId=COMPONENT002298&PageId=fa4119c27edb45558886cde08459bb1b&sbd=${sbd}&type=2&year=${yr}`;
 
-                // Các endpoint proxy CORS công khai hỗ trợ hoàn hảo GitHub Pages
-                const endpoints = [
-                    `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(targetApi)}`,
-                    `https://api.allorigins.win/raw?url=${encodeURIComponent(targetApi)}`,
-                    `https://corsproxy.io/?url=${encodeURIComponent(targetApi)}`,
-                    `https://api.allorigins.win/get?url=${encodeURIComponent(targetApi)}`
-                ];
+                // Tạo các fetch promise chạy song song qua các CORS proxy
+                const makeFetch = (proxyUrl, isWrapped = false) => {
+                    return new Promise(async (resolve, reject) => {
+                        try {
+                            const controller = new AbortController();
+                            const timer = setTimeout(() => controller.abort(), 4000);
 
-                for (const ep of endpoints) {
-                    try {
-                        const controller = new AbortController();
-                        const timer = setTimeout(() => controller.abort(), 4500);
+                            const resp = await fetch(proxyUrl, { signal: controller.signal });
+                            clearTimeout(timer);
 
-                        const resp = await fetch(ep, { signal: controller.signal });
-                        clearTimeout(timer);
+                            if (!resp.ok) return reject(new Error('Response error'));
 
-                        if (resp.ok) {
                             let json = null;
-                            if (ep.includes('allorigins.win/get')) {
-                                const data = await resp.json();
-                                if (data && data.contents) {
-                                    json = typeof data.contents === 'string' ? JSON.parse(data.contents) : data.contents;
+                            if (isWrapped) {
+                                const w = await resp.json();
+                                if (w && w.contents) {
+                                    json = typeof w.contents === 'string' ? JSON.parse(w.contents) : w.contents;
                                 }
                             } else {
-                                const text = await resp.text();
-                                json = JSON.parse(text);
+                                const t = await resp.text();
+                                json = JSON.parse(t);
                             }
 
-                            if (json && json.status && json.data && json.data.data) {
-                                return { ...json.data.data, foundYear: yr };
+                            if (json && json.status && json.data && json.data.data && json.data.model !== false) {
+                                return resolve({ ...json.data.data, foundYear: yr });
                             }
+                            reject(new Error('No candidate data'));
+                        } catch (err) {
+                            reject(err);
                         }
-                    } catch (err) {
-                        // Thử proxy tiếp theo
-                    }
+                    });
+                };
+
+                const proxies = [
+                    makeFetch(`https://api.allorigins.win/raw?url=${encodeURIComponent(targetApi)}`, false),
+                    makeFetch(`https://api.allorigins.win/get?url=${encodeURIComponent(targetApi)}`, true),
+                    makeFetch(`https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(targetApi)}`, false)
+                ];
+
+                try {
+                    const result = await Promise.any(proxies);
+                    if (result) return result;
+                } catch (e) {
+                    // Thử năm tiếp theo nếu năm này không có dữ liệu
                 }
             }
             return null;
