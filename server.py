@@ -30,7 +30,7 @@ def update_client_launchers(local_ip, hostname):
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Đang mở Tra Cứu Điểm 2026...</title>
+    <title>Tra Cứu Điểm Thi THPT 2026 và Tính Điểm Học Bạ...</title>
     <style>
         body {{
             font-family: system-ui, -apple-system, sans-serif;
@@ -47,7 +47,7 @@ def update_client_launchers(local_ip, hostname):
             background: white;
             padding: 32px 24px;
             border-radius: 16px;
-            box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
             max-width: 440px;
             border: 1px solid #e2e8f0;
         }}
@@ -60,7 +60,11 @@ def update_client_launchers(local_ip, hostname):
             animation: spin 0.8s linear infinite;
             margin: 0 auto 16px;
         }}
-        @keyframes spin {{ to {{ transform: rotate(360deg); }} }}
+        @keyframes spin {{
+            to {{
+                transform: rotate(360deg);
+            }}
+        }}
         .btn {{
             display: inline-block;
             margin-top: 16px;
@@ -127,7 +131,7 @@ def update_client_launchers(local_ip, hostname):
             await Promise.all(promises);
 
             if (!found) {{
-                document.getElementById('status').innerHTML = "Chưa kết nối được máy chủ.<br>Vui lòng đảm bảo máy chủ đã chạy <b>run.bat</b> và 2 máy cùng chung Wi-Fi.";
+                document.getElementById('status').innerHTML = "Chưa kết nối được máy chủ.<br>Vui lòng đảm bảo máy chủ đã chạy <b>server</b> và 2 máy cùng chung mạng nội bộ.";
                 document.getElementById('manual').style.display = "block";
                 document.getElementById('link').href = `http://${{KNOWN_IP}}:${{PORT}}/`;
                 document.getElementById('link').textContent = `Bấm thử vào http://${{KNOWN_IP}}:${{PORT}}/`;
@@ -139,7 +143,7 @@ def update_client_launchers(local_ip, hostname):
 </body>
 </html>
 """
-    with open(os.path.join(base_dir, "MoWebTraCuu.html"), "w", encoding="utf-8") as f:
+    with open(os.path.join(base_dir, "ToolTs2026.html"), "w", encoding="utf-8") as f:
         f.write(html_content)
 
 def fetch_year(sbd, yr):
@@ -227,7 +231,7 @@ def run():
     local_ip = get_local_ip()
     hostname = socket.gethostname()
     
-    # Tự động cập nhật file MoWebTraCuu.html
+    # Tự động cập nhật file ToolTs2026.html
     update_client_launchers(local_ip, hostname)
 
     server_address = (HOST, PORT)
@@ -242,7 +246,7 @@ def run():
     print(f"  * Tren may chu nay     : {local_url}")
     print(f"  * Cac may khac cung LAN: {lan_url}  hoac  {host_url}")
     print("=" * 68)
-    print(f"  [>] GUI 1 FILE DUY NHAT CHO MAY KHAC: MoWebTraCuu.html")
+    print(f"  [>] GUI 1 FILE DUY NHAT CHO MAY KHAC: ToolTs2026.html")
     print("=" * 68)
     print("  Nhan Ctrl + C de dung server.")
     print("=" * 68)

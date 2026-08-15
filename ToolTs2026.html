@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Đang mở Tra Cứu Điểm 2026...</title>
+    <title>Tra Cứu Điểm Thi THPT 2026 và Tính Điểm Học Bạ...</title>
     <style>
         body {
             font-family: system-ui, -apple-system, sans-serif;
@@ -16,14 +17,16 @@
             color: #0f172a;
             text-align: center;
         }
+
         .card {
             background: white;
             padding: 32px 24px;
             border-radius: 16px;
-            box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
             max-width: 440px;
             border: 1px solid #e2e8f0;
         }
+
         .spinner {
             width: 36px;
             height: 36px;
@@ -33,7 +36,13 @@
             animation: spin 0.8s linear infinite;
             margin: 0 auto 16px;
         }
-        @keyframes spin { to { transform: rotate(360deg); } }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
         .btn {
             display: inline-block;
             margin-top: 16px;
@@ -47,11 +56,13 @@
         }
     </style>
 </head>
+
 <body>
     <div class="card">
         <div class="spinner"></div>
         <h2 style="margin: 0 0 8px; font-size: 17px; color: #1e3a8a;">Đang kết nối Máy Chủ Tra Cứu Điểm 2026...</h2>
-        <p id="status" style="font-size: 13px; color: #64748b; margin: 0;">Đang tự động nhận diện máy chủ mạng LAN...</p>
+        <p id="status" style="font-size: 13px; color: #64748b; margin: 0;">Đang tự động nhận diện máy chủ mạng LAN...
+        </p>
         <div id="manual" style="display: none; margin-top: 16px;">
             <a id="link" href="#" class="btn">Mở thủ công</a>
         </div>
@@ -100,7 +111,7 @@
             await Promise.all(promises);
 
             if (!found) {
-                document.getElementById('status').innerHTML = "Chưa kết nối được máy chủ.<br>Vui lòng đảm bảo máy chủ đã chạy <b>run.bat</b> và 2 máy cùng chung Wi-Fi.";
+                document.getElementById('status').innerHTML = "Chưa kết nối được máy chủ.<br>Vui lòng đảm bảo máy chủ đã chạy <b>server</b> và 2 máy cùng chung mạng nội bộ.";
                 document.getElementById('manual').style.display = "block";
                 document.getElementById('link').href = `http://${KNOWN_IP}:${PORT}/`;
                 document.getElementById('link').textContent = `Bấm thử vào http://${KNOWN_IP}:${PORT}/`;
@@ -110,4 +121,5 @@
         autoDiscover();
     </script>
 </body>
+
 </html>
