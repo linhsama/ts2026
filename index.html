@@ -27,9 +27,20 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
         rel="stylesheet">
     <style>
+        html {
+            font-size: 16px;
+        }
+
         body {
             font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             font-size: 15px;
+            zoom: 1.15;
+        }
+
+        @media (min-width: 640px) {
+            body {
+                zoom: 1.25;
+            }
         }
 
         /* Focus nổi bật cho ô nhập học bạ */
@@ -64,10 +75,10 @@
     </style>
 </head>
 
-<body class="bg-slate-100 text-slate-900 min-h-screen p-3 sm:p-6 font-sans antialiased">
+<body class="bg-slate-100 text-slate-900 min-h-screen p-3 sm:p-5 font-sans antialiased">
 
     <div
-        class="max-w-5xl mx-auto flex flex-col gap-4 bg-white border border-slate-300 rounded-xl p-3.5 sm:p-5 shadow-xs">
+        class="max-w-6xl mx-auto flex flex-col gap-4 bg-white border border-slate-300 rounded-xl p-3.5 sm:p-5 shadow-xs">
 
         <!-- Header Tiêu Đề & Công Cụ -->
         <div
