@@ -24,7 +24,7 @@ def get_local_ip():
 def update_client_launchers(local_ip, hostname):
     base_dir = os.path.dirname(os.path.abspath(__file__))
     
-    # 1. Tạo file HTML tự động tìm máy chủ trong mạng LAN
+    # Tạo file duy nhất gửi cho các máy khác trong mạng LAN
     html_content = f"""<!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -142,16 +142,6 @@ def update_client_launchers(local_ip, hostname):
     with open(os.path.join(base_dir, "MoWebTraCuu.html"), "w", encoding="utf-8") as f:
         f.write(html_content)
 
-    # 2. Tạo file BAT cho Windows
-    bat_content = f"@echo off\r\nstart http://{local_ip}:{PORT}/\r\n"
-    with open(os.path.join(base_dir, "MoWebTraCuu.bat"), "w", encoding="utf-8") as f:
-        f.write(bat_content)
-
-    # 3. Tạo file Shortcut .url
-    url_content = f"[InternetShortcut]\r\nURL=http://{local_ip}:{PORT}/\r\n"
-    with open(os.path.join(base_dir, "MoWebTraCuu.url"), "w", encoding="utf-8") as f:
-        f.write(url_content)
-
 def fetch_year(sbd, yr):
     target_url = (
         f"https://vietnamnet.vn/newsapi-edu/EducationStudentScore/CheckCandidateNumber?"
@@ -237,7 +227,7 @@ def run():
     local_ip = get_local_ip()
     hostname = socket.gethostname()
     
-    # Tự động tạo file launcher gửi cho máy khác
+    # Tự động cập nhật file MoWebTraCuu.html
     update_client_launchers(local_ip, hostname)
 
     server_address = (HOST, PORT)
@@ -249,13 +239,10 @@ def run():
     print("=" * 68)
     print("      MAY CHU TRA CUU DIEM THI & TINH DIEM HOC BA 2026")
     print("=" * 68)
-    print(f"  * Tren may chu nay    : {local_url}")
+    print(f"  * Tren may chu nay     : {local_url}")
     print(f"  * Cac may khac cung LAN: {lan_url}  hoac  {host_url}")
     print("=" * 68)
-    print(f"  [>] DA TAO SAN FILE GUI CHO MAY KHAC TRONG THU MUC:")
-    print(f"      1. MoWebTraCuu.html (Tu dong ket noi may chu va mo web)")
-    print(f"      2. MoWebTraCuu.bat  (Click dup chuot la vao thang web)")
-    print(f"      3. MoWebTraCuu.url  (Shortcut Windows)")
+    print(f"  [>] GUI 1 FILE DUY NHAT CHO MAY KHAC: MoWebTraCuu.html")
     print("=" * 68)
     print("  Nhan Ctrl + C de dung server.")
     print("=" * 68)
