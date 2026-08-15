@@ -331,7 +331,7 @@
     <div id="toast"
         class="fixed bottom-5 right-5 bg-slate-900 text-white text-xs px-4 py-2.5 rounded-xl shadow-lg transform translate-y-16 opacity-0 transition-all duration-300 z-50 flex items-center gap-2">
         <i class="fa-solid fa-circle-check text-emerald-400"></i>
-        <span id="toastMsg">Đã sao chép kết quả!</span>
+        <span id="toastMsg">Đã lưu dữ liệu!</span>
     </div>
 
     <!-- JAVASCRIPT THUẦN (100% GITHUB PAGES READY) -->
@@ -741,76 +741,63 @@
         const scoreCache = {};
 
         async function fetchCandidateScore(sbd) {
-            if (scoreCache[sbd]) return scoreCache[sbd];
+            if (scoreCache[sbd] !== undefined) return scoreCache[sbd];
 
-            // Nếu đang chạy trên máy chủ cục bộ (Local Python server)
+            // 1. Kiểm tra trên Local Python server nếu đang chạy máy cục bộ
             const isLocal = window.location.hostname === '127.0.0.1' || window.location.hostname === 'localhost';
             if (isLocal) {
                 try {
                     const resp = await fetch(`/api/score?sbd=${sbd}&year=2026`);
                     if (resp.ok) {
                         const json = await resp.json();
-                        if (json && json.status && json.data && json.data.data && json.data.model !== false) {
+                        if (json && json.status && json.data && json.data.model === true && json.data.data) {
                             scoreCache[sbd] = json.data.data;
                             return json.data.data;
+                        } else if (json && json.data && json.data.model === false) {
+                            scoreCache[sbd] = null;
+                            return null;
                         }
                     }
                 } catch (e) { }
             }
 
+            // 2. Chạy trên GitHub Pages qua CORS Proxy
             const years = ['2026', '2025', '2024'];
-            const allPromises = [];
 
-            // Helper gửi request độc lập có timeout 3.5s
-            const fetchSingle = (url, isWrapped, yr) => {
-                return new Promise(async (resolve, reject) => {
-                    try {
-                        const controller = new AbortController();
-                        const timer = setTimeout(() => controller.abort(), 3500);
+            const checkYear = async (yr) => {
+                const targetApi = `https://vietnamnet.vn/newsapi-edu/EducationStudentScore/CheckCandidateNumber?ComponentId=COMPONENT002298&PageId=fa4119c27edb45558886cde08459bb1b&sbd=${sbd}&type=2&year=${yr}`;
+                const proxyUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(targetApi)}`;
 
-                        const resp = await fetch(url, { signal: controller.signal });
-                        clearTimeout(timer);
+                const controller = new AbortController();
+                const timer = setTimeout(() => controller.abort(), 2500);
 
-                        if (!resp.ok) return reject(new Error('HTTP Error'));
-
-                        let json = null;
-                        if (isWrapped) {
-                            const w = await resp.json();
-                            if (w && w.contents) {
-                                json = typeof w.contents === 'string' ? JSON.parse(w.contents) : w.contents;
+                try {
+                    const resp = await fetch(proxyUrl, { signal: controller.signal });
+                    clearTimeout(timer);
+                    if (resp.ok) {
+                        const json = await resp.json();
+                        if (json && json.status && json.data) {
+                            if (json.data.model === true && json.data.data) {
+                                return { found: true, data: json.data.data, year: yr };
                             }
-                        } else {
-                            json = await resp.json();
+                            return { found: false, year: yr };
                         }
-
-                        if (json && json.status && json.data && json.data.data && json.data.model !== false) {
-                            return resolve({ ...json.data.data, foundYear: yr });
-                        }
-                        reject(new Error('No candidate data'));
-                    } catch (err) {
-                        reject(err);
                     }
-                });
+                } catch (err) { }
+                return { error: true, year: yr };
             };
 
-            for (const yr of years) {
-                const targetApi = `https://vietnamnet.vn/newsapi-edu/EducationStudentScore/CheckCandidateNumber?ComponentId=COMPONENT002298&PageId=fa4119c27edb45558886cde08459bb1b&sbd=${sbd}&type=2&year=${yr}`;
-
-                // Chạy song song AllOrigins Raw và AllOrigins Wrap cho từng năm
-                allPromises.push(fetchSingle(`https://api.allorigins.win/raw?url=${encodeURIComponent(targetApi)}`, false, yr));
-                allPromises.push(fetchSingle(`https://api.allorigins.win/get?url=${encodeURIComponent(targetApi)}`, true, yr));
-            }
-
             try {
-                // Đồng thời kích hoạt tất cả các năm & proxy, cái nào có kết quả trước trả về ngay tức thì!
-                const result = await Promise.any(allPromises);
-                if (result) {
-                    scoreCache[sbd] = result;
-                    return result;
+                // Chạy đồng thời 3 năm cùng lúc
+                const results = await Promise.all(years.map(yr => checkYear(yr)));
+                const foundItem = results.find(r => r && r.found === true && r.data);
+                if (foundItem) {
+                    scoreCache[sbd] = foundItem.data;
+                    return foundItem.data;
                 }
-            } catch (e) {
-                // Không tìm thấy dữ liệu cho SBD này
-            }
+            } catch (e) { }
+
+            scoreCache[sbd] = null;
             return null;
         }
 
