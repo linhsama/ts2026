@@ -138,9 +138,6 @@
                         <span id="lookupText">Tra Cứu</span>
                     </button>
                 </div>
-
-                <!-- Thông báo trạng thái -->
-                <div id="lookupAlert" class="hidden text-xs py-2 px-3.5 rounded-xl font-medium transition-all"></div>
             </div>
 
             <!-- BẢNG ĐIỂM NGANG 12 MÔN THI THPT -->
@@ -148,8 +145,7 @@
                 <div class="text-xs font-bold text-slate-700 flex items-center justify-between">
                     <span class="text-slate-500 text-xs font-medium">Kết quả chi tiết 12 môn thi:</span>
                     <span id="currentSbdTag"
-                        class="text-xs text-slate-700 font-bold bg-slate-100 border border-slate-200 px-2.5 py-0.5 rounded-lg shadow-xs">SBD:
-                        —</span>
+                        class="text-xs text-slate-500 font-semibold bg-slate-100 border border-slate-200 px-2.5 py-0.5 rounded-lg shadow-xs">SBD: —</span>
                 </div>
 
                 <div class="overflow-x-auto border border-slate-200 rounded-xl shadow-xs">
@@ -212,39 +208,35 @@
                 </div>
             </div>
 
-            <!-- TỔNG HỢP ĐIỂM THI THPT & TỔ HỢP XÉT TUYỂN -->
+            <!-- TỔNG HỢP ĐIỂM THI THPT & TỔ HỢP XÉT TUYỂN (GỌN GÀNG) -->
             <div id="comboResultsSection"
-                class="hidden flex flex-col gap-2.5 bg-slate-50/90 border border-slate-200 rounded-xl p-3 text-xs">
+                class="hidden flex flex-col gap-1.5 bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs">
                 
                 <!-- Dòng 1: Toán, Văn và 1 môn cao nhất -->
-                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1 pb-2 border-b border-slate-200/80">
-                    <span class="font-bold text-slate-700 flex items-center gap-1.5 shrink-0">
-                        <i class="fa-solid fa-calculator text-indigo-600 text-xs"></i>
-                        <span>Toán, Văn và 1 môn cao nhất:</span>
+                <div class="flex flex-wrap items-center justify-between gap-1">
+                    <span class="font-medium text-slate-600 flex items-center gap-1.5 shrink-0">
+                        <i class="fa-solid fa-calculator text-indigo-600 text-[11px]"></i>
+                        <span>Toán, Văn + 1 môn cao nhất:</span>
                     </span>
-                    <span id="toanVanPlusBest" class="font-semibold text-slate-900 text-xs sm:text-sm">
-                        —
-                    </span>
+                    <span id="toanVanPlusBest" class="font-bold text-slate-900">—</span>
                 </div>
 
                 <!-- Dòng 2: Tổ hợp 3 môn cao nhất -->
-                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1 pb-2 border-b border-slate-200/80">
-                    <span class="font-bold text-slate-700 flex items-center gap-1.5 shrink-0">
-                        <i class="fa-solid fa-trophy text-amber-500 text-xs"></i>
+                <div class="flex flex-wrap items-center justify-between gap-1">
+                    <span class="font-medium text-slate-600 flex items-center gap-1.5 shrink-0">
+                        <i class="fa-solid fa-trophy text-amber-500 text-[11px]"></i>
                         <span>Tổ hợp 3 môn cao nhất:</span>
                     </span>
-                    <span id="bestComboText" class="font-semibold text-slate-900 text-xs sm:text-sm">
-                        —
-                    </span>
+                    <span id="bestComboText" class="font-bold text-indigo-900">—</span>
                 </div>
 
                 <!-- Dòng 3: List tất cả tổ hợp có thể có -->
-                <div class="flex flex-col sm:flex-row sm:items-start gap-1.5 pt-0.5">
-                    <span class="font-bold text-slate-700 flex items-center gap-1.5 shrink-0 pt-0.5">
-                        <i class="fa-solid fa-list-check text-indigo-600 text-xs"></i>
-                        <span>List tổ hợp có thể có:</span>
+                <div class="flex flex-wrap items-center gap-1.5 pt-1.5 border-t border-slate-200/70">
+                    <span class="font-medium text-slate-600 flex items-center gap-1.5 shrink-0">
+                        <i class="fa-solid fa-list-check text-indigo-600 text-[11px]"></i>
+                        <span>Tất cả tổ hợp có điểm:</span>
                     </span>
-                    <div id="comboGrid" class="flex flex-wrap items-center gap-1.5 text-xs">
+                    <div id="comboGrid" class="flex flex-wrap items-center gap-1">
                         <!-- Rendered via JS -->
                     </div>
                 </div>
@@ -532,7 +524,7 @@
             if (validCombos.length > 0) {
                 validCombos.forEach((c, idx) => {
                     const item = document.createElement('span');
-                    item.className = `px-2.5 py-0.5 rounded-md text-xs font-semibold flex items-center gap-1 ${idx === 0 ? 'bg-indigo-600 text-white font-bold' : 'bg-white text-slate-800 border border-slate-200'}`;
+                    item.className = `px-2 py-0.5 rounded-md text-[11px] font-semibold flex items-center gap-1 ${idx === 0 ? 'bg-indigo-600 text-white font-bold' : 'bg-white text-slate-700 border border-slate-200'}`;
                     item.innerHTML = `<span>${c.code}:</span> <span class="${idx === 0 ? 'text-white' : 'text-indigo-700 font-bold'}">${c.total.toFixed(2)}</span>`;
                     container.appendChild(item);
                 });
@@ -873,22 +865,19 @@
             const btn = document.getElementById('btnLookup');
             const icon = document.getElementById('lookupIcon');
             const text = document.getElementById('lookupText');
-            const alertBox = document.getElementById('lookupAlert');
             const sbdTag = document.getElementById('currentSbdTag');
 
-            alertBox.className = 'hidden';
-            alertBox.innerHTML = '';
-
             if (!sbd || sbd.length !== 8) {
-                alertBox.className = 'text-xs py-2 px-3.5 rounded-xl font-medium bg-red-50 text-red-600 border border-red-200 block';
-                alertBox.textContent = 'Số Báo Danh phải gồm đúng 8 chữ số.';
+                sbdTag.className = 'text-xs text-red-600 font-semibold bg-red-50 border border-red-200 px-2.5 py-0.5 rounded-lg';
+                sbdTag.innerHTML = '<i class="fa-solid fa-triangle-exclamation text-red-500 mr-1"></i>SBD phải đủ 8 số';
                 sbdInput.focus();
                 sbdInput.select();
                 return;
             }
 
             currentSbd = sbd;
-            sbdTag.textContent = `SBD: ${sbd}`;
+            sbdTag.className = 'text-xs text-indigo-700 font-semibold bg-indigo-50 border border-indigo-200 px-2.5 py-0.5 rounded-lg';
+            sbdTag.innerHTML = `<i class="fa-solid fa-spinner fa-spin mr-1"></i>Đang tra SBD: ${sbd}...`;
             renderHorizontalTable({});
             calculateAndRenderCombinations();
 
@@ -912,8 +901,8 @@
                 renderHorizontalTable(scoreMap);
                 calculateAndRenderCombinations();
 
-                alertBox.className = 'text-xs py-2 px-3.5 rounded-xl font-medium bg-emerald-50 text-emerald-800 border border-emerald-200 block';
-                alertBox.innerHTML = `<i class="fa-solid fa-circle-check text-emerald-600 mr-1"></i> Tra cứu thành công SBD: <strong>${sbd}</strong> (${candData.examCluster || 'Đã có điểm thi'})`;
+                sbdTag.className = 'text-xs text-emerald-800 font-bold bg-emerald-50 border border-emerald-200 px-2.5 py-0.5 rounded-lg';
+                sbdTag.innerHTML = `<i class="fa-solid fa-circle-check text-emerald-600 mr-1"></i>SBD: ${sbd} (${candData.examCluster || 'Đã có điểm'})`;
 
                 setTimeout(() => {
                     const firstHb = document.getElementById('hb_m1_10');
@@ -929,8 +918,8 @@
                 renderHorizontalTable({});
                 calculateAndRenderCombinations();
 
-                alertBox.className = 'text-xs py-2 px-3.5 rounded-xl font-medium bg-amber-50 text-amber-800 border border-amber-200 block';
-                alertBox.innerHTML = `<i class="fa-solid fa-circle-exclamation text-amber-600 mr-1"></i> Không tìm thấy dữ liệu điểm thi cho SBD: <strong>${sbd}</strong>`;
+                sbdTag.className = 'text-xs text-amber-800 font-bold bg-amber-50 border border-amber-200 px-2.5 py-0.5 rounded-lg';
+                sbdTag.innerHTML = `<i class="fa-solid fa-circle-exclamation text-amber-600 mr-1"></i>Không tìm thấy SBD: ${sbd}`;
 
                 setTimeout(() => {
                     sbdInput.focus();
@@ -1064,7 +1053,14 @@
                     if (item) {
                         currentSbd = item.isActualSbd ? item.sbd : '';
                         document.getElementById('sbdInput').value = currentSbd;
-                        document.getElementById('currentSbdTag').textContent = item.isActualSbd ? `SBD: ${item.sbd}` : 'SBD: —';
+                        const sbdTag = document.getElementById('currentSbdTag');
+                        if (item.isActualSbd) {
+                            sbdTag.className = 'text-xs text-emerald-800 font-bold bg-emerald-50 border border-emerald-200 px-2.5 py-0.5 rounded-lg';
+                            sbdTag.innerHTML = `<i class="fa-solid fa-circle-check text-emerald-600 mr-1"></i>SBD: ${item.sbd}`;
+                        } else {
+                            sbdTag.className = 'text-xs text-slate-500 font-semibold bg-slate-100 border border-slate-200 px-2.5 py-0.5 rounded-lg shadow-xs';
+                            sbdTag.textContent = 'SBD: —';
+                        }
                         currentScores = item.scores || {};
                         renderHorizontalTable(currentScores);
                         calculateAndRenderCombinations();
@@ -1154,8 +1150,9 @@
             const sbdInput = document.getElementById('sbdInput');
             sbdInput.value = '';
             toggleSbdClearButton();
-            document.getElementById('lookupAlert').className = 'hidden';
-            document.getElementById('currentSbdTag').textContent = 'SBD: —';
+            const sbdTag = document.getElementById('currentSbdTag');
+            sbdTag.className = 'text-xs text-slate-500 font-semibold bg-slate-100 border border-slate-200 px-2.5 py-0.5 rounded-lg shadow-xs';
+            sbdTag.textContent = 'SBD: —';
             currentSbd = '';
             currentScores = {};
             renderHorizontalTable({});
