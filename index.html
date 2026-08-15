@@ -189,43 +189,43 @@
                 </div>
             </div>
 
-            <!-- TỔNG HỢP ĐIỂM THI THPT & TỔ HỢP XÉT TUYỂN -->
-            <div id="comboResultsSection" class="hidden flex flex-col gap-2">
+            <!-- TỔNG HỢP ĐIỂM THI THPT & TỔ HỢP XÉT TUYỂN (THIẾT KẾ MỚI SIÊU GỌN) -->
+            <div id="comboResultsSection" class="hidden bg-white border border-slate-200 rounded-lg p-2.5 flex flex-col gap-2 shadow-2xs text-xs">
                 
-                <!-- Hàng trên: 2 Thẻ chỉ số nổi bật -->
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                <!-- Hàng 1: 2 Thẻ chỉ số nổi bật song song -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
                     
                     <!-- Thẻ 1: Toán, Văn + 1 môn cao nhất -->
-                    <div class="bg-white border border-slate-200 rounded-lg p-2.5 flex flex-col justify-between gap-1 shadow-2xs">
-                        <span class="text-[11px] text-slate-500 font-medium flex items-center gap-1.5">
-                            <i class="fa-solid fa-calculator text-blue-800 text-[10px]"></i>
-                            <span>Toán, Văn + 1 môn cao nhất:</span>
-                        </span>
-                        <div id="toanVanPlusBest" class="text-xs font-medium text-slate-800">
+                    <div class="flex items-center justify-between gap-2 bg-slate-50 border border-slate-200/80 rounded-md px-3 py-2">
+                        <div class="text-[11px] text-slate-500 font-semibold flex items-center gap-1.5 shrink-0">
+                            <i class="fa-solid fa-calculator text-blue-800 text-xs"></i>
+                            <span>Toán, Văn + 1 môn:</span>
+                        </div>
+                        <div id="toanVanPlusBest" class="text-xs font-medium text-slate-800 text-right">
                             —
                         </div>
                     </div>
 
                     <!-- Thẻ 2: Tổ hợp 3 môn cao nhất -->
-                    <div class="bg-white border border-slate-200 rounded-lg p-2.5 flex flex-col justify-between gap-1 shadow-2xs">
-                        <span class="text-[11px] text-slate-500 font-medium flex items-center gap-1.5">
-                            <i class="fa-solid fa-award text-blue-800 text-[10px]"></i>
-                            <span>Tổ hợp 3 môn cao nhất:</span>
-                        </span>
-                        <div id="bestComboText" class="text-xs font-medium text-slate-800 flex items-center flex-wrap">
+                    <div class="flex items-center justify-between gap-2 bg-slate-50 border border-slate-200/80 rounded-md px-3 py-2">
+                        <div class="text-[11px] text-slate-500 font-semibold flex items-center gap-1.5 shrink-0">
+                            <i class="fa-solid fa-award text-blue-800 text-xs"></i>
+                            <span>Tổ hợp cao nhất:</span>
+                        </div>
+                        <div id="bestComboText" class="text-xs font-medium text-slate-800 text-right flex items-center justify-end gap-1">
                             —
                         </div>
                     </div>
 
                 </div>
 
-                <!-- Hàng dưới: Danh sách tất cả tổ hợp có điểm -->
-                <div class="bg-white border border-slate-200 rounded-lg p-2.5 flex flex-col gap-1.5 shadow-2xs">
-                    <span class="text-[11px] text-slate-500 font-medium flex items-center gap-1.5">
-                        <i class="fa-solid fa-list-check text-blue-800 text-[10px]"></i>
-                        <span>Danh sách tổ hợp có thể xét tuyển:</span>
-                    </span>
-                    <div id="comboGrid" class="flex flex-wrap items-center gap-1 pt-0.5">
+                <!-- Hàng 2: Danh sách tất cả tổ hợp có điểm (Thanh ngang liền mạch) -->
+                <div class="flex flex-col sm:flex-row sm:items-center gap-2 bg-slate-50 border border-slate-200/80 rounded-md px-3 py-2">
+                    <div class="text-[11px] text-slate-500 font-semibold flex items-center gap-1.5 shrink-0">
+                        <i class="fa-solid fa-list-check text-blue-800 text-xs"></i>
+                        <span>Tất cả tổ hợp:</span>
+                    </div>
+                    <div id="comboGrid" class="flex flex-wrap items-center gap-1.5 flex-1">
                         <!-- Rendered via JS -->
                     </div>
                 </div>
@@ -504,7 +504,7 @@
             // 3. TỔ HỢP 3 MÔN CAO NHẤT
             if (validCombos.length > 0) {
                 const topCombo = validCombos[0];
-                bestComboTextEl.innerHTML = `<span class="bg-blue-800 text-white px-2 py-0.5 rounded text-[11px] font-semibold mr-1.5">${topCombo.code}</span><span class="text-slate-700 font-medium">(${topCombo.name}) : </span><span class="text-blue-800 font-bold text-sm ml-1">${topCombo.total.toFixed(2)}</span>`;
+                bestComboTextEl.innerHTML = `<span class="bg-blue-800 text-white px-1.5 py-0.5 rounded text-[11px] font-bold mr-1.5">${topCombo.code}</span><span class="text-slate-700 font-medium">(${topCombo.subs.join(', ')}) = </span><span class="text-blue-800 font-bold text-sm ml-1">${topCombo.total.toFixed(2)}</span>`;
             } else {
                 bestComboTextEl.innerHTML = `<span class="text-slate-400 font-normal italic">Chưa có tổ hợp nào đủ 3 môn thi</span>`;
             }
