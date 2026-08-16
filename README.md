@@ -12,7 +12,7 @@
 * **Bảng điểm ngang 12 môn**: Hiển thị đầy đủ 12 môn thi (Ngữ văn, Toán, Vật lí, Hóa học, Sinh học, Lịch sử, Địa lí, GD KTPL, Tin học, CNCN, CNNN, Ngoại ngữ).
 
 ### 2. 🏆 Tự Động Tính & Tổng Hợp Tổ Hợp Môn Chuẩn 2026
-* **Bổ sung đầy đủ danh mục tổ hợp xét tuyển 2026**: Hỗ trợ toàn bộ tổ hợp truyền thống và mới theo Chương trình GDPT 2018 (A00–A09, B00–B08, C00–C20, D01–D84, X01–X78...).
+* **Bổ sung danh mục 33 tổ hợp xét tuyển 2026**: Hỗ trợ 33 tổ hợp xét tuyển (A00, A01, A02, A06, A07, B00, B02, B03, C00, C01, C02, C04, D01, D07, D08, D10, D14, D15, D66, D84, X01, X02, X06, X07, X10, X14, X21, X25, X26, X56, X70, X74, X78).
 * **Dải Tag Liền Mạch 1 Dòng (Horizontal Tag Ribbon)**:
   * 👑 **Tag Tổ hợp cao nhất (Top 1)**: Nổi bật với huy hiệu xanh đại học, điểm số vàng hổ phách.
   * 🧮 **Tag Toán, Văn + 1 môn max**: Thể hiện điểm số nền tảng Toán + Văn.
