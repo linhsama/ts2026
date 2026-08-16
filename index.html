@@ -891,41 +891,40 @@
 
         const scoreCache = {};
 
-        async function fetchCandidateScore(sbd) {
-            if (scoreCache[sbd] !== undefined) return scoreCache[sbd];
+        async function fetchCandidateScore(sbd, year = '2026') {
+            const cacheKey = `${sbd}_${year}`;
+            if (scoreCache[cacheKey] !== undefined) return scoreCache[cacheKey];
 
             // 1. Kiểm tra trên Local Python server nếu đang chạy máy cục bộ / mạng LAN
-            const isLocal = window.location.hostname === '127.0.0.1' || 
-                            window.location.hostname === 'localhost' || 
-                            window.location.port === '8080' || 
-                            window.location.hostname.startsWith('192.168.') || 
-                            window.location.hostname.startsWith('10.') || 
-                            window.location.hostname.startsWith('172.');
+            const isLocal = window.location.hostname === '127.0.0.1' ||
+                window.location.hostname === 'localhost' ||
+                window.location.port === '8080' ||
+                window.location.hostname.startsWith('192.168.') ||
+                window.location.hostname.startsWith('10.') ||
+                window.location.hostname.startsWith('172.');
             if (isLocal) {
                 try {
-                    const resp = await fetch(`/api/score?sbd=${sbd}&year=2026`);
+                    const resp = await fetch(`/api/score?sbd=${encodeURIComponent(sbd)}&year=${encodeURIComponent(year)}`);
                     if (resp.ok) {
                         const json = await resp.json();
                         if (json && json.status && json.data && json.data.model === true && json.data.data) {
-                            scoreCache[sbd] = json.data.data;
+                            scoreCache[cacheKey] = json.data.data;
                             return json.data.data;
                         } else if (json && json.data && json.data.model === false) {
-                            scoreCache[sbd] = null;
+                            scoreCache[cacheKey] = null;
                             return null;
                         }
                     }
                 } catch (e) { }
             }
 
-            // 2. Chạy trên GitHub Pages qua CORS Proxy
-            const years = ['2026', '2025', '2024'];
-
+            // 2. Chạy trên GitHub Pages qua CORS Proxy (cố định theo năm yêu cầu)
             const checkYear = async (yr) => {
-                const targetApi = `https://vietnamnet.vn/newsapi-edu/EducationStudentScore/CheckCandidateNumber?ComponentId=COMPONENT002298&PageId=fa4119c27edb45558886cde08459bb1b&sbd=${sbd}&type=2&year=${yr}`;
+                const targetApi = `https://vietnamnet.vn/newsapi-edu/EducationStudentScore/CheckCandidateNumber?ComponentId=COMPONENT002298&PageId=fa4119c27edb45558886cde08459bb1b&sbd=${encodeURIComponent(sbd)}&type=2&year=${encodeURIComponent(yr)}`;
                 const proxyUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(targetApi)}`;
 
                 const controller = new AbortController();
-                const timer = setTimeout(() => controller.abort(), 2500);
+                const timer = setTimeout(() => controller.abort(), 3000);
 
                 try {
                     const resp = await fetch(proxyUrl, { signal: controller.signal });
@@ -944,16 +943,14 @@
             };
 
             try {
-                // Chạy đồng thời 3 năm cùng lúc
-                const results = await Promise.all(years.map(yr => checkYear(yr)));
-                const foundItem = results.find(r => r && r.found === true && r.data);
-                if (foundItem) {
-                    scoreCache[sbd] = foundItem.data;
-                    return foundItem.data;
+                const res = await checkYear(year);
+                if (res && res.found === true && res.data) {
+                    scoreCache[cacheKey] = res.data;
+                    return res.data;
                 }
             } catch (e) { }
 
-            scoreCache[sbd] = null;
+            scoreCache[cacheKey] = null;
             return null;
         }
 

@@ -393,7 +393,8 @@ class AppHandler(SimpleHTTPRequestHandler):
 
             if parsed.path == "/api/score":
                 query = urllib.parse.parse_qs(parsed.query)
-                sbd = query.get("sbd", [""])[0]
+                sbd = query.get("sbd", [""])[0].strip()
+                year = query.get("year", ["2026"])[0].strip() or "2026"
                 
                 if not sbd:
                     self.send_response(400)
@@ -402,16 +403,7 @@ class AppHandler(SimpleHTTPRequestHandler):
                     self.wfile.write(json.dumps({"status": False, "message": "Missing SBD parameter"}).encode("utf-8"))
                     return
 
-                years_to_try = ["2026", "2025", "2024"]
-                result_data = None
-                
-                with ThreadPoolExecutor(max_workers=3) as executor:
-                    future_to_yr = {executor.submit(fetch_year, sbd, yr): yr for yr in years_to_try}
-                    for future in as_completed(future_to_yr):
-                        res = future.result()
-                        if res:
-                            result_data = res
-                            break
+                result_data = fetch_year(sbd, year)
 
                 self.send_response(200)
                 self.send_header("Content-Type", "application/json; charset=utf-8")
@@ -423,7 +415,7 @@ class AppHandler(SimpleHTTPRequestHandler):
                     self.wfile.write(json.dumps({
                         "status": False,
                         "errorCode": 404,
-                        "messages": ["Không tìm thấy dữ liệu điểm thi"],
+                        "messages": [f"Không tìm thấy dữ liệu điểm thi năm {year}"],
                         "data": {"model": False}
                     }).encode("utf-8"))
                 return
